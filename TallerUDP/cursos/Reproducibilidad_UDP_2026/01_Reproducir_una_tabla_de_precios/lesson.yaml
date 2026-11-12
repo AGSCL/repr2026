@@ -1,0 +1,98 @@
+- Class: meta
+  Course: Reproducibilidad UDP 2026
+  Lesson: 01 Reproducir una tabla de precios
+  Author: Curso de Reproducibilidad y Comunicación de Resultados, UDP
+  Type: Standard
+  Organization: Universidad Diego Portales
+  Version: 2.4.5
+
+- Class: text
+  Output: '¿Cuánto costaba un kilo en las ferias libres del sector Coquimbo? La clase 1 pide reconstruir una tabla de precios al consumidor de ODEPA para el año asignado. En el extracto de 2025 hay 36 registros semanales de cuatro productos de primera calidad, entre julio y agosto. Cada precio promedio está en pesos chilenos por kilo.'
+
+- Class: cmd_question
+  Output: 'Abre el archivo desde la raíz de TallerUDP con precios <- read.csv("_data/precios.csv", fileEncoding = "UTF-8"). La ruta relativa permitirá abrirlo aunque tu compañera descomprima el proyecto en otra carpeta.'
+  CorrectAnswer: precios <- read.csv("_data/precios.csv", fileEncoding = "UTF-8")
+  AnswerTests: any_of_exprs('precios <- read.csv("_data/precios.csv", fileEncoding = "UTF-8")', 'precios <- read.csv("_data/precios.csv")')
+  Hint: 'La carpeta _data y el archivo TallerUDP.Rproj están al mismo nivel. Escribe precios <- read.csv("_data/precios.csv", fileEncoding = "UTF-8").'
+
+- Class: cmd_question
+  Output: 'El equipo debía trabajar con 2025. Comprueba qué años aparecen realmente en la columna anio con unique().'
+  CorrectAnswer: unique(precios$anio)
+  AnswerTests: any_of_exprs('unique(precios$anio)', 'sort(unique(precios$anio))')
+  Hint: 'Usa unique(precios$anio). Esto inspecciona todos los valores de la columna, aunque haya muchas filas del mismo año.'
+
+- Class: cmd_question
+  Output: 'Antes de promediar, construye una tabla de frecuencias de grupo por mes. Usa table() con la columna grupo en las filas y mes en las columnas. Los números que verás cuentan registros de precios.'
+  CorrectAnswer: table(precios$grupo, precios$mes)
+  AnswerTests: any_of_exprs('table(precios$grupo, precios$mes)', 'with(precios, table(grupo, mes))')
+  Hint: 'Escribe table(precios$grupo, precios$mes). Lee una celda como el número de filas disponibles para ese grupo durante ese mes.'
+
+- Class: mult_question
+  Output: 'La consigna pide el promedio del precio promedio por grupo y mes. La muestra no trae cantidades vendidas ni el número de cotizaciones detrás de cada fila. ¿Qué cálculo puedes defender con estos datos?'
+  AnswerChoices: La media aritmética de los precios promedio registrados para cada combinación de grupo y mes;El promedio de todas las transacciones del grupo ponderadas por la cantidad que se compró en ese mes;La variación mensual del costo de una canasta usando participaciones de gasto de los hogares
+  CorrectAnswer: La media aritmética de los precios promedio registrados para cada combinación de grupo y mes
+  AnswerTests: omnitest(correctVal='La media aritmética de los precios promedio registrados para cada combinación de grupo y mes')
+  Hint: 'La unidad observada es un registro con un precio promedio. En este ejercicio cada registro del grupo y mes tiene el mismo peso.'
+
+- Class: cmd_question
+  Output: 'Prepara el cálculo con dplyr, del tidyverse. Agrupa precios por las dos claves grupo y mes y guarda el resultado en agrupados. El mismo mes de dos grupos distintos debe quedar separado.'
+  CorrectAnswer: agrupados <- dplyr::group_by(precios, grupo, mes)
+  AnswerTests: grupos_correctos()
+  Hint: 'Escribe agrupados <- dplyr::group_by(precios, grupo, mes). El operador |> también permite empezar con precios y luego agrupar.'
+
+- Class: cmd_question
+  Output: 'Ahora construye tu tabla con dplyr::summarise() sobre agrupados. Guárdala en tabla con una fila por grupo y mes, una columna precio_medio con la media de precio_promedio y otra n_registros con el número de filas que aportan a la media. Conserva todos los decimales en el cálculo. Puedes usar mean() y dplyr::n().'
+  CorrectAnswer: tabla <- dplyr::summarise(agrupados, precio_medio = mean(precio_promedio), n_registros = dplyr::n(), .groups = "drop")
+  AnswerTests: tabla_correcta()
+  Hint: 'Prueba tabla <- dplyr::summarise(agrupados, precio_medio = mean(precio_promedio), n_registros = dplyr::n(), .groups = "drop"). Si obtienes una sola fila, revisa las dos claves de agrupación.'
+
+- Class: cmd_question
+  Output: 'Inspecciona las medias en pesos por kilo con as.data.frame(tabla) para ver sus decimales. Elige una celda de la tabla de frecuencias anterior y comprueba si coincide con n_registros para ese grupo y mes.'
+  CorrectAnswer: as.data.frame(tabla)
+  AnswerTests: any_of_exprs('as.data.frame(tabla)', 'print(as.data.frame(tabla))')
+  Hint: 'Escribe as.data.frame(tabla). Al leer una media, anota el grupo y el mes de su fila.'
+
+- Class: mult_question
+  Output: 'En julio obtuviste dos medias, $1.677,50/kg en Frutas y $565,00/kg en Hortalizas. Si agrupas solo por mes y vuelves a ejecutar el código, ¿qué cambia en la tabla?'
+  AnswerChoices: Quedan dos filas y la media de julio mezcla los registros de frutas y hortalizas;Quedan cuatro filas y cambia únicamente el orden en que aparecen los productos;Quedan dos filas y cada una conserva la media anual de un grupo
+  CorrectAnswer: Quedan dos filas y la media de julio mezcla los registros de frutas y hortalizas
+  AnswerTests: omnitest(correctVal='Quedan dos filas y la media de julio mezcla los registros de frutas y hortalizas')
+  Hint: 'Julio y agosto definen dos claves distintas. Si quitas grupo de la agrupación, ambos tipos de productos entran juntos en el cálculo de cada mes.'
+
+- Class: cmd_question
+  Output: 'Guarda la tabla con write.csv() en "_outputs/precios_por_grupo_y_mes.csv". Incluye row.names = FALSE para que el archivo compartido conserve solo las cuatro columnas del análisis.'
+  CorrectAnswer: write.csv(tabla, "_outputs/precios_por_grupo_y_mes.csv", row.names = FALSE)
+  AnswerTests: any_of_exprs('write.csv(tabla, "_outputs/precios_por_grupo_y_mes.csv", row.names = FALSE)', 'utils::write.csv(tabla, "_outputs/precios_por_grupo_y_mes.csv", row.names = FALSE)')
+  Hint: 'Escribe write.csv(tabla, "_outputs/precios_por_grupo_y_mes.csv", row.names = FALSE). El CSV de entrada queda disponible para otra ejecución.'
+
+- Class: cmd_question
+  Output: 'Si a tu compañera le aparece otra versión de un paquete, necesitará saber con qué entorno corriste el análisis. Ejecuta sessionInfo() y busca la versión de R y la de dplyr entre los paquetes cargados.'
+  CorrectAnswer: sessionInfo()
+  AnswerTests: any_of_exprs('sessionInfo()', 'utils::sessionInfo()')
+  Hint: 'Escribe sessionInfo(). Esta función describe la sesión actual. El proyecto también incluye renv.lock para que tu compañera pueda restaurar las versiones.'
+
+- Class: cmd_question
+  Output: 'Genera el árbol para la captura que pide la clase. La función rutas_del_taller() reúne las rutas de datos, resultados, bibliografía, estilo y figuras que existen en este proyecto. Pásala a data.tree::as.Node() y localiza allí el CSV de entrada y el de salida.'
+  CorrectAnswer: data.tree::as.Node(rutas_del_taller())
+  AnswerTests: any_of_exprs('data.tree::as.Node(rutas_del_taller())', 'print(data.tree::as.Node(rutas_del_taller()))')
+  Hint: 'Escribe data.tree::as.Node(rutas_del_taller()). Busca precios.csv bajo _data y precios_por_grupo_y_mes.csv bajo _outputs. Guarda una captura de ese árbol.'
+
+- Class: mult_question
+  Output: 'Al intercambiar proyectos, tu compañera abre el .Rproj y ejecuta renv::restore(), pero el script que escribió su pareja intenta leer C:/Users/docente/Desktop/precios.csv. ¿Qué corrección servirá a cualquier compañero que descomprima el proyecto completo?'
+  AnswerChoices: Leer _data/precios.csv desde la raíz del proyecto;Cambiar esa ruta por la ruta absoluta del equipo que recibió el ZIP;Ejecutar renv::snapshot() en el nuevo equipo antes de volver a leer el CSV
+  CorrectAnswer: Leer _data/precios.csv desde la raíz del proyecto
+  AnswerTests: omnitest(correctVal='Leer _data/precios.csv desde la raíz del proyecto')
+  Hint: 'renv::restore() recupera paquetes. La ubicación de los datos depende de la ruta del script. Piensa qué parte de la ruta sigue siendo igual después de descomprimir.'
+
+- Class: mult_question
+  Output: 'Tu compañera obtiene los mismos valores con tu archivo de 2025 y tu código. Después aplica el procedimiento a datos recogidos en otro año para comprobar si se mantiene un patrón entre grupos. ¿Qué pregunta responde cada paso?'
+  AnswerChoices: El primero comprueba la reproducibilidad de la tabla y el segundo investiga la replicabilidad del patrón con datos nuevos;El primero comprueba la replicabilidad entre computadores y el segundo reproduce la tabla original;Ambos reproducen la tabla original porque usan la misma función de agrupación
+  CorrectAnswer: El primero comprueba la reproducibilidad de la tabla y el segundo investiga la replicabilidad del patrón con datos nuevos
+  AnswerTests: omnitest(correctVal='El primero comprueba la reproducibilidad de la tabla y el segundo investiga la replicabilidad del patrón con datos nuevos')
+  Hint: 'La lámina 8 distingue entre recuperar el resultado numérico original y examinar si una conclusión se sostiene con observaciones nuevas. Los precios de otro año pueden cambiar.'
+
+- Class: text
+  Output: 'Entrega a otra persona el proyecto comprimido en ZIP con los datos, el código, renv.lock y la tabla. Deja fuera .progreso y renv/library. Quien lo recibe debe abrir el .Rproj, ejecutar renv::restore() y correr analisis.R antes de comparar las cuatro filas. Las medias describen esas ferias y esos productos. Para estudiar precios nacionales haría falta otra cobertura.'
+
+- Class: text
+  Output: 'Al revisar el proyecto recibido, entrega la captura del árbol y escribe al menos dos fortalezas, dos debilidades y dos amenazas a su reproducibilidad o replicabilidad. Para cada punto, cita una evidencia del proyecto y explica su efecto. Por ejemplo, una ruta relativa resiste un cambio de carpeta. ¿Seguiría siendo comparable el promedio si el año siguiente cambiara la unidad de venta?'

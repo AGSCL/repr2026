@@ -1,0 +1,6 @@
+Package: TallerUDP
+Type: Project
+Title: Taller de reproducibilidad UDP 2026
+Version: 1.0.0
+Encoding: UTF-8
+Imports: swirl, renv, dplyr, data.tree

@@ -5,6 +5,20 @@
 
 [Responder la encuesta diagnóstica de R](https://01a10334-b601-4f38-05a8-061a7664f1d3.share.connect.posit.cloud/) (aprox. 5 minutos).
 
+[Código de la encuesta Shiny y guardado en Google Sheets](https://github.com/AGSCL/repr2026/tree/main/encuesta).
+
+## Taller de la clase 1
+
+[Presentación del ejercicio de precios (15 diapositivas, PDF)](https://github.com/AGSCL/repr2026/blob/main/Clase1-Reproducibilidad.pdf) · [Material 2026-1 Reproducibilidad (35 páginas, PDF)](https://github.com/AGSCL/repr2026/blob/main/2026-1%20Reproducibilidad.pdf).
+
+Reconstruye con dplyr una tabla de precios al consumidor de ODEPA por grupo y mes, guarda el resultado y entrégalo a un compañero para que lo compruebe.
+
+[Descargar el taller de la clase 1 (ZIP)](https://github.com/AGSCL/repr2026/raw/refs/heads/main/TallerUDP.zip).
+
+Descomprime el ZIP, abre `TallerUDP.Rproj` y ejecuta `source("iniciar.R", encoding = "UTF-8")` en la consola. Cuando termine, escribe `swirl()` en una nueva línea. La primera instalación requiere internet.
+
+[Revisar las preguntas, alternativas, soluciones y pistas](https://github.com/AGSCL/repr2026/blob/main/Preguntas-clase1.md).
+
 ## Abrir este proyecto en otro equipo
 
 1. Instala R 4.4.1 y abre `repr2026.Rproj` en RStudio.
@@ -22,6 +36,16 @@ El script inicializa la biblioteca con `renv::init()`, fija los paquetes al 2026
 
 ## Estructura
 
+Los PDF de clase, la descarga del taller y la guía de preguntas están en la raíz. `TallerUDP/` contiene el proyecto de práctica y `encuesta/` el código de Shiny.
+
+- `_data/`: datos de entrada, CSV y ejemplos.
+- `_outputs/`: tablas, documentos y otros resultados generados.
+- `_figures/`: figuras como PNG y SVG.
+- `_lit/`: bibliografía.
+- `_hist/`: versiones anteriores.
+- `_lib/`: estilos y archivos de apoyo, como CSS o YAML.
+- `_doc/`: documentación del proyecto y del entorno.
+
 ```text
 repr2026
  |--_data
@@ -33,11 +57,18 @@ repr2026
  |--_lit
  |--_outputs
  |--00estructura_proyecto.R
+ |--2026-1 Reproducibilidad.pdf
+ |--Clase1-Reproducibilidad.pdf
  |--DESCRIPTION
+ |--encuesta
+ |--Preguntas-clase1.md
  |--README.md
  |--renv
  |--renv.lock
- `--repr2026.Rproj
+ |--repr2026.Rproj
+ |--revisar_leccion.R
+ |--TallerUDP
+ `--TallerUDP.zip
 ```
 
 ## Material de clase
