@@ -18,11 +18,12 @@ stopifnot(identical(anonima$nombre, ""), identical(anonima$es_prueba, FALSE))
 
 # Para una prueba de punta a punta, use este marcador en expectativas, no en nombre.
 message("Marcador para expectativas: ", marca)
-confirmar_prueba <- function(marcador) {
-  d <- read.csv(csv, fileEncoding = "UTF-8", colClasses = "character", na.strings = character())
+# Descargar el CSV en Google Sheets con la sesion autorizada.
+confirmar_prueba <- function(marcador, archivo = file.choose()) {
+  d <- read.csv(archivo, fileEncoding = "UTF-8", colClasses = "character", na.strings = character())
   fila <- which(d$expectativas == marcador & d$cohorte == cohorte &
                 tolower(d$es_prueba) %in% c("true", "1", "verdadero"))
   stopifnot(length(fila) == 1L, nzchar(d$fecha[fila]),
             d$nombre[fila] == "" || grepl("^hmac256:[0-9a-f]{64}$", d$nombre[fila]))
-  message("Prueba confirmada en Google Sheets, fila ", fila + 1L, ".")
+  message("Prueba confirmada en el CSV exportado, fila ", fila + 1L, ".")
 }

@@ -5,7 +5,7 @@
 
 [Responder la encuesta diagnóstica de R](https://01a10334-b601-4f38-05a8-061a7664f1d3.share.connect.posit.cloud/) (aprox. 5 minutos).
 
-[Código de la encuesta Shiny y guardado en Google Sheets](https://github.com/AGSCL/repr2026/tree/main/encuesta).
+[Resultados en vivo de la cohorte](https://agscl.github.io/repr2026/resultados/) · [Código de la encuesta Shiny](https://github.com/AGSCL/repr2026/tree/main/encuesta).
 
 ## Taller de la clase 1
 
@@ -70,6 +70,7 @@ repr2026
  |--renv
  |--renv.lock
  |--repr2026.Rproj
+ |--resultados
  |--revisar_leccion.R
  |--TallerUDP
  `--TallerUDP.zip

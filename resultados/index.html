@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#dd3333">
+  <meta name="csv-url" content="https://docs.google.com/spreadsheets/d/1dA8nCGxhlwndp5HM_s7mktoDwvACcXoBdHWck8k0-qA/gviz/tq?gid=20261112&amp;headers=1&amp;range=A%3AC&amp;tqx=out%3Acsv&amp;tq=select%20A%2CB%2CC%20where%20A%20is%20not%20null%20options%20no_format">
+  <title>Encuesta diagnóstica · Reproducibilidad en R · UDP 2026</title>
+  <link rel="stylesheet" href="tablero.css">
+  <script defer src="tablero.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="marca"><strong>UDP</strong><span>Reproducibilidad en R</span></div>
+    <span>Cohorte 2026</span>
+  </header>
+  <main>
+    <header class="portada">
+      <h1>Encuesta diagnóstica</h1>
+      <div class="lectura">
+        <b id="total">— respuestas</b>
+        <span id="estado" role="status">Consultando resultados…</span>
+        <time id="hora" hidden></time>
+      </div>
+    </header>
+    <noscript>Activa JavaScript para consultar los resultados de la encuesta.</noscript>
+    <div class="resumen">
+      <section aria-labelledby="tit-experiencia">
+        <h2 id="tit-experiencia">Experiencia en R</h2>
+        <div class="experiencia">
+          <div class="pie" id="pie" aria-hidden="true"></div>
+          <div>
+            <p class="cifra" id="porcentaje">—</p>
+            <p class="leyenda"><i class="rojo" aria-hidden="true"></i>6 meses o más</p>
+            <p class="leyenda"><i aria-hidden="true"></i>Menos de 6 meses o nunca</p>
+          </div>
+        </div>
+      </section>
+      <section aria-labelledby="tit-nota">
+        <h2 id="tit-nota">Conocimientos de R</h2>
+        <p class="calificacion"><span class="cifra" id="nota">—</span><span> / 7,0</span></p>
+        <p class="aclaracion"><span id="base-nota">Nota promedio del grupo en las 7 preguntas.</span><br>Un 60 % de aciertos equivale a un 4,0.</p>
+      </section>
+    </div>
+    <section class="bloque" aria-labelledby="tit-interes">
+      <h2 id="tit-interes">¿Qué tema le interesa más?</h2>
+      <p class="unidad">Número de respuestas</p>
+      <ul class="barras" id="interes"></ul>
+    </section>
+    <section class="bloque" aria-labelledby="tit-cursos">
+      <h2 id="tit-cursos">Cursos previos del diplomado</h2>
+      <p class="unidad">Número de respuestas</p>
+      <div class="pares">
+        <div><h3>El que más costó</h3><ul class="barras" id="dificil"></ul></div>
+        <div><h3>El más fácil</h3><ul class="barras" id="facil"></ul></div>
+      </div>
+    </section>
+    <div class="bloque pares nubes">
+      <section aria-labelledby="tit-dificultad">
+        <h2 id="tit-dificultad">¿Qué le hizo difícil ese curso?</h2>
+        <ul class="nube" id="por_que"></ul>
+      </section>
+      <section aria-labelledby="tit-expectativas">
+        <h2 id="tit-expectativas">¿Qué espera poder hacer al terminar?</h2>
+        <ul class="nube" id="expectativas"></ul>
+      </section>
+      <p class="unidad">Aparecen los términos que se repiten en al menos dos respuestas. El tamaño indica en cuántas.</p>
+    </div>
+  </main>
+</body>
+</html>

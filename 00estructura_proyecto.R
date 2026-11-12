@@ -107,7 +107,7 @@ fin <- "<!-- fin: 00estructura_proyecto.R -->"
 bloque <- c(inicio, paste("#", titulo), "",
   "## Antes de la primera clase", "",
   paste0("[Responder la encuesta diagnóstica de R](", encuesta, ") (aprox. 5 minutos)."), "",
-  "[Código de la encuesta Shiny y guardado en Google Sheets](https://github.com/AGSCL/repr2026/tree/main/encuesta).", "",
+  "[Resultados en vivo de la cohorte](https://agscl.github.io/repr2026/resultados/) · [Código de la encuesta Shiny](https://github.com/AGSCL/repr2026/tree/main/encuesta).", "",
   "## Taller de la clase 1", "",
   "[Material de clase 2026 (PDF)](https://github.com/AGSCL/repr2026/blob/main/2026-1%20Reproducibilidad.pdf) · [Enunciado original del ejercicio ENSSEX](https://github.com/AGSCL/repr2026/blob/main/Enunciado-ENSSEX.md).",
   "",

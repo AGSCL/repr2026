@@ -1,0 +1,69 @@
+:root {
+  color-scheme: light;
+  --udp: #dd3333;
+  --texto: #333333;
+  --gris: #686868;
+  --linea: #d8d8d5;
+  --resto: #a5a5a1;
+  font-family: Lato, "Helvetica Neue", Arial, sans-serif;
+  color: var(--texto);
+  background: #fff;
+}
+* { box-sizing: border-box; }
+body { margin: 0; border-top: 5px solid var(--udp); }
+.masthead, main { max-width: 1100px; padding-inline: clamp(20px, 5vw, 64px); margin: auto; }
+.masthead {
+  display: flex; align-items: center; justify-content: space-between; gap: 15px;
+  padding-block: 21px; font-size: .94rem;
+}
+.marca { display: flex; align-items: center; gap: 14px; }
+.marca strong { color: var(--udp); font: 900 1.55rem/1 Arial, sans-serif; letter-spacing: -.05em; }
+.marca span { border-left: 1px solid var(--linea); padding-left: 14px; }
+.masthead > span { color: var(--gris); white-space: nowrap; }
+main { padding-bottom: 44px; }
+.portada { border-top: 1px solid var(--linea); padding-block: 36px 26px; }
+h1, h2, h3, p, ul { margin: 0; }
+h1 { color: var(--udp); font-size: clamp(2.5rem, 5.6vw, 4rem); line-height: 1.02; letter-spacing: -.05em; }
+.lectura { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-top: 14px; font-size: .94rem; color: var(--gris); }
+.lectura b { color: var(--texto); }
+.lectura time:before { content: "· "; }
+.lectura time, .cifra, .valor { font-variant-numeric: tabular-nums; }
+.resumen { display: grid; grid-template-columns: 1.12fr 1fr; border-block: 1px solid var(--linea); }
+.resumen section { padding-block: 23px; min-width: 0; }
+.resumen section + section { border-left: 1px solid var(--linea); padding-left: clamp(24px, 4.5vw, 55px); }
+h2 { font-size: clamp(1.23rem, 2vw, 1.52rem); line-height: 1.2; letter-spacing: -.025em; }
+h3 { font-size: 1.04rem; margin-bottom: 12px; }
+.experiencia { display: flex; gap: clamp(16px, 2.5vw, 32px); align-items: center; margin-top: 16px; }
+.pie { width: clamp(78px, 10vw, 110px); aspect-ratio: 1; flex: none; border-radius: 50%; background: #eee; }
+.pie[data-datos] { background: conic-gradient(var(--udp) 0 var(--porcion), var(--resto) var(--porcion) 100%); }
+.cifra { font-size: clamp(2.7rem, 4.9vw, 3.6rem); line-height: 1; letter-spacing: -.055em; font-weight: 700; }
+.leyenda { display: flex; align-items: center; gap: 7px; font-size: .88rem; line-height: 1.45; margin-top: 4px; }
+.leyenda i { width: 10px; height: 10px; border-radius: 50%; background: var(--resto); flex: none; }
+.leyenda .rojo { background: var(--udp); }
+.calificacion { margin-top: 16px; color: var(--gris); }
+.calificacion .cifra { color: var(--texto); }
+.aclaracion, .unidad { color: var(--gris); font-size: .9rem; line-height: 1.45; }
+.aclaracion { margin-top: 8px; }
+.unidad { margin-top: 5px; }
+.bloque { padding-block: 24px; border-bottom: 1px solid var(--linea); }
+.barras, .nube { list-style: none; padding: 0; }
+.barras { display: grid; gap: 11px; margin-top: 16px; }
+.barras li { display: grid; grid-template-columns: minmax(0, 1fr) 2.2em; column-gap: 8px; row-gap: 5px; align-items: baseline; font-size: .96rem; }
+.valor { text-align: right; font-weight: 700; }
+.pista { grid-column: 1 / -1; height: 7px; background: #f0efed; }
+.pista i { display: block; height: 100%; background: var(--udp); }
+.pares { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px clamp(24px, 5vw, 64px); }
+.bloque > .pares { margin-top: 20px; }
+.nubes > p { grid-column: 1 / -1; margin: 0; }
+.nube { display: flex; flex-wrap: wrap; align-items: baseline; gap: 7px 13px; margin-top: 18px; }
+.nube li { font-weight: 700; line-height: 1.1; overflow-wrap: anywhere; max-width: 100%; }
+.barras li.vacio, .nube li.vacio { display: block; color: var(--gris); font-size: .94rem; font-weight: 400; }
+.lector { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 650px) {
+  .resumen, .pares { grid-template-columns: 1fr; }
+  .resumen section + section { border-left: 0; border-top: 1px solid var(--linea); padding-left: 0; }
+  .portada { padding-block: 26px 21px; }
+  .masthead { padding-block: 16px; font-size: .82rem; }
+  .marca, .lectura { column-gap: 9px; }
+  .marca span { padding-left: 9px; }
+}

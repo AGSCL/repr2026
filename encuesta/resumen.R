@@ -2,11 +2,15 @@
 # RESUMEN RAPIDO DE LA ENCUESTA (solo R base)
 # Correr linea a linea desde la carpeta de app.R
 #:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:
-source("app.R", encoding = "UTF-8")   # trae las preguntas, la cohorte y la direccion de lectura
+source("app.R", encoding = "UTF-8")   # trae las preguntas, la cohorte y las claves de conocimiento
 
 # 1. LEER LA COHORTE (las filas de prueba se excluyen antes del resumen)
-stopifnot(nzchar(csv))
-d <- read.csv(csv, fileEncoding = "UTF-8",
+# Desde la cuenta de Andres o Constanza, descarga la pestana de respuestas como CSV.
+# En consola se puede elegir el archivo. Desde la terminal: Rscript resumen.R archivo.csv
+archivo <- commandArgs(trailingOnly = TRUE)
+if (!length(archivo) && interactive()) archivo <- file.choose()
+if (length(archivo) != 1L || !file.exists(archivo)) stop("Indica el CSV descargado de la hoja privada.")
+d <- read.csv(archivo, fileEncoding = "UTF-8",
               colClasses = "character", na.strings = character(0))   # todo como texto: la respuesta "NA" no se pierde
 stopifnot("cohorte" %in% names(d))
 d <- d[d$cohorte %in% cohorte, , drop = FALSE]
