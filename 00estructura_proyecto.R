@@ -61,7 +61,12 @@ if (is.null(lock)) {
 } else {
   renv::checkout(repos = repos, packages = paquetes, restart = FALSE)
 }
-renv::snapshot(type = "explicit", repos = repos, prompt = FALSE)
+lock <- renv::snapshot(type = "explicit", repos = repos, lockfile = NULL, prompt = FALSE)
+# Algunos binarios de Posit declaran «latest» aun cuando se bajaron de la fecha fijada.
+for (p in names(lock$Packages)) {
+  if (identical(lock$Packages[[p]]$Source, "Repository")) lock$Packages[[p]]$Repository <- "CRAN"
+}
+renv::lockfile_write(lock, file = "renv.lock")
 renv::isolate()
 
 # 5. Guardar el entorno que realmente usó R.
@@ -75,7 +80,6 @@ entorno <- data.frame(
   valor = c(raiz, fecha, R.version.string, R.version$platform,
             l10n_info()[["UTF-8"]], sincronizado)
 )
-lock <- renv::lockfile_read("renv.lock")
 pk <- sort(unique(c(loadedNamespaces(), names(lock$Packages))))
 detalle <- data.frame(
   paquete = pk,
