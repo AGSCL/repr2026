@@ -1,5 +1,5 @@
 - Class: meta
-  Course: Reproducibilidad UDP 2026
+  Course: Precios - Repaso opcional de R
   Lesson: 01 Reproducir una tabla de precios
   Author: Curso de Reproducibilidad y Comunicación de Resultados, UDP
   Type: Standard
@@ -7,7 +7,7 @@
   Version: 2.4.5
 
 - Class: text
-  Output: '¿Cuánto costaba un kilo en las ferias libres del sector Coquimbo? La clase 1 pide reconstruir una tabla de precios al consumidor de ODEPA para el año asignado. En el extracto de 2025 hay 36 registros semanales de cuatro productos de primera calidad, entre julio y agosto. Cada precio promedio está en pesos chilenos por kilo.'
+  Output: '¿Cuánto costaba un kilo en las ferias libres del sector Coquimbo? En este repaso opcional reconstruirás una tabla con precios al consumidor de ODEPA. El extracto de 2025 tiene 36 registros semanales de cuatro productos de primera calidad, entre julio y agosto. Cada precio promedio está en pesos chilenos por kilo.'
 
 - Class: cmd_question
   Output: 'Abre el archivo desde la raíz de TallerUDP con precios <- read.csv("_data/precios.csv", fileEncoding = "UTF-8"). La ruta relativa permitirá abrirlo aunque tu compañera descomprima el proyecto en otra carpeta.'
@@ -16,7 +16,7 @@
   Hint: 'La carpeta _data y el archivo TallerUDP.Rproj están al mismo nivel. Escribe precios <- read.csv("_data/precios.csv", fileEncoding = "UTF-8").'
 
 - Class: cmd_question
-  Output: 'El equipo debía trabajar con 2025. Comprueba qué años aparecen realmente en la columna anio con unique().'
+  Output: 'El extracto corresponde a 2025. Comprueba qué años aparecen realmente en la columna anio con unique().'
   CorrectAnswer: unique(precios$anio)
   AnswerTests: any_of_exprs('unique(precios$anio)', 'sort(unique(precios$anio))')
   Hint: 'Usa unique(precios$anio). Esto inspecciona todos los valores de la columna, aunque haya muchas filas del mismo año.'
@@ -72,7 +72,7 @@
   Hint: 'Escribe sessionInfo(). Esta función describe la sesión actual. El proyecto también incluye renv.lock para que tu compañera pueda restaurar las versiones.'
 
 - Class: cmd_question
-  Output: 'Genera el árbol para la captura que pide la clase. La función rutas_del_taller() reúne las rutas de datos, resultados, bibliografía, estilo y figuras que existen en este proyecto. Pásala a data.tree::as.Node() y localiza allí el CSV de entrada y el de salida.'
+  Output: 'Genera el árbol del proyecto. La función rutas_del_taller() reúne las rutas de datos, resultados, bibliografía y figuras de TallerUDP. Pásala a data.tree::as.Node() y localiza allí el CSV de entrada y el de salida.'
   CorrectAnswer: data.tree::as.Node(rutas_del_taller())
   AnswerTests: any_of_exprs('data.tree::as.Node(rutas_del_taller())', 'print(data.tree::as.Node(rutas_del_taller()))')
   Hint: 'Escribe data.tree::as.Node(rutas_del_taller()). Busca precios.csv bajo _data y precios_por_grupo_y_mes.csv bajo _outputs. Guarda una captura de ese árbol.'
@@ -89,10 +89,10 @@
   AnswerChoices: El primero comprueba la reproducibilidad de la tabla y el segundo investiga la replicabilidad del patrón con datos nuevos;El primero comprueba la replicabilidad entre computadores y el segundo reproduce la tabla original;Ambos reproducen la tabla original porque usan la misma función de agrupación
   CorrectAnswer: El primero comprueba la reproducibilidad de la tabla y el segundo investiga la replicabilidad del patrón con datos nuevos
   AnswerTests: omnitest(correctVal='El primero comprueba la reproducibilidad de la tabla y el segundo investiga la replicabilidad del patrón con datos nuevos')
-  Hint: 'La lámina 8 distingue entre recuperar el resultado numérico original y examinar si una conclusión se sostiene con observaciones nuevas. Los precios de otro año pueden cambiar.'
+  Hint: 'El primer paso recupera el resultado numérico original. El segundo examina si una conclusión se sostiene con observaciones nuevas. Los precios de otro año pueden cambiar.'
 
 - Class: text
-  Output: 'Entrega a otra persona el proyecto comprimido en ZIP con los datos, el código, renv.lock y la tabla. Deja fuera .progreso y renv/library. Quien lo recibe debe abrir el .Rproj, ejecutar renv::restore() y correr analisis.R antes de comparar las cuatro filas. Las medias describen esas ferias y esos productos. Para estudiar precios nacionales haría falta otra cobertura.'
+  Output: 'Puedes comprobar el resultado cuando quieras. Abre TallerUDP.Rproj y ejecuta source("analisis.R") desde la raíz del proyecto. Compara las cuatro filas que genera el script con tu tabla. Las medias describen esas ferias y esos productos. Para estudiar precios nacionales haría falta otra cobertura.'
 
 - Class: text
-  Output: 'Al revisar el proyecto recibido, entrega la captura del árbol y escribe al menos dos fortalezas, dos debilidades y dos amenazas a su reproducibilidad o replicabilidad. Para cada punto, cita una evidencia del proyecto y explica su efecto. Por ejemplo, una ruta relativa resiste un cambio de carpeta. ¿Seguiría siendo comparable el promedio si el año siguiente cambiara la unidad de venta?'
+  Output: 'Para cerrar este repaso personal, piensa en una decisión que facilitó repetir el cálculo. ¿Qué pasaría con las medias si el año siguiente algunos precios vinieran por unidad en lugar de por kilo? Para continuar con el ejercicio principal, elige «ENSSEX Ayuda para el ejercicio» en el menú de cursos. Si SWIRL te ofrece reanudar una lección, elige «No. Déjame iniciar con algo nuevo.» para ver los cursos.'

@@ -1,10 +1,10 @@
 # Desde el proyecto del taller: Rscript ../revisar_leccion.R ruta/lesson.yaml [salida.md]
-# Sin segundo argumento, escribe Preguntas-clase1.md en el directorio actual.
+# Verifica la lección de datos de precios y genera su guía en Markdown.
 args <- commandArgs(trailingOnly = TRUE)
 if (!length(args) || length(args) > 2L)
   stop("Uso: Rscript ../revisar_leccion.R ruta/lesson.yaml [salida.md]", call. = FALSE)
 archivo <- normalizePath(args[1], mustWork = TRUE)
-salida <- if (length(args) == 2L) args[2] else "Preguntas-clase1.md"
+salida <- if (length(args) == 2L) args[2] else "Preguntas-precios.md"
 salida <- file.path(normalizePath(dirname(salida), mustWork = TRUE), basename(salida))
 if (!l10n_info()[["UTF-8"]]) {
   utf8 <- if (.Platform$OS.type == "windows") ".UTF-8" else "C.UTF-8"

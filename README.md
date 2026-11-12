@@ -9,15 +9,18 @@
 
 ## Taller de la clase 1
 
-[Presentación del ejercicio de precios (15 diapositivas, PDF)](https://github.com/AGSCL/repr2026/blob/main/Clase1-Reproducibilidad.pdf) · [Material 2026-1 Reproducibilidad (35 páginas, PDF)](https://github.com/AGSCL/repr2026/blob/main/2026-1%20Reproducibilidad.pdf).
+[Material de clase 2026 (PDF)](https://github.com/AGSCL/repr2026/blob/main/2026-1%20Reproducibilidad.pdf) · [Enunciado original del ejercicio ENSSEX](https://github.com/AGSCL/repr2026/blob/main/Enunciado-ENSSEX.md).
 
-Reconstruye con dplyr una tabla de precios al consumidor de ODEPA por grupo y mes, guarda el resultado y entrégalo a un compañero para que lo compruebe.
+Calcula los cuatro porcentajes de la base ENSSEX que recibiste. Intercambia el proyecto con un compañero. Al abrir el suyo, anota cuántas líneas tuviste que cambiar y compara tus cuatro resultados con los que obtuvo él usando esa misma base y los mismos decimales.
 
-[Descargar el taller de la clase 1 (ZIP)](https://github.com/AGSCL/repr2026/raw/refs/heads/main/TallerUDP.zip).
+**Apoyo opcional en RStudio.** [Descarga los dos recorridos SWIRL en un solo ZIP](https://github.com/AGSCL/repr2026/raw/refs/heads/main/TallerUDP.zip).
 
-Descomprime el ZIP, abre `TallerUDP.Rproj` y ejecuta `source("iniciar.R", encoding = "UTF-8")` en la consola. Cuando termine, escribe `swirl()` en una nueva línea. La primera instalación requiere internet.
+Descomprime el ZIP, abre `TallerUDP.Rproj` y ejecuta `source("iniciar.R", encoding = "UTF-8")` en la consola. Cuando vuelva a aparecer `>`, escribe `swirl()`. La primera instalación requiere internet.
 
-[Revisar las preguntas, alternativas, soluciones y pistas](https://github.com/AGSCL/repr2026/blob/main/Preguntas-clase1.md).
+- **ENSSEX** explica el intercambio de proyectos. Después de una pregunta puedes consultar el ZIP, una ruta que falla, el libro de códigos, la comparación de porcentajes o la reflexión final. Al volver otro día, ejecuta el iniciador y escribe `consultas_enssex()` para ir directo al menú.
+- **Precios** es un repaso opcional de R con datos de ODEPA. Puedes comenzar por la consola o ir directamente a leer el CSV y reproducir una tabla.
+
+[Cómo usar SWIRL, paso a paso](https://github.com/AGSCL/repr2026/blob/main/TallerUDP/README.md) · [Vista docente de las preguntas, alternativas y pistas](https://github.com/AGSCL/repr2026/blob/main/Preguntas-clase1.md).
 
 ## Abrir este proyecto en otro equipo
 
@@ -36,7 +39,7 @@ El script inicializa la biblioteca con `renv::init()`, fija los paquetes al 2026
 
 ## Estructura
 
-Los PDF de clase, la descarga del taller y la guía de preguntas están en la raíz. `TallerUDP/` contiene el proyecto de práctica y `encuesta/` el código de Shiny.
+El PDF, el enunciado, la descarga del taller y las guías de preguntas están en la raíz. `TallerUDP/` contiene el proyecto de práctica y `encuesta/` el código de Shiny.
 
 - `_data/`: datos de entrada, CSV y ejemplos.
 - `_outputs/`: tablas, documentos y otros resultados generados.
@@ -58,10 +61,11 @@ repr2026
  |--_outputs
  |--00estructura_proyecto.R
  |--2026-1 Reproducibilidad.pdf
- |--Clase1-Reproducibilidad.pdf
  |--DESCRIPTION
  |--encuesta
+ |--Enunciado-ENSSEX.md
  |--Preguntas-clase1.md
+ |--Preguntas-precios.md
  |--README.md
  |--renv
  |--renv.lock

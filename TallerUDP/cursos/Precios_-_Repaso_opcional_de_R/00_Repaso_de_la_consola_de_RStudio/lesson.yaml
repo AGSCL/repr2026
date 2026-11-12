@@ -1,0 +1,43 @@
+- Class: meta
+  Course: Precios - Repaso opcional de R
+  Lesson: 00 Repaso de la consola de RStudio
+  Author: Curso de Reproducibilidad y Comunicación de Resultados, UDP
+  Type: Standard
+  Organization: Universidad Diego Portales
+  Version: 2.4.5
+
+- Class: text
+  Output: 'Este repaso de la consola dura unos tres minutos. Si ya usas R, puedes abrir directamente «01 Reproducir una tabla de precios» en este curso. Si buscas el ejercicio principal, elige «ENSSEX Ayuda para el ejercicio» en el menú de cursos.'
+
+- Class: text
+  Output: 'Busca la pestaña Console de RStudio. El signo > indica que R espera una instrucción. Escribe después del signo y pulsa Enter para ejecutarla. En un script (un archivo .R) puedes guardar instrucciones para volver a usarlas. El botón Run del editor envía la línea actual a la consola.'
+
+- Class: mult_question
+  Output: 'Quieres que tu pareja pueda abrir mañana las instrucciones y volver a ejecutarlas. Elige una opción escribiendo su número y pulsando Enter. ¿Dónde guardarías el cálculo?'
+  AnswerChoices: En un script .R que guardo y comparto;En una captura de la consola con el resultado;En una nota que contiene solo el precio final
+  CorrectAnswer: En un script .R que guardo y comparto
+  AnswerTests: omnitest(correctVal='En un script .R que guardo y comparto')
+  Hint: 'Piensa qué archivo podrá abrir tu pareja en RStudio para ejecutar las mismas operaciones.'
+
+- Class: cmd_question
+  Output: 'Practica en la consola. Si el precio de ejemplo es de 1200 pesos por kilo, calcula el costo de dos kilos con una multiplicación. Escribe 1200 * 2 y pulsa Enter. Si aparece una pista, cambia la operación y vuelve a pulsar Enter.'
+  CorrectAnswer: 1200 * 2
+  AnswerTests: any_of_exprs('1200 * 2', '2 * 1200')
+  Hint: 'Multiplica el precio de un kilo por dos. Escribe solo 1200 * 2 después del signo >. El asterisco indica multiplicación en R.'
+
+- Class: mult_question
+  Output: 'Al ejecutar 1200 * 2 la consola muestra [1] 2400. ¿Cómo leerías esa línea?'
+  AnswerChoices: El resultado es 2400 pesos y [1] indica que la impresión empieza en el primer valor;El resultado es un kilo y 2400 indica el número de fila;Para repetir el cálculo hay que escribir [1] 2400 después del signo >
+  CorrectAnswer: El resultado es 2400 pesos y [1] indica que la impresión empieza en el primer valor
+  AnswerTests: omnitest(correctVal='El resultado es 2400 pesos y [1] indica que la impresión empieza en el primer valor')
+  Hint: 'El signo > aparece antes del comando. En la salida, R muestra entre corchetes la posición del primer valor que imprime en esa línea.'
+
+- Class: mult_question
+  Output: 'En la práctica abrirás una tabla de ODEPA. Cada fila identifica producto, semana, sector y tipo de comercio. La unidad $/kilo expresa pesos chilenos por kilo (CLP/kg). ¿Qué representa precio_promedio en una fila de manzanas?'
+  AnswerChoices: El precio medio por kilo de esas manzanas en el sector y comercio monitoreados esa semana;El total en pesos que gastaron en manzanas todas las familias del sector esa semana;El número de kilos de manzanas vendidos durante esa semana
+  CorrectAnswer: El precio medio por kilo de esas manzanas en el sector y comercio monitoreados esa semana
+  AnswerTests: omnitest(correctVal='El precio medio por kilo de esas manzanas en el sector y comercio monitoreados esa semana')
+  Hint: 'CLP/kg expresa cuánto cuesta un kilo. Para obtener el gasto total también necesitarías conocer los kilos vendidos.'
+
+- Class: text
+  Output: 'Al terminar vuelves al menú. Para practicar con estos datos, elige el curso «Precios - Repaso opcional de R» y luego «01 Reproducir una tabla de precios». Para seguir con el ejercicio principal, elige «ENSSEX Ayuda para el ejercicio». Si SWIRL te ofrece reanudar una lección, la opción «No. Déjame iniciar con algo nuevo.» te lleva al menú de cursos.'

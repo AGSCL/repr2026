@@ -1,0 +1,34 @@
+- Class: meta
+  Course: ENSSEX Ayuda para el ejercicio
+  Lesson: 01 Antes de abrir el proyecto
+  Author: Curso de Reproducibilidad y Comunicación de Resultados, UDP
+  Type: Standard
+  Organization: Universidad Diego Portales
+  Version: 2.4.5
+
+- Class: text
+  Output: '¿Por qué intercambiamos proyectos? Tu compañero va a abrir el proyecto que tú preparaste y a ejecutar tu código con la misma base que usaste. Queremos averiguar dos cosas: cuántas líneas tuvo que cambiar para que corriera y si obtuvo tus mismos cuatro porcentajes.'
+
+- Class: text_question
+  Output: |-
+    Imagina que abrió tu proyecto, ejecutó el análisis y no tuvo que editar ninguna línea. ¿Qué falta comprobar?
+
+    A. Que ambos obtuvieron los mismos cuatro porcentajes al mostrarlos con la misma cantidad de decimales.
+
+    B. Que obtendría esos mismos porcentajes con la otra base que le tocó trabajar.
+
+    C. Nada más: si el código terminó sin errores, los resultados ya están comprobados.
+
+    Escribe A, B o C y pulsa Enter.
+  CorrectAnswer: A
+  AnswerTests: val_matches('^[Aa]$')
+  Hint: 'Ya sabes que el código corrió en otro computador. ¿Qué tendrían que mirar juntos para saber si reprodujeron el resultado?'
+
+- Class: cmd_question
+  Output: 'Escribe consultas_enssex() para abrir el menú de ayuda. Elige la duda que tengas ahora. En cada tema verás primero una pista y podrás volver al menú cuando quieras.'
+  CorrectAnswer: consultas_enssex()
+  AnswerTests: expr_identical_to('consultas_enssex()')
+  Hint: 'Escribe consultas_enssex() con ambos paréntesis y pulsa Enter. Dentro del menú, usa el número que aparece junto a la consulta.'
+
+- Class: text
+  Output: 'Pulsa Enter para terminar esta bienvenida. En el selector de cursos escribe 0 para volver a R. Si vuelves a tener una duda, escribe consultas_enssex() en la consola. En una sesión nueva, carga primero iniciar.R.'

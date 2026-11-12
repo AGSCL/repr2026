@@ -8,4 +8,5 @@ options(swirl_courses_dir = normalizePath("cursos"),
         swirl_data_dir = normalizePath(".progreso"),
         swirl_language = "spanish", swirl_logging = FALSE)
 library(swirl)
-message("Ahora escribe swirl() en la consola y pulsa Enter.")
+source("cursos/ENSSEX_Ayuda_para_el_ejercicio/01_Antes_de_abrir_el_proyecto/initLesson.R", encoding = "UTF-8")
+message("Primera visita: escribe swirl() en la consola. Para volver al menú ENSSEX, escribe consultas_enssex().")
