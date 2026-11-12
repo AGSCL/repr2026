@@ -1,0 +1,10 @@
+.Rproj.user/
+.Rhistory
+.RData
+.Renviron
+.Renviron.*
+*.gsheet
+respuestas*.csv
+rsconnect/
+secrets/
+*.Rproj.user

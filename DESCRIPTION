@@ -1,0 +1,9 @@
+Package: repr2026
+Type: Project
+Title: Reproducibilidad y Comunicación de Resultados · UDP 2026
+Version: 0.1.0
+Authors@R: person("Andrés", "González Santa Cruz", email =
+        "37744754+AGSCL@users.noreply.github.com", role = c("aut",
+        "cre"))
+Encoding: UTF-8
+Imports: renv, data.tree, here

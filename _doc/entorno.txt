@@ -1,0 +1,24 @@
+dato	valor
+Proyecto	H:/My Drive/Curso_UDP/2026 Reproducibilidad/repr2026
+Fecha del repositorio	2026-10-03
+R	R version 4.4.1 (2024-06-14 ucrt)
+Plataforma	x86_64-w64-mingw32
+Codificación UTF-8	TRUE
+renv.lock al día	TRUE
+
+paquete	version	origen	libreria
+base	4.4.1	base	C:/Users/andre/AppData/Local/R/cache/R/renv/sandbox/windows/R-4.4/x86_64-w64-mingw32/e0da0d43
+compiler	4.4.1	base	C:/Users/andre/AppData/Local/R/cache/R/renv/sandbox/windows/R-4.4/x86_64-w64-mingw32/e0da0d43
+data.tree	1.2.0	RSPM	renv/library/windows/R-4.4/x86_64-w64-mingw32
+datasets	4.4.1	base	C:/Users/andre/AppData/Local/R/cache/R/renv/sandbox/windows/R-4.4/x86_64-w64-mingw32/e0da0d43
+graphics	4.4.1	base	C:/Users/andre/AppData/Local/R/cache/R/renv/sandbox/windows/R-4.4/x86_64-w64-mingw32/e0da0d43
+grDevices	4.4.1	base	C:/Users/andre/AppData/Local/R/cache/R/renv/sandbox/windows/R-4.4/x86_64-w64-mingw32/e0da0d43
+here	1.0.2	RSPM	renv/library/windows/R-4.4/x86_64-w64-mingw32
+methods	4.4.1	base	C:/Users/andre/AppData/Local/R/cache/R/renv/sandbox/windows/R-4.4/x86_64-w64-mingw32/e0da0d43
+R6	2.6.1	RSPM	renv/library/windows/R-4.4/x86_64-w64-mingw32
+renv	1.3.0	RSPM	renv/library/windows/R-4.4/x86_64-w64-mingw32
+rprojroot	2.1.1	RSPM	renv/library/windows/R-4.4/x86_64-w64-mingw32
+stats	4.4.1	base	C:/Users/andre/AppData/Local/R/cache/R/renv/sandbox/windows/R-4.4/x86_64-w64-mingw32/e0da0d43
+stringi	1.8.9	RSPM	renv/library/windows/R-4.4/x86_64-w64-mingw32
+tools	4.4.1	base	C:/Users/andre/AppData/Local/R/cache/R/renv/sandbox/windows/R-4.4/x86_64-w64-mingw32/e0da0d43
+utils	4.4.1	base	C:/Users/andre/AppData/Local/R/cache/R/renv/sandbox/windows/R-4.4/x86_64-w64-mingw32/e0da0d43
