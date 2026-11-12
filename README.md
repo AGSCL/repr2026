@@ -45,5 +45,6 @@ repr2026
 - [Ejemplo en Google Colab](https://colab.research.google.com/drive/1uHuQvINVgw1l__oTZHG_O5zXJ7NR0wpY?usp=sharing)
 - [Proyecto en Posit Cloud](https://posit.cloud/content/13059382)
 - [Script explicado en Posit Connect](https://agonzalezsc-udp-00estructura-proyecto.share.connect.posit.cloud/)
-- [Clases de la edición anterior](https://github.com/AGSCL/repr)
+- [Clases de 2024 (AGSCL)](https://github.com/AGSCL/repr)
+- [Clases de 2025 (JoseRTM)](https://github.com/JoseRTM/Reproducibilidad-UDP/)
 <!-- fin: 00estructura_proyecto.R -->
