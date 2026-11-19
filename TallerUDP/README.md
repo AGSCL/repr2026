@@ -1,6 +1,8 @@
 # Clase 1 · Ayuda en RStudio
 
-El ejercicio de la clase consiste en intercambiar proyectos y comprobar si otra persona puede obtener tus mismos cuatro porcentajes de ENSSEX. Este taller es opcional. Puedes abrirlo aunque aún no tengas tu base. Trabaja los indicadores en el proyecto que vas a intercambiar.
+**TallerUDP** es el nombre heredado del tutor SWIRL opcional de la clase 1: ayuda para ENSSEX y repaso de R con precios. La práctica interactiva de Git y GitHub es un HTML independiente.
+
+El ejercicio de la clase consiste en intercambiar proyectos y comprobar si otra persona puede obtener tus mismos cuatro porcentajes de ENSSEX. Trabaja con una pareja que tenga la misma base asignada; cada persona prepara primero su proyecto sin mirar el de la otra. Este taller es opcional. Puedes abrirlo aunque aún no tengas tu base. Trabaja los indicadores en el proyecto que vas a intercambiar.
 
 ## Abrir SWIRL por primera vez
 
@@ -23,6 +25,8 @@ SWIRL es un tutor que conversa contigo en la pestaña **Console** de RStudio. Te
 
 ### ENSSEX · Ayuda para el ejercicio
 
+El ejercicio usa `00estructura_proyecto.R`: su sección 6 actualiza el árbol del README, en la misma sesión donde ejecutaste el script completo. Guarda `analisis.R` en la raíz de tu propio proyecto, junto al `.Rproj`, y la base en `_data/`.
+
 Elige **ENSSEX Ayuda para el ejercicio** y su primera lección. Tras una pregunta sobre el intercambio se abrirá el menú cuando escribas `consultas_enssex()`. Puedes ir directo a lo que necesitas en ese momento.
 
 - Preparar el ZIP que recibirá tu compañero.
@@ -39,7 +43,7 @@ Cada consulta te da una pista. **Sigo con dudas** amplía la ayuda y después pu
 
 Elige **Precios - Repaso opcional de R**. **00 Repaso de la consola de RStudio** sirve para practicar cómo escribir una instrucción, leer la respuesta de R y guardarla en un script. Si ya manejas la consola, elige **01 Reproducir una tabla de precios**. Leerás un CSV de ODEPA y calcularás una tabla de precios medios por grupo y mes. Cuando terminas una lección, SWIRL vuelve al selector de cursos. Elige **Precios** otra vez para abrir la otra lección.
 
-Los datos de precios vienen en [`_data/precios.csv`](_data/precios.csv). El script [`analisis.R`](analisis.R) permite repetir el cálculo y crea `_outputs/precios_por_grupo_y_mes.csv`. En el ejercicio ENSSEX, tu script va en `_lib/analisis.R` de **tu propio proyecto**, junto con la base asignada en `_data/`.
+Los datos de precios vienen en [`_data/precios.csv`](_data/precios.csv). El script [`analisis.R`](analisis.R) permite repetir el cálculo y crea `_outputs/precios_por_grupo_y_mes.csv`. En el ejercicio ENSSEX, guarda `analisis.R` en la raíz de **tu propio proyecto**, junto al archivo `.Rproj`, y la base asignada en `_data/`.
 
 ### Controles de la consola
 
@@ -47,12 +51,12 @@ Cuando veas `...`, pulsa Enter. En los menús, escribe el número de la opción.
 
 ## Para quien dicta el taller
 
-La [guía docente de la clase](https://github.com/AGSCL/repr2026/blob/main/Preguntas-clase1.md) reúne las preguntas y las pistas. Cada lección tiene un `lesson.yaml` en [cursos](cursos). El menú ENSSEX está en `initLesson.R`, junto al archivo de su lección.
+La [guía docente de la clase](https://github.com/AGSCL/repr2026/blob/main/_doc/docencia/Preguntas-clase1.md) reúne las preguntas y las pistas. Cada lección tiene un `lesson.yaml` en [cursos](cursos). El menú ENSSEX está en `initLesson.R`, junto al archivo de su lección.
 
 Si editas la práctica de datos de precios, abre una terminal en `TallerUDP/` de la copia del repositorio y regenera su guía. El script prueba las respuestas y contrasta la tabla con el CSV incluido.
 
 ```sh
-Rscript ../revisar_leccion.R cursos/Precios_-_Repaso_opcional_de_R/01_Reproducir_una_tabla_de_precios/lesson.yaml ../Preguntas-precios.md
+Rscript ../_lib/revisar_leccion.R cursos/Precios_-_Repaso_opcional_de_R/01_Reproducir_una_tabla_de_precios/lesson.yaml ../_doc/docencia/Preguntas-precios.md
 ```
 
 Para probar una edición, abre el taller con un alias nuevo e intenta una respuesta equivocada y una correcta. Con la fuente guardada en un commit, puedes reconstruir la descarga desde la raíz con `git archive --format=zip --prefix=TallerUDP/ -o TallerUDP.zip HEAD:TallerUDP`.

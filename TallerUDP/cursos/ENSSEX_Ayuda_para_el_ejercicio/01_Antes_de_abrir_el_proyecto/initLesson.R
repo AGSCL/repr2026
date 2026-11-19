@@ -39,16 +39,16 @@ consultas_enssex <- function() {
 
     switch(tema,
       {
-        mostrar("Comprime la carpeta del proyecto que trabajaste. Dentro deberían viajar juntos el .Rproj, la base asignada en _data/, _lib/analisis.R, el README con el árbol actualizado y los archivos de renv que permiten restaurar los paquetes.")
-        mostrar("Vuelve a ejecutar la sección que actualiza el árbol del README. El enunciado la llama sección 7. En 00estructura_proyecto.R del repositorio es la sección 6.")
+        mostrar("Cada integrante prepara primero su proyecto de forma independiente con la misma base asignada. Después comprime su carpeta para intercambiarla. Dentro deberían viajar juntos el .Rproj, analisis.R en la raíz, la base asignada en _data/, el README con el árbol actualizado y los archivos de renv que permiten restaurar los paquetes.")
+        mostrar("En la misma sesión donde ejecutaste 00estructura_proyecto.R completo, vuelve a ejecutar su sección 6 para actualizar el árbol del README. El cuaderno de Colab es otro ejemplo y usa la sección 7.")
         mostrar("Una comprobación rápida es abrir el ZIP y localizar el .Rproj y esas rutas dentro de la misma carpeta.")
       },
       {
         mostrar("Descomprime la carpeta y abre el .Rproj que te enviaron. En su consola, getwd() muestra desde dónde está leyendo R. list.files(\"_data\") muestra los nombres de archivos que llegaron.")
-        mostrar("Compara el nombre y la extensión con la línea de _lib/analisis.R que lee la base. Por ejemplo, read.csv(\"_data/nombre_real.csv\") busca ese archivo desde el proyecto abierto. Sustituye nombre_real.csv por el nombre que viste. En tu script conserva la función y sus opciones originales y ajusta solo la ruta. Si falta el archivo en el ZIP, pídeselo a tu pareja.")
+        mostrar("Compara el nombre y la extensión con la línea de analisis.R, en la raíz del proyecto, que lee la base. Por ejemplo, read.csv(\"_data/nombre_real.csv\") busca ese archivo desde el proyecto abierto. Sustituye nombre_real.csv por el nombre que viste. En tu script conserva la función y sus opciones originales y ajusta solo la ruta. Si falta el archivo en el ZIP, pídeselo a tu pareja.")
       },
       {
-        mostrar("Abre el .Rproj recibido, ejecuta renv::restore() y luego _lib/analisis.R, como indica el enunciado. Para cada indicador puedes anotar tres cosas: su nombre, el porcentaje de tu pareja y el que obtuviste tú al correr su proyecto.")
+        mostrar("Abre el .Rproj recibido, ejecuta renv::restore() y luego source(\"analisis.R\", encoding = \"UTF-8\"), como indica el enunciado. Para cada indicador puedes anotar tres cosas: su nombre, el porcentaje de tu pareja y el que obtuviste tú al correr su proyecto.")
         mostrar("Compara porcentajes expresados en la misma escala y con los mismos decimales. Si las cifras difieren, revisen juntos qué archivo cargó cada uno y qué observaciones entraron al denominador antes de interpretar la diferencia.")
       },
       {

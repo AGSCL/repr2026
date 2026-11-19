@@ -1,14 +1,18 @@
 # Ejercicio: ¿corre en el computador de otra persona?
 
-1. Cree un proyecto en RStudio y corra `estructura_proyecto.R`. En `paquetes` agregue los que vaya a usar (por ejemplo, `"dplyr"` y `"readr"`).
-2. Copie su base en `_data/` y, en `_lib/analisis.R`, calcule los 4 porcentajes de su base (tabla abajo).
-3. Vuelva a correr la sección 7 de `estructura_proyecto.R` (actualiza el data.tree), comprima la carpeta del proyecto en un .zip y envíesela a un compañer@.
-4. Con el proyecto de su compañer@: descomprímalo, abra el `.Rproj`, corra `renv::restore()` y luego `_lib/analisis.R`.
+Trabaje con alguien que tenga la misma base que usted. Cada uno prepara su proyecto de forma independiente antes de intercambiarlo.
+
+1. Cree un proyecto en RStudio, copie `00estructura_proyecto.R` a la raíz y edite su sección 1. En `paquetes` agregue los que vaya a usar (por ejemplo, `"dplyr"` y `"readr"`) y ejecute el script completo.
+2. Copie su base en `_data/` y cree `analisis.R` en la raíz del proyecto, junto al archivo `.Rproj`. En ese script calcule los 4 porcentajes de su base (tabla abajo).
+3. En la misma sesión donde ejecutó el script completo, vuelva a correr la sección 6 de `00estructura_proyecto.R` para actualizar el árbol del README. Comprima la carpeta del proyecto en un .zip y envíesela a un compañer@.
+4. Con el proyecto de su compañer@: descomprímalo, abra el `.Rproj`, corra `renv::restore()` y luego `source("analisis.R", encoding = "UTF-8")`.
    **Cuente cuántas líneas tuvo que cambiar para que corriera. Lo ideal es 0.**
 5. Envíe por correo:
    - una captura del data.tree de su compañer@ (está en su `README.md`);
    - cuántas líneas cambió y cuáles;
    - una reflexión con al menos dos fortalezas, dos debilidades y dos amenazas a la reproducibilidad del proyecto de su compañer@.
+
+**Sobre Google Colab:** el cuaderno `ejemplo_google_colab.ipynb` es otro ejemplo de compendio y genera su árbol en la sección 7. Este enunciado sigue `00estructura_proyecto.R`, cuya sección correspondiente es la 6.
 
 | Base | Indicador 1 | Indicador 2 | Indicador 3 | Indicador 4 |
 |---|---|---|---|---|

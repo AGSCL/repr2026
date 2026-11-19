@@ -2,12 +2,14 @@
 
 ## ENSSEX · Primera visita
 
-«Tu compañero va a abrir el proyecto que tú preparaste y a ejecutar tu código con la misma base que usaste. Queremos averiguar dos cosas: cuántas líneas tuvo que cambiar para que corriera y si obtuvo tus mismos cuatro porcentajes».
+«Trabaja con una pareja que tenga la misma base asignada. Primero, cada persona prepara su proyecto sin mirar el de la otra. Después intercambian los proyectos. Tu compañero va a abrir el proyecto que tú preparaste y a ejecutar tu código con la base incluida. Queremos averiguar dos cosas: cuántas líneas tuvo que cambiar para que corriera y si obtuvo tus mismos cuatro porcentajes».
+
+La bienvenida recuerda usar `00estructura_proyecto.R`, su sección 6 para actualizar el árbol, `analisis.R` en la raíz junto al `.Rproj` y la base en `_data/`. La sección 6 se ejecuta en la misma sesión que el generador completo.
 
 **Imagina que abrió tu proyecto, ejecutó el análisis y no tuvo que editar ninguna línea. ¿Qué falta comprobar?**
 
 - **A.** Que ambos obtuvieron los mismos cuatro porcentajes al mostrarlos con la misma cantidad de decimales.
-- **B.** Que obtendría esos mismos porcentajes con la otra base que le tocó trabajar.
+- **B.** Que obtendría esos mismos porcentajes con una base distinta.
 - **C.** Nada más: si el código terminó sin errores, los resultados ya están comprobados.
 
 <details>
@@ -29,7 +31,7 @@ Tras B o C, SWIRL pregunta «Ya sabes que el código corrió en otro computador.
 | ¿Qué escribo en la reflexión? | Registrar las líneas cambiadas y usar una plantilla para describir dos fortalezas, dos debilidades y dos amenazas. Hay un único ejemplo opcional. Cada estudiante fundamenta sus observaciones en el proyecto que revisó. |
 | ¿Qué significa esta variable? | Buscarla en el libro de códigos del MINSAL y contrastar la etiqueta y los valores con el diccionario de la base asignada. La ayuda ampliada lleva a la sección 4 del manual. |
 
-Para recorrer estas consultas como las verá un estudiante, abre el proyecto del taller, ejecuta `source("iniciar.R", encoding = "UTF-8")` y después `consultas_enssex()`. El ejercicio y los cuatro indicadores asignados a cada base se pueden consultar en el [enunciado original](Enunciado-ENSSEX.md).
+Para recorrer estas consultas como las verá un estudiante, abre el proyecto del taller, ejecuta `source("iniciar.R", encoding = "UTF-8")` y después `consultas_enssex()`. El ejercicio y los cuatro indicadores asignados a cada base se pueden consultar en el [enunciado original](../../Enunciado-ENSSEX.md).
 
 ## Precios · Repaso opcional de R
 
@@ -42,4 +44,4 @@ El repaso de consola plantea cuatro tareas. Las preguntas de alternativas dan un
 | Interpretar `[1] 2400`. | El resultado es 2.400 pesos. El `[1]` indica la posición del primer valor que R imprime en esa línea. |
 | Explicar una fila de precios de manzanas de ODEPA. | Es el precio medio por kilo de esas manzanas en el sector y tipo de comercio monitoreados esa semana. |
 
-El archivo del [repaso de consola](TallerUDP/cursos/Precios_-_Repaso_opcional_de_R/00_Repaso_de_la_consola_de_RStudio/lesson.yaml) muestra las alternativas y pistas literales. La [guía de la práctica con el CSV de precios](Preguntas-precios.md) incluye las preguntas, los comandos aceptados y las salidas que se obtienen con los datos del taller.
+El archivo del [repaso de consola](../../TallerUDP/cursos/Precios_-_Repaso_opcional_de_R/00_Repaso_de_la_consola_de_RStudio/lesson.yaml) muestra las alternativas y pistas literales. La [guía de la práctica con el CSV de precios](Preguntas-precios.md) incluye las preguntas, los comandos aceptados y las salidas que se obtienen con los datos del taller.

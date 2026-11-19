@@ -8,3 +8,6 @@ respuestas*.csv
 rsconnect/
 secrets/
 *.Rproj.user
+
+# Desarrollo archivado; el HTML entregable vive en _outputs/.
+/_hist/desarrollo-taller-git/

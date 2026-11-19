@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Un apoyo breve para aprender Git con RStudio: prueba un cambio, mira qué ocurre y repítelo en tu proyecto. Aplicación estática sin servidor.">
+<title>Git, de a poco · UDP</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='12' fill='%23dded8d'/%3E%3Ctext x='8' y='28' font-family='sans-serif' font-size='24' fill='%23203b30'%3Eg.%3C/text%3E%3C/svg%3E">
+<style>:root{--paper:#faf9f3;--ink:#253c31;--muted:#647069;--line:#d8ded3;--green:#345b45;--lime:#dded8d;--soft:#edf1e7;--orange:#b55e31;font-family:Arial,"Helvetica Neue",sans-serif;color:var(--ink);background:var(--paper);font-synthesis:none}*{box-sizing:border-box}body{margin:0}button,input,textarea,select{font:inherit}a{color:inherit;text-underline-offset:5px}button,.button{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px;padding:11px 19px;border:1px solid var(--line);border-radius:12px;background:transparent;color:var(--ink);cursor:pointer;text-decoration:none;font-size:14px;font-weight:600;line-height:1.4}button:hover,.button:hover{background:var(--soft);border-color:var(--green)}button:disabled{opacity:.55;cursor:default}.primary{background:var(--ink);color:white;border-color:var(--ink)}.primary:hover{background:var(--green);color:white}.lime{background:var(--lime);border-color:var(--lime)}.lime:hover{background:#cddd7d}.quiet{border:0;text-decoration:underline;text-underline-offset:5px;font-weight:400}.small{font-size:12px}input,textarea,select{border:1px solid #9daa9e;border-radius:8px;background:#fff;padding:12px;color:var(--ink);max-width:100%;min-height:46px}textarea{width:100%;resize:vertical;min-height:85px;line-height:1.7}input{width:100%}label{display:block;font-size:13px;line-height:1.6}label input,label textarea{margin:7px 0 14px}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #b45f31;outline-offset:4px}[hidden]{display:none!important}.site-header{max-width:1100px;padding:27px 38px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:20px}.brand{font-size:24px;font-weight:800;text-decoration:none;letter-spacing:-1px;display:flex;align-items:center;gap:7px}.brand span{font-weight:400;font-size:18px;letter-spacing:-.5px}.brand i{font-style:normal;display:inline-grid;place-items:center;background:var(--lime);width:28px;height:28px;border-radius:50%;font-size:17px;margin-left:6px}.site-header nav{display:flex;gap:25px;font-size:13px}.site-header nav a{display:inline-flex;min-height:44px;align-items:center;text-decoration:none}.site-header nav a:hover{text-decoration:underline}main{max-width:1000px;margin:auto;padding:35px 38px 65px;min-height:calc(100vh - 180px);outline:none}.home{padding:28px 0 0}.home-top{display:grid;grid-template-columns:1.2fr 1fr;gap:65px;align-items:center}.eyebrow{font-size:12px;letter-spacing:.7px;color:var(--muted);margin:0 0 20px}.home h1{font-size:clamp(48px,6vw,76px);line-height:1.03;letter-spacing:-3px;font-weight:700;margin:0 0 25px}.home h1 span{display:block;color:var(--green)}.intro{font-size:17px;line-height:1.6;max-width:410px;color:var(--muted);margin:0 0 25px}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.home-note{font-size:12px;line-height:1.65;color:var(--muted);margin-top:16px}.paper-demo{position:relative;background:#e4ebdf;padding:45px 25px;border-radius:44% 44% 18px 18px;min-height:300px;display:grid;place-items:center}.paper{width:100%;max-width:290px;background:#fffefb;border:1px solid #d1d8cd;border-radius:3px;box-shadow:8px 9px 0 #c9d6c2;transform:rotate(-4deg);padding:20px 24px 25px}.paper .file-title{font:11px Consolas,monospace;letter-spacing:1px;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:24px}.paper .line{height:6px;background:#e6e9e0;margin:13px 0;border-radius:4px}.paper .line.short{width:70%}.paper .handline{background:var(--lime);padding:9px 10px;font:17px Georgia,serif;line-height:1.4;margin:16px -9px 8px}.paper-stamp{position:absolute;right:5px;bottom:24px;background:var(--ink);color:white;transform:rotate(5deg);padding:11px 17px;border-radius:6px;font-size:12px}.home-picker{margin-top:55px;border-top:1px solid var(--line);padding-top:25px}.home-picker p{font-size:13px;color:var(--muted);margin:0 0 15px}.topic-list{display:flex;flex-wrap:wrap;gap:10px}.topic-list a{display:flex;gap:10px;min-height:48px;align-items:center;padding:10px 18px;border:1px solid var(--line);border-radius:100px;text-decoration:none;font-size:14px}.topic-list a:hover,.topic-list a[aria-current]{background:var(--lime);border-color:var(--lime)}.topic-list .n{font-size:11px;color:var(--muted)}.back{display:inline-block;font-size:12px;color:var(--muted);text-decoration:none;margin-bottom:25px;padding:9px 0}.back:hover{text-decoration:underline}.work-head{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:20px}.mode{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;font-weight:600;color:var(--green);display:flex;align-items:center;gap:7px}.mode:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green)}.work-head a{font-size:12px}.exercise{max-width:760px;margin:auto}.exercise h1,.secondary h1{font-size:40px;line-height:1.1;letter-spacing:-1.5px;margin:0 0 15px;font-weight:650}.subtitle{font-size:16px;line-height:1.6;color:var(--muted);margin:0 0 25px;max-width:630px}.lab{background:#fffefb;border:1px solid var(--line);border-radius:20px;padding:25px 28px}.diagram{margin:0 0 27px;padding-bottom:20px;border-bottom:1px solid var(--line)}.diagram svg{display:block;width:100%;height:62px;overflow:visible}.diagram-labels{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;text-align:center;font-size:12px;line-height:1.4}.diagram-labels small{display:block;color:var(--muted);font-size:10px;margin-top:4px}.line-arrow{stroke:#aebbac;stroke-width:2;fill:none}.node-circle{fill:#e7ece2;stroke:#a7b5a2;stroke-width:2}.node-circle.active{fill:var(--lime);stroke:var(--green)}.diagram .node-text{font:18px Arial,sans-serif;fill:var(--ink);font-weight:bold}.diagram.changed .active{animation:breathe .4s ease-out}.file{border:1px solid var(--line);border-radius:9px;background:var(--paper);overflow:hidden;margin-bottom:20px}.file-label{font:11px Consolas,monospace;color:var(--muted);padding:10px 15px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}.file-content{padding:16px;font:15px/1.7 Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;min-height:70px}.file textarea{display:block;resize:vertical;min-height:95px;border:0;border-radius:0;background:white;font:15px/1.7 Consolas,monospace;padding:16px}.file-empty{font:14px Arial,sans-serif;color:var(--muted)}.file del{color:#985033;text-decoration-thickness:1px}.file ins{background:#e7efbe;color:var(--ink);text-decoration:none}.action-line{display:flex;gap:15px;justify-content:space-between;align-items:center}.action-line small{font-size:11px;color:var(--muted);line-height:1.6;max-width:210px}.feedback{margin-top:20px;border-radius:10px;background:var(--soft);border-left:4px solid var(--green);padding:16px 18px}.feedback h2{font-size:17px;margin:0 0 8px}.feedback p{font-size:14px;line-height:1.6;margin:0 0 12px}.feedback .row{margin-top:12px}.feedback .button{font-size:12px;min-height:44px;padding:9px 14px}.micro-help{margin-top:20px;font-size:13px}.micro-help summary{cursor:pointer;min-height:44px;padding:12px 0;line-height:1.5}.micro-help p,.micro-help li{font-size:13px;line-height:1.8}.micro-help code{overflow-wrap:anywhere}.secondary{max-width:760px;margin:auto}.secondary .topic-list{margin:25px 0}.subnav{display:flex;gap:9px;flex-wrap:wrap;margin:24px 0}.subnav a{font-size:13px;padding:10px 13px;border-radius:7px;min-height:44px;display:inline-flex;align-items:center;text-decoration:none;background:var(--soft)}.subnav a[aria-current]{background:var(--ink);color:#fff}.list-item{border-bottom:1px solid var(--line);padding:6px 0}.list-item summary{cursor:pointer;padding:17px 0;min-height:48px;line-height:1.5;font-size:15px}.list-item p,.list-item li{font-size:14px;line-height:1.8}.list-item pre{margin:15px 0}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.7 Consolas,monospace;padding:16px;background:#edf0e7;border:1px solid var(--line);border-radius:8px;margin:13px 0}code{font-family:Consolas,monospace}.muted{color:var(--muted);font-size:12px!important;line-height:1.7}.real-steps{padding:0;list-style:none;counter-reset:step;margin:25px 0}.real-steps li{counter-increment:step;display:flex;align-items:flex-start;gap:13px;font-size:16px;line-height:1.7;padding:13px 0;max-width:670px}.real-steps li:before{content:counter(step);width:25px;height:25px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--soft);flex-shrink:0;font-size:12px;margin-top:3px}.observe{font-size:16px;line-height:1.6;border-top:1px solid var(--line);padding-top:22px;margin-top:20px}.observe strong{display:block;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--green);margin-bottom:8px}.status{display:inline-block;font-size:11px;padding:5px 9px;border-radius:6px;background:#e9ece5;color:#53604e}.status.confirmado{background:#e0edc5;color:#365125}.status.tentativo{background:#f5ead9;color:#754d24}.note-form{margin-top:15px;padding-top:5px}.note-form .row{justify-content:space-between}.warning{font-size:13px;line-height:1.7;background:#f4eadc;padding:14px 16px;border-radius:8px;color:#674820;margin:17px 0}.split-toggle{display:flex;gap:7px;margin:0 0 20px}.split-toggle button{font-size:12px;min-height:44px;padding:9px 16px}.split-toggle button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:white}.choose-example{margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:25px 0}.record-row{border-bottom:1px solid var(--line);padding:15px 0}.record-row h3{font-size:15px;font-weight:600;margin:0 0 8px}.record-row p{font-size:13px;line-height:1.7}.source{font-size:13px;line-height:1.8;margin:16px 0}.source a{overflow-wrap:anywhere}footer{max-width:1100px;padding:22px 38px;margin:auto;border-top:1px solid var(--line);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:20px;align-items:center}footer a{min-height:44px;display:inline-flex;align-items:center}dialog{border:1px solid var(--line);border-radius:18px;max-width:510px;width:calc(100% - 30px);padding:26px;color:var(--ink);background:var(--paper)}dialog::backdrop{background:#203b3070}.dialog-head{display:flex;align-items:center;justify-content:space-between;gap:20px}.dialog-head h2{font-size:22px;letter-spacing:-.5px}dialog p{font-size:13px;line-height:1.8}dialog select{display:block;width:100%;margin:8px 0 20px}dialog details{margin-top:25px;border-top:1px solid var(--line)}dialog summary{padding:18px 0;cursor:pointer}dialog label{margin:10px 0}.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);max-width:90vw;background:var(--ink);color:white;padding:15px 20px;border-radius:12px;font-size:13px;z-index:10;line-height:1.6}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.skip{position:fixed;left:10px;top:-100px;z-index:50;background:white;padding:12px}.skip:focus{top:10px}@keyframes breathe{0%{r:17}60%{r:23}100%{r:20}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}@media(max-width:760px){.site-header{padding:20px 23px}.brand{font-size:21px}.brand span{font-size:16px}.site-header nav{gap:15px;font-size:12px}main{padding:20px 23px 45px}.home-top{grid-template-columns:1fr;gap:35px}.home{padding-top:20px}.home h1{font-size:57px}.intro{font-size:16px}.paper-demo{display:none}.home-picker{margin-top:35px}.exercise h1,.secondary h1{font-size:35px}.lab{padding:20px}.work-head{align-items:flex-start}.work-head a{max-width:150px;line-height:1.7;text-align:right}.action-line{align-items:flex-start;flex-direction:column;gap:10px}.action-line small{max-width:none}.file-content,.file textarea{font-size:13px}.diagram-labels{font-size:11px}.diagram-labels small{font-size:10px}footer{padding:16px 23px;font-size:10px}.real-steps li{font-size:15px}.subtitle{font-size:15px}.topic-list a{padding:10px 14px}.diagram{margin-bottom:20px}}
+@media(max-width:390px){.site-header{padding:15px 16px;gap:9px}.brand{font-size:20px}.brand span{font-size:14px}.brand i{display:none}.site-header nav{gap:12px;font-size:11px}main{padding:22px 16px 35px}.home h1{font-size:49px;letter-spacing:-2.5px}.exercise h1,.secondary h1{font-size:32px}.lab{padding:15px}.diagram-labels{font-size:10px}.diagram-labels small{font-size:9px}.diagram svg{height:50px}.topic-list{gap:7px}.topic-list a{font-size:13px;padding:10px 12px}footer{align-items:flex-start;gap:8px}.work-head{gap:10px}.work-head a{font-size:11px}.mode{font-size:10px}.file-label{font-size:10px}}
+@media print{header,footer,button,.button,.back,.subnav,.note-form{display:none}main{max-width:none;padding:0}.lab{border:0}details:not([open])>*:not(summary){display:block}}
+
+.diagram-labels{font-size:12px}.diagram-labels small{font-size:11px}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<header class="site-header"><a class="brand" href="#inicio" aria-label="Git, de a poco. Inicio">git<span>, de a poco.</span><i aria-hidden="true">↗</i></a><nav aria-label="Navegación principal"><a href="#rstudio/abrir">En RStudio</a><a href="#ayuda">Me trabé</a></nav></header>
+<p id="storage-warning" class="warning" role="alert" hidden style="max-width:924px;margin:12px auto;padding:16px">Este navegador no permite guardar aquí o el respaldo anterior no se pudo leer. Puedes practicar; las confirmaciones y notas no se guardarán. Conserva tus notas aparte y exporta el respaldo anterior, si existe.</p>
+<main id="main" tabindex="-1"></main>
+<footer><span>UDP · Reproducibilidad y Comunicación de Resultados</span><a href="#docentes">Material docente</a></footer>
+<div id="announcement" class="sr-only" role="status" aria-live="polite"></div>
+<div id="toast" class="toast" role="status" hidden></div>
+<dialog id="cohort-dialog"><div class="dialog-head"><h2>Guardar para otra vez</h2><button type="button" data-close aria-label="Cerrar">✕</button></div><p>Tu avance se guarda en este navegador. Exporta antes de cambiar de equipo, mover el HTML o publicarlo: cada ubicación puede tener un guardado diferente.</p><label for="cohort-select">Cohorte activa</label><select id="cohort-select"></select><div class="row"><button id="export">Exportar JSON ↓</button><button type="button" id="import-trigger">Importar una copia ↑</button><input id="import" type="file" accept=".json,application/json" hidden></div><details><summary>Preparar otra cohorte</summary><form id="cohort-form"><label>Nombre<input name="name" maxlength="80" required placeholder="Ej. UDP 2027"></label><label>Fecha<input name="date" type="date" required value="2026-11-19"></label><label>Responsable (opcional)<input name="actor" maxlength="100"></label><button class="primary" type="submit">Crear con avance vacío</button></form></details></dialog>
+<script>
+(()=>{
+const preparation = [
+  {
+    "id": "prep-versiones",
+    "title": "Verificar las versiones del aula",
+    "detail": "Registrar sistema operativo, git --version, R.version.string y versión de RStudio. Probar panel Git en Windows y macOS si ambos se usarán."
+  },
+  {
+    "id": "prep-cuentas",
+    "title": "Ensayar acceso y autenticación",
+    "detail": "Cuenta GitHub accesible, segundo factor disponible y un Push de prueba en un repositorio personal. Nunca guardar tokens en el material."
+  },
+  {
+    "id": "prep-carpeta",
+    "title": "Elegir carpetas locales sin sincronización",
+    "detail": "Evitar trabajar dentro de Google Drive/OneDrive y de otros repositorios. Tener espacio y permisos de escritura."
+  },
+  {
+    "id": "prep-material",
+    "title": "Preparar los archivos mínimos",
+    "detail": "Copiar analisis.R, README.md y .gitignore desde Ejemplos mínimos. No se necesita la base ENSSEX ni restaurar paquetes para la ruta principal."
+  },
+  {
+    "id": "prep-ensayo",
+    "title": "Ensayar la ruta completa en RStudio",
+    "detail": "Ensayar las cinco acciones con un proyecto peque?o. Usar cada ejemplo cuando ayude a la clase; no exigir completar toda la aplicación. Las pruebas locales no sustituyen el ensayo con interfaz y cuenta real."
+  },
+  {
+    "id": "prep-red",
+    "title": "Preparar una alternativa sin red",
+    "detail": "Proyecto local con Git inicializado y archivos del ejemplo. Commit, historial y conflicto se pueden practicar offline; dejar Push/Pull pendientes."
+  },
+  {
+    "id": "prep-programa",
+    "title": "Alinear la adaptación con el programa",
+    "detail": "El programa 2026 menciona GitHub Desktop el 19/11 y la integración con RStudio en contenidos. Este taller usa RStudio por solicitud docente; confirmar la adaptación y reservar temas avanzados para el 24/11."
+  },
+  {
+    "id": "prep-datos",
+    "title": "Revisar qué puede salir del equipo",
+    "detail": "Usar únicamente datos ficticios o autorizados. Revisar .gitignore y Diff antes del primer commit. No dar por autorizada la publicación de ENSSEX."
+  },
+  {
+    "id": "prep-publicacion",
+    "title": "Separar código y producto publicado",
+    "detail": "Preparar instrucciones de despliegue apropiadas al producto final. GitHub Pages para HTML; plataforma Shiny para apps. No marcar publicación confirmada sin abrir y probar su URL."
+  },
+  {
+    "id": "prep-respaldo",
+    "title": "Guardar un respaldo por cohorte",
+    "detail": "Exportar la bitácora JSON. Verificar que se puede importar como copia. Las notas se guardan en este navegador, no en una cuenta compartida."
+  }
+];
+const risks = [
+  {
+    "title": "No aparece el panel Git",
+    "level": "Bloquea el inicio",
+    "symptom": "RStudio no muestra la pestaña Git o no encuentra el ejecutable.",
+    "action": "Comprueba Git instalado y su ruta en Tools → Global Options → Git/SVN. Reinicia RStudio. Abre el .Rproj dentro del repositorio; revisa Project Options → Git/SVN.",
+    "check": "git --version responde y git status reconoce el repositorio."
+  },
+  {
+    "title": "not a git repository",
+    "level": "Carpeta incorrecta",
+    "symptom": "La Terminal no está dentro del proyecto clonado.",
+    "action": "Abre el .Rproj correcto y una Terminal nueva desde ese proyecto. No ejecutes git init dentro del repositorio del curso por ensayo.",
+    "check": "git status muestra la rama del repositorio de práctica."
+  },
+  {
+    "title": "Author identity unknown",
+    "level": "Configuración",
+    "symptom": "Git rechaza el commit porque falta nombre o correo.",
+    "action": "Dentro del repositorio configura git config user.name y git config user.email. Usa el correo elegido o noreply. Esto no inicia sesión en GitHub.",
+    "check": "El commit aparece con la identidad elegida."
+  },
+  {
+    "title": "403, Permission denied o autenticación fallida",
+    "level": "Bloquea remoto",
+    "symptom": "Puedes clonar pero no hacer Push, o Git vuelve a pedir credenciales.",
+    "action": "Revisa origin, cuenta autenticada y permisos del repositorio personal. HTTPS requiere gestor de credenciales/token autorizado, no contraseña de cuenta. Si usas SSH, comprueba la clave por separado con el docente. No incrustes secretos en URL.",
+    "check": "Push termina correctamente y el SHA aparece en la rama remota."
+  },
+  {
+    "title": "non-fast-forward / historias divergentes",
+    "level": "Requiere revisión",
+    "symptom": "El remoto tiene commits que tu rama no contiene.",
+    "action": "Guarda y confirma tu trabajo. Ejecuta git fetch origin y git log --oneline --graph --all -10. Con el docente, integra git merge origin/RAMA usando la rama real y resuelve conflictos. Vuelve a Push después. No uses force ni pull a ciegas.",
+    "check": "El historial conserva ambos cambios y git status queda limpio."
+  },
+  {
+    "title": "Cambios locales impiden Pull o cambiar de rama",
+    "level": "Conservar trabajo",
+    "symptom": "Git informa que la operación sobrescribiría archivos modificados.",
+    "action": "Revisa Diff. Guarda una copia si hace falta y crea un commit de los cambios que quieras conservar. Si son descartables, usa restore solo sobre archivos identificados y después de entender la pérdida.",
+    "check": "git status limpio antes de la operación pendiente."
+  },
+  {
+    "title": "No aparece un archivo / nothing to commit",
+    "level": "Revisión de archivos",
+    "symptom": "El archivo no figura en Git o el commit está vacío.",
+    "action": "Guarda en el editor, comprueba carpeta y Stage. Revisa .gitignore y, para diagnosticar, git check-ignore -v RUTA. No uses git add . para resolverlo indiscriminadamente.",
+    "check": "Diff y selección contienen exactamente los archivos de la tarea."
+  },
+  {
+    "title": "Datos o credenciales confirmados por error",
+    "level": "Detener envío",
+    "symptom": "Diff o History muestran información que no debe publicarse.",
+    "action": "Detén Push. Quitar el archivo o añadirlo a .gitignore no elimina el historial. Si se expuso una credencial, revócala/rotála en su proveedor y solicita ayuda para sanear historial. No ensayes limpiezas destructivas durante clase.",
+    "check": "Responsable de datos o docente confirma la corrección antes de publicar."
+  },
+  {
+    "title": "Carpeta sincronizada, bloqueos o rutas largas",
+    "level": "Riesgo de archivos",
+    "symptom": "Archivos bloqueados, cambios inesperados o rutas difíciles de manejar.",
+    "action": "Trabaja en una nueva carpeta local corta y sin sincronización automática. Copia solo lo necesario con cuidado y comprueba origin. No borres .git para resolver errores.",
+    "check": "El proyecto abre, Git detecta cambios normales y los archivos guardan."
+  },
+  {
+    "title": "Sin internet / instalación de renv lenta",
+    "level": "Plan de continuidad",
+    "symptom": "No se puede autenticar, descargar paquetes o acceder a GitHub.",
+    "action": "Continúa el ejemplo de R base y commits locales. Registra Push/Pull como pendientes. Para el proyecto ENSSEX, programa aparte renv::restore() y comprueba renv::status(); no atribuyas esa restauración a este ensayo.",
+    "check": "Queda claro qué se realizó localmente y qué requiere red o paquetes."
+  },
+  {
+    "title": "Conflicto que no aparece o nombres de ramas usados",
+    "level": "Ensayo controlado",
+    "symptom": "El merge se completa sin conflicto o la rama ya existe.",
+    "action": "Comprueba que las dos ramas partían del mismo commit y editaron la misma línea confirmada. Para repetir, usa otro repositorio de práctica; no elimines ramas con trabajo. Si hay merge en curso, git merge --abort con ayuda docente.",
+    "check": "Se observa el conflicto previsto y se conserva la rama original."
+  },
+  {
+    "title": "Se perdió la bitácora al cambiar de navegador",
+    "level": "Persistencia local",
+    "symptom": "Las notas o estados no están en otro equipo o perfil.",
+    "action": "Importa un respaldo JSON desde Gestionar. Exporta antes de limpiar datos del navegador. La importación añade copias y nunca sustituye cohortes existentes.",
+    "check": "La cohorte importada contiene las notas y estados esperados."
+  }
+];
+const sources = [
+  {
+    "title": "README actual de AGSCL/repr2026",
+    "url": "https://github.com/AGSCL/repr2026/blob/main/README.md",
+    "type": "Repositorio · lectura comprobada",
+    "detail": "Consultado el 16/11/2026. Blob 402aeffd8b75c28b4cd7e8a0286bc45e82c1af28. ENSSEX, organización de proyectos, R 4.4.1 y renv. No es aún una guía completa de Git."
+  },
+  {
+    "title": "Programa 2026 · secciones IV, VII y VIII",
+    "type": "Documento local · lectura comprobada",
+    "detail": "2026 Reproducibilidad y Comunicación de Resultados.docx, carpeta Curso_UDP/2026 Reproducibilidad. Contenidos: integración GitHub–RStudio. Taller 2: código en GitHub y producto publicado. Cronograma: 19/11, 18:00–21:30, con GitHub Desktop. La elección de RStudio para este taller es una adaptación solicitada."
+  },
+  {
+    "title": "Referencia histórica · Quarto y GitHub Pages",
+    "url": "https://franplaza.github.io/Quarto-Github/slides/quarto-github-tutorial.html#/title-slide",
+    "type": "Archivo local · lectura comprobada",
+    "detail": "Francisco Plaza Vega, 2024. Consultado el .qmd en Reproducibilidad y Comunicación de Resultados/Quarto-Github-main/Quarto-Github-main/slides. Apoya la relación entre versiones y publicación; no se considera un ensayo vigente de la interfaz."
+  },
+  {
+    "title": "Posit · Version Control",
+    "url": "https://docs.posit.co/ide/user/ide/guide/tools/version-control.html",
+    "type": "Documentación oficial",
+    "detail": "Rutas de RStudio, panel Git e integración de repositorios. Consulta documental; no prueba en los equipos del aula."
+  },
+  {
+    "title": "GitHub · Credenciales para Git",
+    "url": "https://docs.github.com/en/get-started/git-basics/caching-your-github-credentials-in-git?platform=windows",
+    "type": "Documentación oficial",
+    "detail": "Autenticación HTTPS con gestor de credenciales. La contraseña de cuenta no sustituye las credenciales Git."
+  },
+  {
+    "title": "Git · pull, restore, revert y merge",
+    "url": "https://git-scm.com/docs/git-pull",
+    "type": "Documentación oficial",
+    "detail": "Comandos contrastados con documentación. Consulta también git-scm.com/docs/git-restore, git-scm.com/docs/git-revert y git-scm.com/docs/git-merge."
+  },
+  {
+    "title": "GitHub · Errores non-fast-forward",
+    "url": "https://docs.github.com/en/get-started/using-git/dealing-with-non-fast-forward-errors",
+    "type": "Documentación oficial",
+    "detail": "Integrar cambios remotos antes de volver a enviar; no forzar como solución inicial."
+  }
+];
+const initialVerification = [
+  {
+    "id": "fuentes",
+    "title": "Contexto y programa",
+    "state": "Comprobado · lectura",
+    "detail": "Se leyeron el README remoto, el programa 2026 y la referencia local de 2024. El material complementa la clase; no asigna una agenda al estudiante.",
+    "date": "2026-11-16"
+  },
+  {
+    "id": "documentacion",
+    "title": "Procedimientos documentados",
+    "state": "Comprobado · documentación",
+    "detail": "Se contrastaron las rutas de RStudio y los comandos Git con Posit, Git y GitHub. Consultar documentación no equivale a ejecutar el procedimiento.",
+    "date": "2026-11-16"
+  },
+  {
+    "id": "ensayo-local",
+    "title": "Ensayo automatizado aislado",
+    "state": "Pendiente",
+    "detail": "Hasta registrar una prueba efectiva, no se atribuye ejecución a los comandos ni al ejemplo R.",
+    "date": "2026-11-16"
+  },
+  {
+    "id": "rstudio",
+    "title": "Recorrido en la interfaz de RStudio",
+    "state": "Pendiente",
+    "detail": "Falta ensayar los menús, Stage, Diff, History y el flujo completo en RStudio con los equipos y versiones de la cohorte.",
+    "date": "2026-11-16"
+  },
+  {
+    "id": "github",
+    "title": "Autenticación y sincronización con GitHub",
+    "state": "Pendiente",
+    "detail": "No se creó, modificó ni publicó ningún repositorio en GitHub. Push/Pull con cuenta real y permisos del estudiantado no fueron probados.",
+    "date": "2026-11-16"
+  },
+  {
+    "id": "publicacion",
+    "title": "Producto del curso y tiempos de aula",
+    "state": "Planificado",
+    "detail": "La publicación final, la reproducción por un compañero y la duración de cada bloque requieren un ensayo. Publicar este Site no verifica esas actividades.",
+    "date": "2026-11-16"
+  }
+];
+const exampleR = "# Datos ficticios: no corresponde a ENSSEX.\nvalores <- c(3, 5, 7)\nstopifnot(length(valores) == 3, all(is.finite(valores)))\nresumen <- data.frame(n = length(valores), media = mean(valores))\ndir.create(\"_outputs\", showWarnings = FALSE)\nwrite.csv(resumen, \"_outputs/resumen.csv\", row.names = FALSE)\nprint(resumen)";
+const exampleReadme = "# Taller de Git con RStudio\n\nEjemplo de práctica con tres valores ficticios; no usa ENSSEX.\n\n## Reproducir\n1. Abre el archivo .Rproj de esta carpeta en RStudio.\n2. En la consola de R ejecuta source(\"analisis.R\").\n3. Revisa _outputs/resumen.csv: n = 3 y media = 5.\n\nSolo se necesita R base. Registra tu versión con R.version.string.\nLos resultados se regeneran y no se versionan en este ejemplo.\n\nModalidad: individual\n";
+const exampleIgnore = ".Rproj.user/\n.Rhistory\n.RData\n.Ruserdata\n.Renviron\n_outputs/\n";
+const exampleQuarto = "---\ntitle: \"Un resultado reproducible\"\nformat: html\n---\n\nDatos ficticios, sin información personal.\n\n```{r}\n#| echo: true\nsource(\"analisis.R\")\nresumen\n```\n\nEl código permite regenerar la tabla.\n";
+const lessons = [
+{id:'abrir',verb:'Abrir',title:'Una copia para ti.',prompt:'Trae un proyecto a tu equipo. El original sigue en GitHub.',button:'Clonar el proyecto',success:'Ya tienes tu copia.',feedback:'Puedes trabajar en ella. El repositorio remoto no cambió.',realTitle:'Abre tu proyecto en RStudio.',prereq:'Necesitas Git instalado, RStudio y la URL de un repositorio propio o de práctica.',real:['Copia la URL HTTPS desde Code, en tu repositorio de GitHub.','En RStudio: File → New Project → Version Control → Git.','Pega la URL y elige una carpeta nueva, fuera de Google Drive u OneDrive.'],observe:'¿Ves el README y la pestaña Git?',evidence:'Declaro que abrí mi copia y veo README y la pestaña Git.',help:'Clonar copia archivos e historial. No te concede permiso para enviar cambios a un repositorio ajeno.',quiz:'Si editas tu copia, ¿cambia inmediatamente GitHub?',answers:['Sí, se sincroniza solo','No, son copias distintas'],correct:1,explain:'Son copias distintas. Más adelante enviarás tus commits con Push.'},
+{id:'editar',verb:'Cambiar',title:'Deja una pequeña huella.',prompt:'Cambia una frase del README y guarda el archivo.',button:'Guardar archivo',success:'Git puede ver tu cambio.',feedback:'Cambió el archivo de tu equipo. Todavía no hay un nuevo commit.',realTitle:'Cambia una frase.',prereq:'Abre un proyecto de práctica que ya tenga un README y la pestaña Git.',real:['Abre README.md y añade: Hoy hice mi primer cambio.','Guarda el archivo.','Mira la pestaña Git: README debería aparecer modificado.'],observe:'¿Git detectó tu frase nueva?',evidence:'Declaro que guardé el README y aparece modificado en Git.',help:'Guardar escribe el archivo. Un commit guarda una versión en el historial: es el siguiente movimiento.',quiz:'¿Guardar el archivo crea un commit?',answers:['Sí','Todavía no'],correct:1,explain:'Todavía no. Primero eliges el cambio y después haces el commit.'},
+{id:'commit',verb:'Guardar versión',title:'Un punto al que volver.',prompt:'Hay un cambio listo. Elígelo y guárdalo en el historial.',button:'Preparar README',success:'Este cambio ya tiene historia.',feedback:'El commit guardó la versión elegida. Todavía vive solo en tu equipo.',realTitle:'Guarda una versión.',prereq:'Necesitas un README con un cambio guardado y revisado. Configura tu nombre/correo de Git si aún faltan.',real:['En Git, abre Diff y revisa el cambio de README.','Marca README en Staged. Abre Commit.','Escribe «Agrega primera nota» y confirma el commit.'],observe:'¿Tu mensaje aparece en History?',evidence:'Declaro que veo mi commit y su mensaje en History.',help:'Stage elige qué entra al próximo commit. Si editas después de preparar, vuelve a revisar y preparar el archivo.',quiz:'¿Qué guarda un commit?',answers:['Todo lo abierto en RStudio','Los cambios que preparaste'],correct:1,explain:'Guarda lo que preparaste en Stage. Revisar esa selección evita sorpresas.'},
+{id:'sincronizar',verb:'Sincronizar',title:'El cambio viaja.',prompt:'Envía un commit o trae uno que está en la otra copia.',button:'Enviar · Push',success:'Las dos copias coinciden.',feedback:'Compara el contenido y el commit en ambos lados. Así compruebas la sincronización.',realTitle:'Conecta las dos copias.',prereq:'Usa tu repositorio personal y la rama correcta. Necesitas internet, permisos y autenticación. El árbol local debe estar limpio para Pull.',real:['Con un commit local, pulsa Push en RStudio.','Abre tu repositorio y la misma rama en GitHub.','Busca allí la frase y el commit que acabas de enviar.'],observe:'¿Tu cambio aparece en GitHub?',evidence:'Declaro que comparé mi commit y contenido con GitHub.',help:'Push envía commits. Pull trae e integra cambios. Ninguno reemplaza guardar el archivo ni hacer commit.',quiz:'Para recibir un commit de GitHub, ¿qué usas?',answers:['Push','Pull'],correct:1,explain:'Pull trae cambios. En la práctica usa git pull --ff-only para detenerte si las historias divergen.'},
+{id:'recuperar',verb:'Recuperar',title:'Lo guardado sigue ahí.',prompt:'Se añadió una frase de prueba. Recupera la última versión guardada.',button:'Recuperar README',success:'Volvió la versión guardada.',feedback:'Se descartó la edición de prueba. El historial de commits no cambió.',realTitle:'Recupera una versión guardada.',prereq:'Solo en un README de práctica, sin otro trabajo pendiente. Copia fuera cualquier edición que quieras conservar.',real:['Parte de un commit y añade al README una frase que puedas descartar. Guarda.','En la Terminal de RStudio ejecuta el comando de abajo.','Abre el README: debería volver al último commit.'],code:'git restore --source=HEAD -- README.md',observe:'¿Desapareció solo la frase de prueba?',evidence:'Declaro que recuperé el README de práctica y comprobé su contenido.',help:'restore sobrescribe la edición sin commit del archivo indicado. Para deshacer un commit compartido se usa revert: pide apoyo antes de hacerlo.',quiz:'¿Este restore borra el historial?',answers:['No, recupera el archivo','Sí, borra los commits'],correct:0,explain:'El historial sigue intacto. Se sobrescribió solo la edición no confirmada del README.'}
+];
+const legacyIds=['preparar','clonar','commits','sincronizar','recuperar','conflicto','producto','cierre'];
+const realId = id => 'real-'+id;
+const lessonById = id => lessons.find(l=>l.id===id) || lessons[0];
+const nextLesson = id => lessons[(lessons.findIndex(l=>l.id===id)+1)%lessons.length];
+const base='# Mi análisis\nDatos de ejemplo.';
+const changed='# Mi análisis\nMétodo: media de tres valores.';
+const initial={id:'a1',text:base,message:'Inicia el proyecto'};
+function newSimulation(id, direction='push') {
+ const local=[{...initial}],remote=[{...initial}];
+ let file=base;
+ if(id==='abrir'){file=null;local.length=0;}
+ if(id==='commit')file=changed;
+ if(id==='recuperar')file=base+'\nUna frase que puedo borrar.';
+ if(id==='sincronizar'){
+  const c={id:'b2',text:changed,message:'Documenta el método'};
+  if(direction==='push'){local.push(c);file=changed;}else remote.push(c);
+ }
+ return {id,direction,file,staged:null,local,remote,done:false,stageReady:false};
+}
+// shortcut: modelo lineal para cinco ejemplos, usar Git real para ramas y conflictos.
+function simulate(current, action, value) {
+ const s=structuredClone(current);
+ if(s.done)throw Error('Este ejemplo ya terminó. Puedes repetirlo.');
+ const head=()=>s.local.at(-1)?.text;
+ if(action==='clone' && s.id==='abrir'){s.local=structuredClone(s.remote);s.file=head();s.done=true;}
+ else if(action==='save' && s.id==='editar'){
+  if(typeof value!=='string'||!value.trim()||value.length>200)throw Error('Escribe una frase de hasta 200 caracteres.');
+  if(value===s.file)throw Error('Cambia una frase para ver la diferencia.');
+  s.file=value;s.done=true;
+ }else if(action==='stage' && s.id==='commit'){s.staged=s.file;s.stageReady=true;}
+ else if(action==='commit' && s.id==='commit'){
+  if(s.staged===null)throw Error('Primero prepara el README.');
+  s.local.push({id:'b2',text:s.staged,message:'Agrega primera nota'});s.staged=null;s.done=true;
+ }else if(action==='push' && s.id==='sincronizar' && s.direction==='push'){
+  s.remote=structuredClone(s.local);s.done=true;
+ }else if(action==='pull' && s.id==='sincronizar' && s.direction==='pull'){
+  s.local=structuredClone(s.remote);s.file=head();s.done=true;
+ }else if(action==='restore' && s.id==='recuperar'){s.file=head();s.done=true;}
+ else throw Error('Esa acción no corresponde a este ejemplo.');
+ return s;
+}
+
+const statuses = ['pendiente', 'tentativo', 'confirmado'];
+const statusLabel = {pendiente:'Pendiente',tentativo:'Tentativo',confirmado:'Confirmado'};
+const freshCohort = (name, date, actor = '', id = crypto.randomUUID()) => ({id,name,date,actor,records:{},history:[]});
+const freshState = () => ({version:1,activeId:'udp-2026',cohorts:[freshCohort('UDP · 2026','2026-11-19','','udp-2026')]});
+const text = (v, max) => typeof v === 'string' && v.length <= max;
+const dateValid = v => /^\d{4}-\d{2}-\d{2}$/.test(v) && !Number.isNaN(Date.parse(v)) && new Date(v).toISOString().slice(0,10) === v;
+function validateState(s, allowedIds) {
+  if (!s || s.version !== 1 || !Array.isArray(s.cohorts) || !s.cohorts.length || s.cohorts.length > 50) throw Error('Formato o número de cohortes no válido.');
+  const seen = new Set();
+  for (const c of s.cohorts) {
+    if (!c || !text(c.id,100) || !c.id || seen.has(c.id) || !text(c.name,80) || !c.name.trim() || !dateValid(c.date) || !text(c.actor,100)) throw Error('Datos de cohorte no válidos.');
+    seen.add(c.id);
+    if (!c.records || Array.isArray(c.records) || typeof c.records !== 'object' || !Array.isArray(c.history) || c.history.length > 5000) throw Error('Registros no válidos.');
+    for (const [id,r] of Object.entries(c.records)) {
+      if (!allowedIds.includes(id) || !r || !statuses.includes(r.status) || !text(r.note,4000) || !text(r.at,40) || !Number.isFinite(Date.parse(r.at))) throw Error('Paso, estado o nota no válido.');
+      if (r.status === 'confirmado' && !r.note.trim()) throw Error('Un paso confirmado debe incluir evidencia en sus notas.');
+    }
+    for (const e of c.history) {
+      if (!e || !allowedIds.includes(e.item) || !statuses.includes(e.status) || !text(e.note,4000) || !text(e.actor,100) || !text(e.at,40) || !Number.isFinite(Date.parse(e.at))) throw Error('Historial no válido.');
+    }
+  }
+  if (!seen.has(s.activeId)) throw Error('La cohorte activa no existe.');
+  return s;
+}
+function recordStep(cohort, id, status, note, at = new Date().toISOString()) {
+  if (!statuses.includes(status)) throw Error('Estado no válido.');
+  if (typeof note !== 'string' || note.length > 4000) throw Error('La nota debe tener hasta 4.000 caracteres.');
+  if (status === 'confirmado' && !note.trim()) throw Error('Añade qué comprobaste antes de marcar Confirmado.');
+  if (cohort.history.length >= 5000) throw Error('Exporta esta cohorte y crea una nueva para continuar.');
+  cohort.records[id] = {status,note,at};
+  cohort.history.push({item:id,status,note,at,actor:cohort.actor || 'Sin identificar'});
+}
+function importCopies(current, incoming, allowedIds) {
+  validateState(incoming, allowedIds);
+  if (current.cohorts.length + incoming.cohorts.length > 50) throw Error('Máximo 50 cohortes por bitácora.');
+  const next = structuredClone(current);
+  for (const c of incoming.cohorts) next.cohorts.push({...structuredClone(c),id:crypto.randomUUID(),name:(c.name.slice(0,68)+' · copia')});
+  next.activeId = next.cohorts.at(-1).id;
+  return validateState(next, allowedIds);
+}
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const allowedIds=[...legacyIds,...lessons.map(l=>realId(l.id)),'real-sincronizar-push','real-sincronizar-pull',...preparation.map(p=>p.id)];
+const key='udp-git-taller-v1';
+let state=freshState(),storageBlocked=false,dirty=false,qa=[{"id":"git-r","title":"Git y R en repositorios temporales","state":"Comprobado · ejecución local","date":"2026-11-16T13:03:37.810Z","detail":"Se ejecutó el ejemplo de R con medias 5, 6 y 5 tras revert. Clone, commits, Push/Pull con remoto bare en disco, restore, revert, conflicto y reproducción desde clon limpio. git version 2.56.0.windows.4; Rscript (R) version 4.4.1 (2024-06-14). No se usó GitHub ni la interfaz de RStudio."},{"id":"modelo","title":"Simulación y conservación de notas","state":"Comprobado · pruebas de código","date":"2026-11-16T22:06:59.727Z","detail":"Cinco simulaciones, preparación antes de commit, copia de estados sin mutación, registros reales separados de la simulación, notas anteriores conservadas e importación como copias. Push y Pull tienen confirmaciones diferentes."},{"id":"browser","title":"Interfaz original · revisión previa","state":"Comprobado · navegador local","date":"2026-11-16T22:01:50.852Z","detail":"12 comprobaciones aprobadas, sin excepciones JavaScript. Recursos servidos bajo /taller/ para reproducir una ruta de proyecto. Simulaciones, notas tras recarga, estados, cohortes vacías, exportación/importación JSON, teclado y enlace para saltar al contenido. Las pantallas caben en 320 y 390 px sin desbordamiento horizontal."},{"id":"revision","title":"Revisión de claridad y accesibilidad","state":"Comprobado · revisión parcial","date":"2026-11-16T22:06:59.727Z","detail":"Tres agentes revisaron facilidad de uso, UI/accesibilidad y carga. Se corrigieron confirmaciones cruzadas de Push/Pull, mensajes de estado, regreso desde la ayuda, acceso por teclado y conservación de respaldos. Capturas de escritorio y móvil inspeccionadas. Los pares principales de texto superan contraste 4,5:1; no se hizo una auditoría completa con lector de pantalla."},{"id":"hosting","title":"GitHub Pages y tráfico","state":"Preparado · sin publicar en GitHub","date":"2026-11-16T22:06:59.727Z","detail":"Esta versión reúne HTML, estilos, código y registro en un único archivo. No requiere servidor de aplicación, librerías remotas ni telemetría. El alojamiento efectivo en GitHub y la carga concurrente de producción no fueron probados."},{"id":"aula","title":"Uso en clase","state":"Pendiente · ensayo con estudiantes","date":"2026-11-16T22:06:59.727Z","detail":"La aplicación complementa la clase. No se han medido tiempos, atención ni resultados de aprendizaje con estudiantes. Las acciones de RStudio y la autenticación GitHub de la cohorte siguen pendientes de ensayo."},{"id":"html-unico","title":"Versión de un solo archivo","state":"Comprobado · Edge local","date":"2026-11-17T01:37:03.637Z","detail":"Se abrieron 18 vistas desde file:// en Edge con perfil temporal y ancho de 320 px, sin desbordamiento horizontal. Se comprobaron simulación separada del avance, notas tras recarga, Push/Pull independientes, cohortes, exportación/importación, copia alternativa y avisos de guardado bloqueado o inválido. El mismo HTML funcionó servido bajo /taller/. Sin errores JavaScript ni recursos externos. No se publicó en GitHub ni se ensayó con estudiantes."}],sim=null,direction=location.hash.endsWith('/pull')?'pull':'push',previousHash=location.hash,rawBackup=null,helpFrom='#inicio';
+try{rawBackup=localStorage.getItem(key);if(rawBackup)state=validateState(JSON.parse(rawBackup),allowedIds);const probe=key+'-probe-'+crypto.randomUUID();localStorage.setItem(probe,'1');localStorage.removeItem(probe);}catch{storageBlocked=true;}
+const cohort=()=>state.cohorts.find(c=>c.id===state.activeId);
+const saved=id=>cohort().records[id]||{status:'pendiente',note:'',at:''};
+const badge=(s)=>`<span class="status ${s}">${statusLabel[s]}</span>`;
+const route=()=>{let [view,id]=location.hash.slice(1).split('/');if(!view||view==='estudiantes')view='inicio';if(view==='preparacion')view='docentes';if(view==='riesgos')view='ayuda';return {view,id};};
+const back=()=>'<a class="back" href="#inicio">← Elegir otra cosa</a>';
+const topics=(prefix,current='')=>`<div class="topic-list">${lessons.map((l,i)=>`<a href="#${prefix}/${l.id}" ${current===l.id?'aria-current="page"':''}><span class="n">0${i+1}</span>${l.verb}</a>`).join('')}</div>`;
+const studentLabel=()=>`<p class="muted">${esc(cohort().name)} · Tu avance real se guarda en este navegador.</p>`;
+function home(){return `<section class="home"><div class="home-top"><div><p class="eyebrow">Git + GitHub con RStudio</p><h1>Prueba un cambio.<span>Ve qué pasa.</span></h1><p class="intro">Un apoyo breve para la clase.<br>Elige lo que necesitas ahora.</p><div class="row"><a class="button primary" href="#probar/editar">Probar aquí <span aria-hidden="true">→</span></a><a class="button" href="#rstudio/abrir">Voy a RStudio</a></div><p class="home-note">Puedes parar después de un ejemplo y volver cuando quieras.</p></div><div class="paper-demo" aria-hidden="true"><div class="paper"><div class="file-title">README.md</div><div class="line"></div><div class="line short"></div><div class="handline">Un cambio pequeño.<br>Una versión que queda.</div><div class="line short"></div></div><span class="paper-stamp">guardar ≠ hacer commit</span></div></div><div class="home-picker"><p>O ve directo a una acción</p>${topics('probar')}</div></section>`;}
+function diagram(s){const dirtyFile=s.file!==null&&s.file!==s.local.at(-1)?.text;const same=s.local.length===s.remote.length&&s.local.at(-1)?.id===s.remote.at(-1)?.id;const active=[dirtyFile||s.file!==null,s.staged!==null,s.local.length>0,same&&s.done];const notes=[s.file===null?'Sin copia':dirtyFile?'Con cambios':'Sin cambios',s.staged===null?'Nada elegido':'README elegido',s.local.length+' commit'+(s.local.length===1?'':'s'),s.remote.length+' commit'+(s.remote.length===1?'':'s')];return `<div class="diagram ${s.done||s.stageReady?'changed':''}"><svg viewBox="0 0 640 62" role="img" aria-label="${esc('Estado simulado. Archivo: '+notes[0]+'. Preparado: '+notes[1]+'. Historial local: '+notes[2]+'. GitHub: '+notes[3]+'.')}"><path class="line-arrow" d="M100 30 H220 M260 30 H380 M420 30 H540"/><path class="line-arrow" d="m213 25 7 5-7 5 m160-10 7 5-7 5 m160-10 7 5-7 5"/>${[80,240,400,560].map((x,i)=>`<circle cx="${x}" cy="30" r="20" class="node-circle ${active[i]?'active':''}"/><text x="${x}" y="36" text-anchor="middle" class="node-text">${['✎','+','✓','↗'][i]}</text>`).join('')}</svg><div class="diagram-labels" aria-hidden="true">${['Archivo','Preparado','Historial','GitHub'].map((t,i)=>`<div>${t}<small>${notes[i]}</small></div>`).join('')}</div>`;}
+function simulator(l){if(!sim||sim.id!==l.id)sim=newSimulation(l.id,direction);let action={abrir:'clone',editar:'save',commit:sim.stageReady?'commit':'stage',sincronizar:direction,recuperar:'restore'}[l.id];let label=l.button;if(l.id==='commit'&&sim.stageReady)label='Crear commit';if(l.id==='sincronizar')label=direction==='push'?'Enviar · Push':'Traer · Pull';const text=sim.file??sim.remote.at(-1).text;return `<section class="exercise">${back()}<div class="work-head"><span class="mode">Simulación</span><a href="#rstudio/${l.id}${l.id==='sincronizar'?'/'+direction:''}">Hacerlo en RStudio →</a></div><h1>${l.title}</h1><p class="subtitle">${l.prompt}</p>${l.id==='sincronizar'?directionButtons():''}<div class="lab">${diagram(sim)}<div class="file"><div class="file-label"><span>README.md · ${sim.file===null?'GitHub simulado':'archivo simulado'}</span>${sim.stageReady&&!sim.done?'<span>Preparado</span>':''}</div>${l.id==='editar'&&!sim.done?`<label class="sr-only" for="sim-editor">Edita una frase del README simulado</label><textarea id="sim-editor" maxlength="200" spellcheck="false">${esc(text)}</textarea>`:`<div class="file-content">${esc(text)}</div>`}</div>${!sim.done?`<div class="action-line"><button class="primary" id="simulation-action" data-sim="${action}">${label} <span aria-hidden="true">→</span></button><small>${sim.stageReady?'Se guardará la versión preparada.':'Solo cambia este ejemplo. No toca tus archivos.'}</small></div>`:`<div class="feedback" id="sim-feedback" tabindex="-1"><h2>${l.success}</h2><p>${l.feedback}</p><div class="row"><a class="button primary" href="#rstudio/${l.id}${l.id==='sincronizar'?'/'+direction:''}">Ahora en RStudio →</a><a class="button" href="#inicio">Parar aquí</a><button class="quiet" data-repeat>Repetir</button></div></div>`}</div>${sim.done?`<details class="micro-help"><summary>Una pregunta para fijar la idea</summary><p>${l.quiz}</p><div class="row">${l.answers.map((a,i)=>`<button data-answer="${i}">${a}</button>`).join('')}</div><p id="quiz-feedback" role="status"></p></details>`:''}<details class="micro-help"><summary>¿Qué acaba de pasar?</summary><p>${l.help}</p><p class="muted">Cada ejemplo empieza con un estado preparado. El simulador no ejecuta Git ni cuenta como avance en tu proyecto.</p></details></section>`;}
+function directionButtons(){return `<div class="split-toggle" aria-label="Dirección del cambio"><button data-direction="push" aria-pressed="${direction==='push'}">Enviar · Push</button><button data-direction="pull" aria-pressed="${direction==='pull'}">Traer · Pull</button></div>`;}
+function noteForm(id){const r=saved(id);return `<form class="note-form" data-record="${id}"><label for="note-${id}">Nota para recordar<textarea id="note-${id}" name="note" maxlength="4000" placeholder="Lo que te sirvió o dónde te trabaste. Sin contraseñas.">${esc(r.note)}</textarea></label><div class="row"><label for="status-${id}">Estado <select id="status-${id}" name="status">${statuses.map(s=>`<option value="${s}" ${r.status===s?'selected':''}>${statusLabel[s]}</option>`).join('')}</select></label><button type="submit">Guardar nota</button></div></form>`;}
+function real(l){const stepId=l.id==='sincronizar'?realId(l.id)+'-'+direction:realId(l.id);const r=saved(stepId);let steps=l.real,observe=l.observe;
+if(l.id==='sincronizar'&&direction==='pull'){steps=['En GitHub, añade al final del README una frase y confirma el cambio en tu rama.','Vuelve a RStudio. Con git status limpio, ejecuta git pull --ff-only en la Terminal.','Abre el README y busca la frase que añadiste en GitHub.'];observe='¿Llegó la frase nueva a RStudio?';}
+return `<section class="exercise">${back()}<div class="work-head"><span class="mode">En tu proyecto</span><a href="#probar/${l.id}${l.id==='sincronizar'?'/'+direction:''}">Ver el ejemplo antes →</a></div><h1>${l.realTitle}</h1><p class="muted">${{abrir:"Con Git y RStudio instalados.",editar:"Con tu proyecto de práctica abierto.",commit:"Con un cambio guardado y revisado.",sincronizar:"En tu repositorio personal, con conexión y permisos.",recuperar:"Solo con una edición de prueba que puedas descartar."}[l.id]}</p><details class="micro-help"><summary>Antes de empezar</summary><p>${l.prereq}</p>${l.id==='abrir'?'<p>¿No tienes repositorio? En tu cuenta de GitHub crea uno privado con README y .gitignore de R. Copia su URL. Usa ese repositorio personal para enviar cambios; AGSCL/repr2026 es referencia de lectura.</p><p>¿No aparece Git? Revisa Tools → Global Options → Git/SVN y reinicia RStudio tras instalar Git.</p>':''}</details>${l.id==='sincronizar'?directionButtons():''}${l.id==='recuperar'?'<div class="warning">Este comando sobrescribe el README local. Úsalo solo con la frase de prueba que puedes descartar; conserva aparte cualquier trabajo importante.</div>':''}<ol class="real-steps">${steps.map(s=>`<li><span>${s}</span></li>`).join('')}</ol>${l.code?`<pre><code>${esc(l.code)}</code></pre><button data-copy-code class="small">Copiar comando</button>`:''}<div class="observe"><strong>La señal que buscas</strong>${observe}</div><div class="row" style="margin-top:18px"><button class="primary" id="confirm-real" data-confirm="${stepId}">Sí, lo veo ${r.status==='confirmado'?'✓':''}</button><a class="button" href="#ayuda">Me trabé</a></div><p class="muted" id="real-feedback" role="status">${r.status==='confirmado'?'Confirmado por ti. Puedes parar aquí o elegir otro paso.':'Márcalo solo después de verlo en tu proyecto.'}</p><details class="micro-help"><summary>Mi avance y una nota ${badge(r.status)}</summary>${noteForm(stepId)}${studentLabel()}<button class="quiet" data-cohorts>Respaldar o cambiar cohorte</button></details><details class="micro-help"><summary>Una pista más</summary><p>${l.help}</p><a href="#ejemplos">Archivos mínimos de ejemplo →</a></details>${topics('rstudio',l.id)}</section>`;}
+function helper(){return `<section class="secondary"><a class="back" href="${esc(helpFrom)}">← Volver a mi paso</a><p class="eyebrow">Ayuda puntual</p><h1>¿Dónde te trabaste?</h1><p class="subtitle">Elige lo que ves. No necesitas leer toda la lista.</p><label for="issue">Lo que pasa en mi pantalla</label><select id="issue" style="width:100%;margin:10px 0 24px">${risks.map((r,i)=>`<option value="${i}">${esc(r.title)}</option>`).join('')}</select><div id="issue-content"></div><details class="micro-help"><summary>Quiero entender un conflicto</summary><p>Dos versiones cambiaron la misma línea. Git se detiene para que tú decidas cómo debe quedar.</p><pre>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD\nModalidad: parejas\n=======\nModalidad: grupos\n&gt;&gt;&gt;&gt;&gt;&gt;&gt; otra-rama</pre><p>Reemplaza el bloque completo por una frase acordada, por ejemplo «Modalidad: parejas con revisión grupal». Guarda, prepara el archivo y confirma el merge.</p><p class="muted">Pide al docente el ensayo en ramas de práctica. Si debes salir de un merge iniciado con árbol limpio: git merge --abort.</p></details></section>`;}
+function issue(index=0){const r=risks[index]||risks[0];$('#issue-content').innerHTML=`<h2 style="font-size:20px">${esc(r.title)}</h2><p class="subtitle">${esc(r.action)}</p><div class="observe"><strong>Se resolvió cuando…</strong>${esc(r.check)}</div>`;}
+const files={r:{name:'analisis.R',value:exampleR,note:'Datos ficticios, solo R base. Ejecuta source("analisis.R"): la media esperada es 5.'},readme:{name:'README.md',value:exampleReadme,note:'Instrucciones para que otra persona ejecute el ejemplo.'},ignore:{name:'.gitignore',value:exampleIgnore,note:'Reglas para este ejemplo. Combínalas con las de tu proyecto. Ignorar no borra archivos del historial.'},qmd:{name:'informe.qmd',value:exampleQuarto,note:'Opcional: requiere Quarto y knitr instalados. Renderizar no publica el producto.'}};
+function examples(){return `<section class="secondary">${back()}<p class="eyebrow">Un archivo a la vez</p><h1>Ejemplos mínimos.</h1><p class="subtitle">Para practicar sin datos reales ni instalaciones de paquetes.</p><label for="example-select">Archivo</label><select id="example-select" class="choose-example">${Object.entries(files).map(([id,f])=>`<option value="${id}">${f.name}</option>`).join('')}</select><div id="example-content"></div></section>`;}
+function example(id='r'){const f=files[id]||files.r;$('#example-content').innerHTML=`<p class="subtitle">${f.note}</p><pre><code>${esc(f.value)}</code></pre><div class="row"><button data-copy-code>Copiar</button><button data-download="${id}">Descargar ${f.name} ↓</button></div>`;}
+const staffNav=current=>`<nav class="subnav" aria-label="Material docente">${[['docentes','Preparación'],['soluciones','Soluciones'],['registro','Registro'],['ejemplos','Ejemplos']].map(([id,t])=>`<a href="#${id}" ${id===current?'aria-current="page"':''}>${t}</a>`).join('')}</nav>`;
+function teacher(){return `<section class="secondary">${back()}<p class="eyebrow">Material docente</p><h1>Un apoyo para la clase.</h1><p class="subtitle">Elige un ejemplo cuando sirva. No hay un recorrido obligatorio ni una agenda que completar.</p>${staffNav('docentes')}<p class="muted">La clase del 19/11/2026 es de 18:00 a 21:30. Esta aplicación se usa en momentos breves dentro de ella. Tiempos de uso sin validar en aula.</p>${preparation.map(p=>`<details class="list-item"><summary>${esc(p.title)} ${badge(saved(p.id).status)}</summary><p>${esc(p.detail)}</p>${noteForm(p.id)}</details>`).join('')}<div class="row" style="margin-top:25px"><button data-cohorts>Gestionar cohortes y respaldos</button></div><details class="micro-help"><summary>Contexto del curso y decisiones</summary><p>El README de AGSCL/repr2026 aborda ENSSEX, estructura de proyectos y renv. Aquí se practica cómo registrar y compartir cambios con un ejemplo pequeño.</p><p>El programa exige código en GitHub y un producto reproducible publicado. HTML estático puede alojarse en GitHub Pages; Shiny necesita una plataforma compatible. Esta aplicación usa JavaScript y SVG en el navegador, sin servidor Shiny.</p><p>El cronograma nombra GitHub Desktop; se usa RStudio por solicitud docente. Las soluciones son una vista separada, no un área con contraseña.</p></details></section>`;}
+function solutions(){return `<section class="secondary">${back()}<p class="eyebrow">Material docente</p><h1>Qué observar.</h1>${staffNav('soluciones')}${lessons.map(l=>`<details class="list-item"><summary>${l.verb}</summary><p><strong>Señal:</strong> ${l.observe}</p><p>${l.help}</p><p><strong>En la simulación:</strong> ${l.feedback} Esto no prueba que se haya hecho en RStudio.</p></details>`).join('')}<details class="list-item"><summary>Ensayo opcional: conflicto local</summary><p>Parte de un repositorio de práctica limpio y un README confirmado con «Modalidad: individual». Anota tu rama original. Crea dos ramas desde ese mismo commit:</p><pre>git branch practica-b\ngit switch -c practica-a</pre><p>En a, cambia la línea a «Modalidad: parejas» y haz commit. Cambia a b, escribe «Modalidad: grupos» en esa misma línea y haz commit. Desde b:</p><pre>git merge practica-a</pre><p>Resuelve el bloque con una frase acordada. Elimina los marcadores, guarda, Stage y commit. Comprueba git status limpio y vuelve a la rama original. No necesitas enviar estas ramas a GitHub. Para repetir usa otro repositorio de práctica.</p></details><details class="list-item"><summary>Recuperación: edición o commit</summary><p>restore --staged retira del próximo commit y conserva el archivo. restore --source=HEAD recupera el archivo descartando su edición local. Para deshacer un commit ya compartido, revisa su SHA y usa git revert --no-edit SHA con el árbol limpio; crea un commit inverso. No usar reset --hard ni force push en la ruta inicial.</p></details><details class="list-item"><summary>Producto reproducible del curso</summary><p>El ejemplo analisis.R devuelve media 5 con c(3, 5, 7), y 6 si el último valor cambia a 10. Pide a otra persona reproducir el resultado desde README. Versionar no basta: documentar dependencias, autorización de datos y forma de ejecutar.</p><p>La entrega final del curso incluye gráfico interactivo, tabla personalizable, código y producto publicado. Este ejercicio breve no pretende reemplazarla.</p></details></section>`;}
+function log(){const realItems=lessons.flatMap(l=>l.id==='sincronizar'?[{id:'real-sincronizar-push',title:'Enviar · Push',lesson:l.id+'/push'},{id:'real-sincronizar-pull',title:'Traer · Pull',lesson:l.id+'/pull'}]:[{id:realId(l.id),title:l.verb,lesson:l.id}]);const names=Object.fromEntries([...realItems.map(l=>[l.id,l.title+' · en mi proyecto']),...preparation.map(p=>[p.id,p.title])]);return `<section class="secondary">${back()}<p class="eyebrow">Evidencia y respaldo</p><h1>Lo que sí se comprobó.</h1>${staffNav('registro')}<p class="subtitle">Las pruebas del material y tu avance real son cosas distintas.</p><details class="list-item"><summary>Pruebas técnicas del material</summary>${initialVerification.filter(v=>v.id!=='ensayo-local'&&v.id!=='publicacion').concat(qa).map(v=>`<div class="record-row"><h3>${esc(v.title)}</h3><span class="muted">${esc(v.state)} · ${esc(v.date)}</span><p>${esc(v.detail)}</p></div>`).join('')}</details><details class="list-item"><summary>Mi avance · ${esc(cohort().name)}</summary><p class="muted">Lo confirmas tú después de observarlo. La simulación no modifica estos registros.</p>${realItems.map(l=>`<div class="record-row"><h3>${l.title} ${badge(saved(l.id).status)}</h3><p style="white-space:pre-wrap">${esc(saved(l.id).note||'Aún sin registrar.')}</p><a href="#rstudio/${l.lesson}" class="small">Abrir paso →</a></div>`).join('')}</details><details class="list-item"><summary>Historial de registros, incluidas versiones anteriores</summary>${cohort().history.length?cohort().history.slice().reverse().map(e=>`<div class="record-row"><h3>${esc(names[e.item]||'Registro anterior: '+e.item)} · ${statusLabel[e.status]}</h3><span class="muted">${esc(e.at)} · ${esc(e.actor)}</span><p style="white-space:pre-wrap">${esc(e.note)}</p></div>`).join(''):'<p>Aún no hay registros.</p>'}</details><details class="list-item"><summary>Fuentes y contexto</summary>${sources.map(s=>`<div class="source"><strong>${s.url?`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)} ↗</a>`:esc(s.title)}</strong><p>${esc(s.detail)}</p></div>`).join('')}<p class="muted">Preparado con asistencia de IA. Las mejoras de claridad se revisaron; no se afirma un efecto de aprendizaje medido en estudiantes.</p></details><div class="row" style="margin-top:25px"><button data-cohorts>Respaldos y cohortes</button></div><p class="muted">Almacenamiento local del navegador; no hay sincronización entre equipos. Nunca guardes credenciales aquí.</p></section>`;}
+function render(focusId){const {view,id}=route();const l=lessonById(id);const html={inicio:home,probar:()=>simulator(l),rstudio:()=>real(l),ayuda:helper,ejemplos:examples,docentes:teacher,soluciones:solutions,registro:log};$('#main').innerHTML=(html[view]||home)();if(view==='ayuda')issue();if(view==='ejemplos')example();dirty=false;if(focusId){const el=document.getElementById(focusId);el?.focus({preventScroll:focusId!=='sim-feedback'});}}
+function persist(next){if(storageBlocked)throw Error('No se pudo abrir el guardado anterior; no lo sobrescribiremos. Exporta un respaldo.');validateState(next,allowedIds);try{if(localStorage.getItem(key)!==rawBackup)throw Error('Otra pestaña cambió la bitácora. Copia tu nota y recarga antes de guardar.');const encoded=JSON.stringify(next);localStorage.setItem(key,encoded);rawBackup=encoded;}catch(error){throw Error(error.message.startsWith('Otra pestaña')?error.message:'No se pudo guardar. Revisa el espacio del navegador y exporta tu bitácora.');}state=next;}
+function notify(message){$('#toast').textContent=message;$('#toast').hidden=false;clearTimeout(notify.timer);notify.timer=setTimeout(()=>$('#toast').hidden=true,6000);}
+function leave(){return !dirty||confirm('Hay una nota sin guardar. ¿Continuar y descartarla?');}
+function download(value,name,type='text/plain;charset=utf-8'){const url=URL.createObjectURL(new Blob([value],{type})),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+async function copyCode(){
+ const code=$('#main pre code');if(!code)return;
+ try{await navigator.clipboard.writeText(code.textContent);notify('Copiado.');return;}catch{}
+ const range=document.createRange();range.selectNodeContents(code);const selection=getSelection();selection.removeAllRanges();selection.addRange(range);
+ let copied=false;try{copied=document.execCommand('copy');}catch{}
+ notify(copied?'Copiado.':'Texto seleccionado. Usa Ctrl+C o la opción Copiar de tu dispositivo.');
+}
+function exportState(){const original=storageBlocked&&rawBackup!==null;download(original?rawBackup:JSON.stringify(state,null,2),original?'bitacora-original-sin-validar.json':'bitacora-git.json','application/json');notify(original?'Se descargó el guardado original para recuperación; no se validó.':'Respaldo descargado.');}
+function openCohorts(){$('#cohort-select').innerHTML=state.cohorts.map(c=>`<option value="${esc(c.id)}" ${c.id===state.activeId?'selected':''}>${esc(c.name)}</option>`).join('');$('#cohort-dialog').showModal();}
+function saveReal(id,status,note){const next=structuredClone(state),c=next.cohorts.find(c=>c.id===next.activeId);recordStep(c,id,status,note);persist(next);}
+window.addEventListener('hashchange',()=>{if(!leave()){history.replaceState(null,'',previousHash||'#inicio');return;}if(location.hash==='#ayuda'&&previousHash!=='#ayuda')helpFrom=previousHash||'#inicio';previousHash=location.hash;sim=null;direction=location.hash.endsWith('/pull')?'pull':'push';render();window.scrollTo(0,0);$('#main').focus({preventScroll:true});});
+window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
+$('#main').addEventListener('input',e=>{if(e.target.closest('[data-record]'))dirty=true;});
+$('#main').addEventListener('change',e=>{if(e.target.closest('[data-record]'))dirty=true;if(e.target.id==='issue')issue(Number(e.target.value));if(e.target.id==='example-select')example(e.target.value);});
+$('#main').addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;const {id}=route(),l=lessonById(id);
+try{
+ if(b.hasAttribute('data-sim')){sim=simulate(sim,b.dataset.sim,$('#sim-editor')?.value);render(sim.done?'sim-feedback':'simulation-action');$('#announcement').textContent=sim.done?l.success+' '+l.feedback:'README preparado. Ahora puedes crear el commit.';}
+ else if(b.hasAttribute('data-repeat')){sim=newSimulation(l.id,direction);render('simulation-action');}
+ else if(b.hasAttribute('data-direction')){if(!leave())return;direction=b.dataset.direction;history.replaceState(null,'','#'+route().view+'/'+l.id+'/'+direction);previousHash=location.hash;sim=newSimulation(l.id,direction);render();$(`[data-direction="${direction}"]`)?.focus();}
+ else if(b.hasAttribute('data-answer')){$('#quiz-feedback').textContent=(Number(b.dataset.answer)===l.correct?'Exacto. ':'Probemos otra vez. ')+l.explain;}
+ else if(b.hasAttribute('data-confirm')){if(dirty&&!leave())return;const old=saved(b.dataset.confirm);const evidence=l.id==='sincronizar'&&direction==='pull'?'Declaro que vi en RStudio el cambio traído desde GitHub.':l.evidence;saveReal(b.dataset.confirm,'confirmado',old.note?old.note+'\n'+evidence:evidence);render('confirm-real');$('#announcement').textContent='Confirmado por ti y guardado para esta cohorte.';}
+ else if(b.hasAttribute('data-cohorts'))openCohorts();
+ else if(b.hasAttribute('data-copy-code')){await copyCode();}
+ else if(b.hasAttribute('data-download')){const f=files[b.dataset.download];download(f.value,f.name);}
+}catch(error){notify(error.message||'No se pudo completar la acción.');}});
+$('#main').addEventListener('submit',e=>{if(!e.target.matches('[data-record]'))return;e.preventDefault();try{const f=new FormData(e.target);saveReal(e.target.dataset.record,f.get('status'),f.get('note'));dirty=[...document.querySelectorAll('[data-record]')].some(form=>{const r=saved(form.dataset.record);return form.elements.note.value!==r.note||form.elements.status.value!==r.status;});const d=e.target.closest('details'),status=d?.querySelector('.status');if(status)status.outerHTML=badge(f.get('status'));if(route().view==='rstudio'){const ok=f.get('status')==='confirmado';$('#confirm-real').textContent=ok?'Sí, lo veo ✓':'Sí, lo veo';$('#real-feedback').textContent=ok?'Confirmado por ti. Puedes parar aquí o elegir otro paso.':'Márcalo solo después de verlo en tu proyecto.';}notify('Nota guardada.');}catch(error){notify(error.message);}});
+$('[data-close]').addEventListener('click',()=>$('#cohort-dialog').close());
+$('#export').addEventListener('click',exportState);
+$('#import-trigger').addEventListener('click',()=>$('#import').click());
+$('.skip').addEventListener('click',e=>{e.preventDefault();$('#main').focus();});
+$('#cohort-select').addEventListener('change',e=>{if(!leave()){e.target.value=state.activeId;return;}try{const next=structuredClone(state);next.activeId=e.target.value;persist(next);render();notify('Cohorte cambiada.');}catch(error){e.target.value=state.activeId;notify(error.message);}});
+$('#cohort-form').addEventListener('submit',e=>{e.preventDefault();if(!leave())return;try{const f=new FormData(e.target),next=structuredClone(state),c=freshCohort(f.get('name').trim(),f.get('date'),f.get('actor').trim());next.cohorts.push(c);next.activeId=c.id;persist(next);$('#cohort-dialog').close();e.target.reset();render();notify('Nueva cohorte. Su avance empieza vacío.');}catch(error){notify(error.message);}});
+$('#import').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{if(file.size>10*1024*1024)throw Error('El archivo supera 10 MB.');if(!leave())return;const next=importCopies(state,JSON.parse(await file.text()),allowedIds);persist(next);$('#cohort-dialog').close();render();notify('Importado como copia. No se reemplazó ninguna cohorte.');}catch(error){notify('No se importó: '+error.message);}finally{e.target.value='';}});
+render();if(storageBlocked){$('#storage-warning').hidden=false;notify('Guardado local no disponible. Revisa el aviso antes del contenido.');}
+
+})();
+</script>
+</body></html>

@@ -1,0 +1,32 @@
+---
+title: "ENSSEX: estado civil según sexo"
+author: "Escriba aquí los nombres de la pareja"
+lang: es
+format:
+  html:
+    embed-resources: true
+---
+
+Esta página se genera desde `index.qmd` con el botón **Render** de RStudio.
+Usa la base 1 de la ENSSEX, que está en esta misma carpeta.
+
+```{r}
+enssex <- read.csv("enssex_base1.csv")
+
+# FILTRO DE EDAD: quien colabora cambia solo estos dos números
+edad_min <- 18
+edad_max <- 29
+
+# p7 es el estado civil: 1 = Casado(a); 88 y 99 son "No sabe" y "No responde"
+personas <- subset(enssex, edad >= edad_min & edad <= edad_max & p7 %in% 1:8)
+personas$sexo <- factor(personas$sexo, levels = 1:2, labels = c("Hombre", "Mujer"))
+personas$estado_civil <- ifelse(personas$p7 == 1, "Casado(a)", "Otro estado civil")
+
+# Porcentajes por fila, usando el factor de expansión
+tabla <- xtabs(ponderador ~ sexo + estado_civil, data = personas)
+porcentajes <- round(100 * prop.table(tabla, margin = 1), 1)
+knitr::kable(as.data.frame.matrix(porcentajes))
+```
+
+Porcentaje de cada sexo según estado civil, entre personas de `r edad_min` a `r edad_max` años
+(`r nrow(personas)` personas encuestadas).

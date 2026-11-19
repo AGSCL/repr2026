@@ -7,7 +7,10 @@
   Version: 2.4.5
 
 - Class: text
-  Output: '¿Por qué intercambiamos proyectos? Tu compañero va a abrir el proyecto que tú preparaste y a ejecutar tu código con la misma base que usaste. Queremos averiguar dos cosas: cuántas líneas tuvo que cambiar para que corriera y si obtuvo tus mismos cuatro porcentajes.'
+  Output: 'Trabaja con una pareja que tenga la misma base asignada. Primero, cada persona prepara su proyecto sin mirar el de la otra. Después intercambian los proyectos. Tu compañero va a abrir el proyecto que tú preparaste y a ejecutar tu código con la base incluida. Queremos averiguar dos cosas: cuántas líneas tuvo que cambiar para que corriera y si obtuvo tus mismos cuatro porcentajes.'
+
+- Class: text
+  Output: 'Usa 00estructura_proyecto.R para preparar tu proyecto. Guarda analisis.R en la raíz, junto al archivo .Rproj, y la base asignada en _data/. Antes de comprimir, actualiza el árbol del README con la sección 6 del generador, en la misma sesión donde lo ejecutaste completo.'
 
 - Class: text_question
   Output: |-
@@ -15,7 +18,7 @@
 
     A. Que ambos obtuvieron los mismos cuatro porcentajes al mostrarlos con la misma cantidad de decimales.
 
-    B. Que obtendría esos mismos porcentajes con la otra base que le tocó trabajar.
+    B. Que obtendría esos mismos porcentajes con una base distinta.
 
     C. Nada más: si el código terminó sin errores, los resultados ya están comprobados.
 
