@@ -1,7 +1,7 @@
 <!-- inicio: 00estructura_proyecto.R -->
 # Reproducibilidad y Comunicación de Resultados · UDP 2026
 
-## Apoyo de Git y GitHub
+## Clase 3- Apoyo de Git y GitHub
 
 [Diapositivas y ejercicio paso a paso](https://agscl.github.io/repr2026/clase-git/) · [PDF](https://agscl.github.io/repr2026/clase-git/clase-git.pdf) · [Kit ENSSEX del ejercicio (ZIP)](https://github.com/AGSCL/repr2026/raw/refs/heads/main/clase-git/kit-enssex.zip).
 
