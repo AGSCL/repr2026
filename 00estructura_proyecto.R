@@ -106,7 +106,7 @@ fin <- "<!-- fin: 00estructura_proyecto.R -->"
 bloque <- c(inicio, paste("#", titulo), "",
   "## Apoyo de Git y GitHub", "",
   "[Diapositivas y ejercicio paso a paso](https://agscl.github.io/repr2026/clase-git/) · [PDF](https://agscl.github.io/repr2026/clase-git/clase-git.pdf) ·[Kit ENSSEX del ejercicio (ZIP)](https://github.com/AGSCL/repr2026/raw/refs/heads/main/clase-git/kit-enssex.zip).", "",
-  "[Descargar el ejemplo en ZIP](_outputs/taller-git-autocontenido.zip) · [Archivo HTML único](_outputs/taller-git-autocontenido/index.html).", "",
+  "[Abrir el taller en el navegador](https://agscl.github.io/repr2026/_outputs/taller-git-autocontenido/index.html) · [Descargar el taller en ZIP](https://agscl.github.io/repr2026/_outputs/taller-git-autocontenido.zip).", "",
   "Complemento de la clase del jueves 19 de noviembre de 2026 (18:00–21:30). Practica una acción a la vez: abrir, cambiar, guardar una versión, sincronizar o recuperar. La simulación no ejecuta Git ni confirma trabajo en RStudio.", "",
   "El ZIP contiene solo `index.html`. Descomprímelo y ábrelo con doble clic. Para publicarlo, sube ese archivo a la carpeta que uses como origen de GitHub Pages. No requiere R, Shiny, instalación ni servidor para abrirlo en tu equipo.", "",
   "Las notas y los estados quedan en ese navegador. Usa **Exportar** antes de cambiar de equipo, navegador o ubicación del HTML; usa **Importar** para recuperarlos. Las vistas docentes y el registro de comprobaciones están dentro de la aplicación.", "",
