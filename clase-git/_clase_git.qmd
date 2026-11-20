@@ -308,6 +308,8 @@ En los pasos 2 y 3 escribió comandos. Desde ahora usará botones. En cada paso 
 3. Presione **Sign in to GitHub.com**. Se abre el navegador.
 4. En el navegador, presione **Authorize desktop**. Si el navegador pregunta, permita abrir GitHub Desktop.
 5. De vuelta en la aplicación, en *Configure Git*, presione **Finish**.
+
+Si Desktop ya muestra su cuenta sin pedirle nada, siga al paso 5.
 :::
 ::: {.column width="44%"}
 ::: {.ok}
@@ -315,7 +317,7 @@ En los pasos 2 y 3 escribió comandos. Desde ahora usará botones. En cada paso 
 :::
 
 ::: {.espejo}
-Desktop usa el mismo Git que instaló en el paso 2. En **File → Options → Git** están el nombre y el correo del paso 3.
+Desktop lee la misma configuración de Git que dejó en el paso 3. En **File → Options → Git** ya están su nombre y su correo.
 :::
 :::
 ::::
