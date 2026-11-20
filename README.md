@@ -15,7 +15,7 @@ Las notas y los estados quedan en ese navegador. Usa **Exportar** antes de cambi
 
 ## Antes de la primera clase
 
-[Responder la encuesta diagnóstica de R](https://01a10334-b601-4f38-05a8-061a7664f1d3.share.connect.posit.cloud/) (aprox. 5 minutos).
+**Encuesta diagnóstica de R cerrada.** Retiramos el enlace porque caducó el formulario inicial.
 
 [Resultados en vivo de la cohorte](https://agscl.github.io/repr2026/resultados/) · [Código de la encuesta Shiny](https://github.com/AGSCL/repr2026/tree/main/encuesta).
 

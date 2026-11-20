@@ -4,7 +4,6 @@ nombre   <- "Andrés"
 apellido <- "González Santa Cruz"
 correo   <- "37744754+AGSCL@users.noreply.github.com"
 fecha    <- "2026-10-03"
-encuesta <- "https://01a10334-b601-4f38-05a8-061a7664f1d3.share.connect.posit.cloud/"
 paquetes <- c("renv", "data.tree", "here")
 carpetas <- c("_data", "_doc", "_figures", "_hist", "_lib", "_lit", "_outputs")
 
@@ -112,7 +111,7 @@ bloque <- c(inicio, paste("#", titulo), "",
   "El ZIP contiene solo `index.html`. Descomprímelo y ábrelo con doble clic. Para publicarlo, sube ese archivo a la carpeta que uses como origen de GitHub Pages. No requiere R, Shiny, instalación ni servidor para abrirlo en tu equipo.", "",
   "Las notas y los estados quedan en ese navegador. Usa **Exportar** antes de cambiar de equipo, navegador o ubicación del HTML; usa **Importar** para recuperarlos. Las vistas docentes y el registro de comprobaciones están dentro de la aplicación.", "",
   "## Antes de la primera clase", "",
-  paste0("[Responder la encuesta diagnóstica de R](", encuesta, ") (aprox. 5 minutos)."), "",
+  "**Encuesta diagnóstica de R cerrada.** Retiramos el enlace porque caducó el formulario inicial.", "",
   "[Resultados en vivo de la cohorte](https://agscl.github.io/repr2026/resultados/) · [Código de la encuesta Shiny](https://github.com/AGSCL/repr2026/tree/main/encuesta).", "",
   "## Taller de la clase 1", "",
   "[Material de clase 2026 (PDF)](https://github.com/AGSCL/repr2026/blob/main/2026-1%20Reproducibilidad.pdf) · [Enunciado original del ejercicio ENSSEX](https://github.com/AGSCL/repr2026/blob/main/Enunciado-ENSSEX.md).",
