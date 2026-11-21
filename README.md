@@ -5,15 +5,11 @@
 
 [Diapositivas y ejercicio paso a paso](https://agscl.github.io/repr2026/clase-git/) · [PDF](https://agscl.github.io/repr2026/clase-git/clase-git.pdf) · [Kit ENSSEX del ejercicio (ZIP)](https://github.com/AGSCL/repr2026/raw/refs/heads/main/clase-git/kit-enssex.zip).
 
-[Abrir el taller en el navegador](https://agscl.github.io/repr2026/_outputs/taller-git-autocontenido/index.html) · [Descargar el taller en ZIP](https://agscl.github.io/repr2026/_outputs/taller-git-autocontenido.zip).
+[Taller para hacer por tu cuenta: ocho etapas con ensayo y capturas](https://agscl.github.io/repr2026/taller-git/) · [PDF](https://agscl.github.io/repr2026/taller-git/taller-git.pdf) · [Repositorio de práctica](https://github.com/AGSCL/enssex-andresgsta).
 
-Complemento de la clase del jueves 19 de noviembre de 2026 (18:00–21:30). Practica una acción a la vez: abrir, cambiar, guardar una versión, sincronizar o recuperar. La simulación no ejecuta Git ni confirma trabajo en RStudio.
+Complemento de la clase del jueves 19 de noviembre de 2026 (18:00–21:30). Copias el análisis ENSSEX del profesor con un fork, cambias el tramo de edad, guardas la versión, la subes y propones el cambio con un pull request. Se hace con GitHub Desktop, en unos 45 minutos. En cada etapa hay un ensayo: un dibujo que muestra qué lugar cambia, sin ejecutar Git.
 
-El ZIP contiene solo `index.html`. Descomprímelo y ábrelo con doble clic. Para publicarlo, sube ese archivo a la carpeta que uses como origen de GitHub Pages. No requiere R, Shiny, instalación ni servidor para abrirlo en tu equipo.
-
-Las notas y los estados quedan en ese navegador. Usa **Exportar** antes de cambiar de equipo, navegador o ubicación del HTML; usa **Importar** para recuperarlos. Las vistas docentes y el registro de comprobaciones están dentro de la aplicación.
-
-## Shiny: de una tabla a una app
+## Clase 4- Shiny: de una tabla a una app
 
 [Diapositivas con editor en vivo y pasos para publicar](https://agscl.github.io/repr2026/clase-shiny/) · [PDF](https://agscl.github.io/repr2026/clase-shiny/clase-shiny.pdf) · [Código de la app](https://github.com/AGSCL/repr2026/blob/main/_lib/kit-shiny/app.R).
 
@@ -60,7 +56,7 @@ Para trabajar en clase, parte del enunciado y de los datos. Las pautas y las her
 | Carpeta | Qué contiene |
 | --- | --- |
 | `_data/` | Datos de entrada y diccionarios. |
-| `_outputs/` | Archivos producidos para entregar: tablas, documentos y el HTML/ZIP de Git. |
+| `_outputs/` | Archivos producidos para entregar: tablas y documentos. |
 | `_figures/` | Figuras exportadas, como PNG y SVG. |
 | `_lit/` | Bibliografía. |
 | `_doc/` | Documentación y entorno; `docencia/` contiene las pautas con respuestas. |
@@ -69,6 +65,7 @@ Para trabajar en clase, parte del enunciado y de los datos. Las pautas y las her
 | `resultados/` | Tablero web de la encuesta publicado en GitHub Pages. Se mantiene esta ruta para conservar su enlace público. |
 | `clase-git/` | Diapositivas de Git y GitHub publicadas en GitHub Pages (`index.html`), su fuente (`_clase_git.qmd`) y `kit-enssex.zip`, que reúne `_lib/kit-enssex/index.qmd` y `_data/enssex_base1.csv`. |
 | `clase-shiny/` | Diapositivas de Shiny publicadas en GitHub Pages (`index.html`) y su fuente (`_clase_shiny.qmd`). La app, su variante con la ENSSEX y la receta de GitHub Actions están en `_lib/kit-shiny/`; las capturas, en `_figures/shiny/`. |
+| `taller-git/` | Taller de Git para hacer por cuenta propia, publicado en GitHub Pages (`index.html`), con su fuente (`_taller_git.qmd`) y su PDF. Las capturas están en `_figures/taller-git/`. |
 | `encuesta/` | Código de la encuesta Shiny y preparación del tablero. |
 | `TallerUDP/` | Fuente del tutor SWIRL opcional para ENSSEX y precios; `TallerUDP.zip` es su descarga. |
 
@@ -103,7 +100,8 @@ repr2026
  |--renv
  |--renv.lock
  |--repr2026.Rproj
- `--resultados
+ |--resultados
+ `--taller-git
 ```
 
 </details>
