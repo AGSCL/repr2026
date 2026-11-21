@@ -1,0 +1,16 @@
+name: Publicar app en GitHub Pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+
+jobs:
+  shinylive:
+    uses: posit-dev/r-shinylive/.github/workflows/deploy-app.yaml@actions-v1
+    with:
+      app-dir: app
+      shinylive-version: shinylive
+    permissions:
+      pages: write
+      id-token: write

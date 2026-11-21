@@ -13,6 +13,10 @@ El ZIP contiene solo `index.html`. Descomprímelo y ábrelo con doble clic. Para
 
 Las notas y los estados quedan en ese navegador. Usa **Exportar** antes de cambiar de equipo, navegador o ubicación del HTML; usa **Importar** para recuperarlos. Las vistas docentes y el registro de comprobaciones están dentro de la aplicación.
 
+## Shiny: de una tabla a una app
+
+[Diapositivas con editor en vivo y pasos para publicar](https://agscl.github.io/repr2026/clase-shiny/) · [PDF](https://agscl.github.io/repr2026/clase-shiny/clase-shiny.pdf) · [Código de la app](https://github.com/AGSCL/repr2026/blob/main/_lib/kit-shiny/app.R).
+
 ## Antes de la primera clase
 
 **Encuesta diagnóstica de R cerrada.** Retiramos el enlace porque caducó el formulario inicial.
@@ -64,6 +68,7 @@ Para trabajar en clase, parte del enunciado y de los datos. Las pautas y las her
 | `_hist/` | Versiones anteriores; el desarrollo anterior del taller Git queda archivado localmente e ignorado por Git. |
 | `resultados/` | Tablero web de la encuesta publicado en GitHub Pages. Se mantiene esta ruta para conservar su enlace público. |
 | `clase-git/` | Diapositivas de Git y GitHub publicadas en GitHub Pages (`index.html`), su fuente (`_clase_git.qmd`) y `kit-enssex.zip`, que reúne `_lib/kit-enssex/index.qmd` y `_data/enssex_base1.csv`. |
+| `clase-shiny/` | Diapositivas de Shiny publicadas en GitHub Pages (`index.html`) y su fuente (`_clase_shiny.qmd`). La app, su variante con la ENSSEX y la receta de GitHub Actions están en `_lib/kit-shiny/`; las capturas, en `_figures/shiny/`. |
 | `encuesta/` | Código de la encuesta Shiny y preparación del tablero. |
 | `TallerUDP/` | Fuente del tutor SWIRL opcional para ENSSEX y precios; `TallerUDP.zip` es su descarga. |
 
@@ -92,6 +97,7 @@ repr2026
  |--_lit
  |--_outputs
  |--clase-git
+ |--clase-shiny
  |--ejemplo_google_colab.ipynb
  |--encuesta
  |--renv
