@@ -98,6 +98,12 @@ format:
             img.addEventListener("keydown", function (e) { if (e.key === "Enter") ampliar(); });
           });
 
+          // Zoom con doble clic: usa el zoom que ya trae reveal.js (el de Alt + clic); otro doble clic vuelve
+          document.querySelector(".reveal .slides").addEventListener("dblclick", function (e) {
+            if (e.target.closest("a, button, img.captura")) return;
+            e.target.dispatchEvent(new MouseEvent("mousedown", { bubbles: true, altKey: true, ctrlKey: true, clientX: e.clientX, clientY: e.clientY }));
+          });
+
           // Editor vivo: el código de cada bloque .vivo se abre en el editor de shinylive.io.
           // El enlace usa el formato del botón "Share" de shinylive: #code= seguido del archivo comprimido con LZString.
           if (/print-pdf/.test(location.search)) return;   // en el PDF queda el código a la vista
@@ -122,6 +128,12 @@ format:
 # Parte 1 · La idea {.seccion background-color="#8f4a4a"}
 
 5 minutos. Después, una pieza por etapa.
+
+::: {.notes}
+- 5 min. Todavía no se instala nada.
+- Meta de hoy: cada persona sale con una app propia publicada.
+- Teclas: **S** abre estas notas; **doble clic** amplía; **O** muestra todas las láminas; **F** pantalla completa.
+:::
 
 ## Ya usó una app Shiny
 
@@ -149,7 +161,10 @@ Hoy construirá las dos mitades, primero con ejemplos chicos y después con dato
 ::::
 
 ::: {.notes}
-De la clase 5 de 2024: para mí Shiny no es tanto una herramienta de reproducibilidad como de comunicación de resultados, al servicio de la ciencia abierta.
+- Gancho: la encuesta del primer día era Shiny (`encuesta/app.R` en el repo).
+- Shiny = paquete de R para hacer apps web. No pide HTML ni JavaScript.
+- Para mí no es tanto reproducibilidad como comunicación de resultados y ciencia abierta.
+- Término. **App web**: página que responde a lo que hace quien la visita.
 :::
 
 ## De una tabla fija a una app
@@ -166,6 +181,12 @@ En una app, quien visita la página **mueve un control** y el gráfico y la tabl
 ![](../_figures/shiny/app-final.png){width="100%" fig-alt="La app terminada: a la izquierda un menú para elegir departamento; a la derecha un gráfico de barras con el porcentaje de hombres y de mujeres admitidos y, debajo, una tabla con postulantes, admitidos y porcentaje."}
 :::
 ::::
+
+::: {.notes}
+- Tabla fija: una pregunta, una respuesta. App: quien visita elige la pregunta.
+- La imagen es la app que harán en la parte 3 (admisión a Berkeley, 1973).
+- No explicar todavía la paradoja: la descubren en el paso 4.
+:::
 
 ## Toda app tiene dos mitades
 
@@ -200,7 +221,11 @@ Cinco etapas, una pieza cada una: la página, un control, un resultado, un gráf
 :::
 
 ::: {.notes}
-ui es el front-end: lo que definimos y personalizamos. server es el back-end: la lógica que genera los resultados. Lee input$..., y entrega output$... por medio de las funciones render.
+- **ui** = front-end = lo que se ve: controles y lugares para resultados.
+- **server** = back-end = una función de R que calcula.
+- **input** = lo que entra desde un control (`input$nombre`). **output** = lo que sale (`output$nombre`).
+- `shinyApp(ui, server)` las une.
+- Analogía: restaurante. ui = la carta y la mesa; server = la cocina.
 :::
 
 ## Ruta de hoy
@@ -218,9 +243,24 @@ Cada parte deja algo funcionando. Si una posterior falla, lo anterior sigue en p
 De la clase de Git solo necesita su cuenta de GitHub y GitHub Desktop. Los datos vienen con R: no hay archivos que copiar.
 :::
 
+[Un doble clic amplía cualquier parte de la lámina. Otro doble clic la devuelve.]{.chico}
+
+::: {.notes}
+- Cuatro partes; cada una deja algo funcionando.
+- Tiempos sugeridos: parte 2, 30 min; parte 3, 35; parte 4, 30; parte 5, 25.
+- Meta mínima: el enlace del paso 7.
+- Requisitos: cuenta de GitHub y GitHub Desktop. No se usa el repositorio `enssex-…`.
+:::
+
 # Parte 2 · Las partes de una app {.seccion background-color="#8f4a4a"}
 
 En el navegador. Etapas 1 a 5.
+
+::: {.notes}
+- En el navegador, etapas 1 a 5, unos 30 min.
+- Ritmo de cada etapa: leer la idea, hacer, comprobar.
+- Si shinylive.io no carga: proyecto yo, y pegan el código en RStudio después del paso 1.
+:::
 
 ## Cómo usar el editor vivo
 
@@ -248,6 +288,14 @@ Nada se instala: R corre dentro de su navegador.
 :::
 :::
 ::::
+
+::: {.notes}
+- Izquierda: código. Derecha: app. ▶ = volver a correr (Ctrl + Shift + Enter).
+- Panel de abajo = consola de R. Ahí salen los errores, en rojo.
+- Primera carga lenta: el navegador baja R completo. Después queda guardado.
+- F5 devuelve el código original. Lo que editan no se guarda.
+- Términos. **shinylive**: Shiny corriendo en el navegador, sin servidor. **webR**: R preparado para navegador (WebAssembly).
+:::
 
 ## Etapa 1 · La página: `ui` {.etapa}
 
@@ -285,6 +333,13 @@ shinyApp(ui, server)
 :::
 ::::
 
+::: {.notes}
+- `fluidPage()` = una página que se adapta al ancho de la pantalla.
+- Un `server` vacío es válido: `function(input, output) {}`.
+- Si no ven el cambio: no presionaron ▶.
+- Si borran una comilla o un paréntesis: mensaje rojo en la consola de abajo. F5 y de nuevo.
+:::
+
 ## Etapa 2 · Un control: `input` {.etapa}
 
 :::: {.columns}
@@ -319,6 +374,13 @@ shinyApp(ui, server)
 :::
 :::
 ::::
+
+::: {.notes}
+- `sliderInput(id, etiqueta, min, max, value)`. El primer argumento es el nombre interno.
+- Otros controles: `selectInput` (menú), `textInput`, `numericInput`, `checkboxInput`, `radioButtons`, `dateInput`.
+- Las piezas de `ui` se separan con comas.
+- Falta una coma: error `unexpected symbol`. Sobra una al final: puede dar `argument is missing, with no default`.
+:::
 
 ## Etapa 3 · Un resultado: `output` {.etapa}
 
@@ -360,6 +422,14 @@ shinyApp(ui, server)
 :::
 ::::
 
+::: {.notes}
+- Pareja: `textOutput("mensaje")` en ui y `output$mensaje <- renderText({ })` en server.
+- `input$edad` se lee solo dentro de un `render…()` o un `reactive()`.
+- Término. **Reactividad**: Shiny vuelve a ejecutar el bloque cuando cambia el input que ese bloque usa.
+- Nombres distintos en ui y server: no hay error, el resultado queda en blanco. El punto 2 de la tarea lo muestra.
+- Error `Can't access reactive value … outside of reactive consumer`: se usó `input$` fuera de render o reactive.
+:::
+
 ## Etapa 4 · Un gráfico que responde {.etapa}
 
 :::: {.columns}
@@ -399,6 +469,13 @@ shinyApp(ui, server)
 :::
 :::
 ::::
+
+::: {.notes}
+- Parejas: `textOutput`–`renderText`, `plotOutput`–`renderPlot`, `tableOutput`–`renderTable`, `verbatimTextOutput`–`renderPrint`.
+- `rnorm(n, mean, sd)` = n números al azar. Por eso el dibujo cambia aunque no toquen nada.
+- Dentro de `renderPlot` va cualquier gráfico: `hist`, `barplot`, `plot`, ggplot.
+- Colores: nombre en inglés (`"tomato"`) o código (`"#bc7777"`).
+:::
 
 ## Etapa 5 · Ordenar la pantalla y conectar un control {.etapa}
 
@@ -449,6 +526,14 @@ shinyApp(ui, server)
 :::
 ::::
 
+::: {.notes}
+- `sidebarLayout(sidebarPanel(controles), mainPanel(resultados))`. `titlePanel` = título.
+- Otros diseños: `fluidRow` + `column` (grilla de 12 columnas), `tabsetPanel` (pestañas).
+- Idea de la etapa: un control no hace nada hasta que server usa `input$color`.
+- Solución: `hist(edades, col = input$color, …)`.
+- Error frecuente: escribir `"input$color"` entre comillas.
+:::
+
 ## Antes de seguir: ¿`ui` o `server`? {.etapa}
 
 ¿En qué mitad va cada línea?
@@ -472,9 +557,21 @@ shinyApp(ui, server)
 | Cálculo del resultado | `server` | `output$grafico <- renderPlot({ … })` |
 | Unión | al final | `shinyApp(ui, server)` |
 
+::: {.notes}
+- Respuestas: 1 y 3 van en ui; 2 y 4 van en server.
+- Regla rápida: termina en `Input` u `Output` → ui. Empieza con `render` o usa `input$` → server.
+- Pedir que respondan por el chat antes de avanzar la lámina.
+:::
+
 # Parte 3 · Su app con datos reales {.seccion background-color="#8f4a4a"}
 
 En RStudio, en un repositorio nuevo. Pasos 1 a 6.
+
+::: {.notes}
+- RStudio y un repositorio nuevo. Pasos 1 a 6, unos 35 min.
+- Los datos vienen con R (`UCBAdmissions`): no hay archivos que copiar.
+- Quien no pueda instalar: posit.cloud, o trabajar con la persona de al lado.
+:::
 
 ## Paso 1 · Instale los paquetes
 
@@ -500,6 +597,13 @@ install.packages(c("shiny", "rsconnect"))
 :::
 ::::
 
+::: {.notes}
+- `shiny` hace la app. `rsconnect` crea `manifest.json` en la parte 5.
+- Si pregunta *Do you want to install from sources…?*: responder **No**.
+- Un proyecto con renv abierto (clase 1) instala en su propia biblioteca. Por eso File → Close Project.
+- Comprobar: `library(shiny)` sin error; `packageVersion("shiny")`.
+:::
+
 ## Paso 2 · Cree un repositorio para la app
 
 :::: {.columns}
@@ -523,6 +627,13 @@ Es lo mismo de la clase de Git.
 :::
 ::::
 
+::: {.notes}
+- Igual al paso 5 de la clase de Git: File → New repository.
+- Carpeta por defecto: `Documentos\GitHub\shiny-nombre`.
+- La carpeta `app` se crea en el Explorador: clic derecho → Nuevo → Carpeta.
+- Git no muestra carpetas vacías: en Changes todavía no aparece nada. Es normal.
+:::
+
 ## Paso 3 · Escriba la app
 
 :::: {.columns}
@@ -543,6 +654,12 @@ Una app vive en su propia carpeta. Esta no necesita nada más: los datos vienen 
 :::
 :::
 ::::
+
+::: {.notes}
+- Nombre exacto `app.R`: con ese nombre RStudio muestra Run App, y shinylive y Connect Cloud la encuentran.
+- Tras Save As, revisar que quedó dentro de `app`: pasar el cursor sobre la pestaña del archivo muestra la ruta.
+- No aparece Run App: el archivo no se llama `app.R`, o falta `shinyApp(ui, server)` al final.
+:::
 
 ## El código de su app {.etapa .codigo}
 
@@ -571,6 +688,14 @@ El código no tiene tildes ni ñ, tampoco en los textos: en algunos computadores
 :::
 ::::
 
+::: {.notes}
+- `UCBAdmissions`: tabla de 3 dimensiones, Admit × Gender × Dept. 4.526 postulantes.
+- `apply(datos, c(1, 2), sum)` suma los seis departamentos. `datos[, , "A"]` deja solo el A.
+- `reactive({ })` = cálculo con nombre que se reutiliza. Se llama con paréntesis: `conteo()`.
+- Sin paréntesis: error `object of type 'closure' is not subsettable`.
+- `LETTERS[1:6]` = "A" a "F". `as.integer` evita decimales en la tabla. `digits = 1` deja un decimal en el porcentaje.
+:::
+
 ## Paso 4 · Córrala y hágale una pregunta a los datos
 
 :::: {.columns}
@@ -594,7 +719,12 @@ Una tabla fija habría mostrado solo el total. La app deja ver que la diferencia
 ::::
 
 ::: {.notes}
-Es la paradoja de Simpson. Las mujeres postulaban más a los departamentos con menos cupos (C a F), donde se rechazaba a casi todo el mundo. Bickel, Hammel y O'Connell, Science, 1975.
+- Run App = Ctrl + Shift + Enter. La flecha junto al botón elige dónde abre: ventana, panel Viewer o navegador.
+- `Listening on http://127.0.0.1:…` = su computador hace de servidor. Consola ocupada.
+- Detener: botón Stop rojo, o Esc con el cursor en la consola.
+- Pantalla gris = la app se cayó. El motivo está en la consola de R.
+- **Paradoja de Simpson.** Total: hombres 44,5 %, mujeres 30,4 %. Por departamento (H / M): A 62 / 82, B 63 / 68, C 37 / 34, D 33 / 35, E 28 / 24, F 6 / 7.
+- Explicación: las mujeres postulaban más a los departamentos C a F, donde casi nadie entraba. Bickel, Hammel y O'Connell, *Science*, 1975.
 :::
 
 ## Paso 5 · Hágala suya
@@ -619,6 +749,12 @@ Guarde y presione **Run App** otra vez.
 :::
 ::::
 
+::: {.notes}
+- Guardar (Ctrl + S) antes de Run App. Si la app sigue abierta: Reload App.
+- `unexpected symbol` o `unexpected string` = falta una coma o una comilla.
+- El título sin tildes.
+:::
+
 ## Paso 6 · Guarde y suba (commit y push)
 
 :::: {.columns}
@@ -639,9 +775,21 @@ Su app ya está guardada y respaldada, pero nadie más puede usarla: solo corre 
 :::
 ::::
 
+::: {.notes}
+- Commit = versión guardada. Publish repository = el primer push: crea el repositorio en GitHub.
+- Desmarcar *Keep this code private*: GitHub Pages y Connect Cloud gratis piden repositorio público.
+- Si lo olvidaron: en github.com, Settings → General → Danger Zone → Change repository visibility.
+:::
+
 # Parte 4 · Publicar sin servidor {.seccion background-color="#8f4a4a"}
 
 Con shinylive: primero un enlace, después GitHub Pages. Pasos 7 a 9.
+
+::: {.notes}
+- Dos niveles: un enlace (1 min) y GitHub Pages (unos 10 min, casi todo espera).
+- Pasos 7 a 9, unos 30 min.
+- Mientras Actions corre se puede avanzar al paso 10.
+:::
 
 ## Shinylive: R viaja al navegador
 
@@ -664,6 +812,12 @@ Es lo que usó en las etapas 1 a 5.
 :::
 ::::
 
+::: {.notes}
+- Shiny normal necesita un servidor con R encendido. GitHub Pages es un sitio estático: solo entrega archivos.
+- shinylive manda R al navegador (webR). El servidor pasa a ser el computador de quien visita.
+- Límites: no todos los paquetes existen para webR; primera carga lenta; los datos quedan a la vista.
+:::
+
 ## Paso 7 · Su app en un enlace
 
 :::: {.columns}
@@ -684,6 +838,14 @@ La dirección es larga porque **contiene** su app completa. Ya tiene algo para c
 :::
 :::
 ::::
+
+::: {.notes}
+- En shinylive.io/r/editor: seleccionar todo (Ctrl + A), pegar (Ctrl + V), ▶.
+- Share → *Application URL* → Copy URL. *Hide header* quita la barra azul de arriba.
+- *Editor URL* = enlace con el código editable. *Application URL* = solo la app.
+- El enlace no se actualiza: es una foto del código de ese momento.
+- Meta mínima de la clase: que todos tengan este enlace.
+:::
 
 ## Paso 8 · Dígale a GitHub Pages que publique con Actions
 
@@ -708,6 +870,13 @@ No hay botón para guardar: queda guardado al elegir.
 :::
 :::
 ::::
+
+::: {.notes}
+- Ruta: Settings → Pages → Build and deployment → Source: GitHub Actions.
+- No ven Settings: no iniciaron sesión, o están en el repositorio de otra persona.
+- Términos. **Workflow**: la receta (archivo .yml). **Run**: una ejecución. **Job**: una tarea de la receta. **Runner**: el computador de GitHub que la ejecuta.
+- GitHub Actions es gratis en repositorios públicos.
+:::
 
 ## Paso 9 · Deje la receta y espere el visto verde {.etapa .receta}
 
@@ -737,9 +906,25 @@ No hay botón para guardar: queda guardado al elegir.
 :::
 ::::
 
+::: {.notes}
+- Ruta exacta: `.github/workflows/publicar-app.yml`. Empieza con punto.
+- YAML: la sangría con espacios es parte del significado. Copiar con el botón, no a mano.
+- `on: push` = corre con cada push a main. `workflow_dispatch` = botón *Run workflow* para lanzarla a mano.
+- `uses:` = receta oficial de Posit. `app-dir: app` = dónde está `app.R`. `shinylive-version: shinylive` = versión de CRAN.
+- Círculo amarillo = corriendo. Visto verde = listo. Equis roja = falló: clic y mirar el paso en rojo.
+- Falla típica: *Source* sin cambiar (paso 8). Corregir y **Re-run all jobs**.
+- Después: Fetch y Pull en Desktop. Si no, el próximo push sale rechazado.
+:::
+
 # Parte 5 · Publicar con servidor {.seccion background-color="#8f4a4a"}
 
 Posit Connect Cloud, desde GitHub. Pasos 10 a 13.
+
+::: {.notes}
+- Connect Cloud = un servidor de Posit que corre R de verdad.
+- Pasos 10 a 13, unos 25 min.
+- Si falta tiempo o falla: lo muestro con mi repositorio ya publicado.
+:::
 
 ## Paso 10 · Prepare la lista de paquetes
 
@@ -767,6 +952,14 @@ Es la misma idea del `renv.lock` de la primera clase: dejar por escrito el entor
 :::
 ::::
 
+::: {.notes}
+- `manifest.json` = versión de R y lista de paquetes con sus versiones. Connect Cloud instala lo mismo.
+- `writeManifest()` escribe en la carpeta de trabajo. Por eso el cambio de carpeta.
+- Comprobar: `getwd()` debe terminar en `/app`.
+- Si el archivo quedó en otra carpeta: borrarlo y repetir.
+- Si el push sale rechazado: primero Pull origin (por el archivo del paso 9).
+:::
+
 ## Paso 11 · Cree su cuenta en Connect Cloud
 
 :::: {.columns}
@@ -787,6 +980,12 @@ Así no crea otra contraseña, y Connect Cloud queda enlazado a la cuenta donde 
 :::
 :::
 ::::
+
+::: {.notes}
+- Sign Up → GitHub → Authorize.
+- Plan gratuito: solo repositorios públicos.
+- No confundir: **Posit Cloud** = RStudio en línea. **Posit Connect Cloud** = publicar.
+:::
 
 ## Paso 12 · Publique la app
 
@@ -811,6 +1010,14 @@ Así no crea otra contraseña, y Connect Cloud queda enlazado a la cuenta donde 
 :::
 ::::
 
+::: {.notes}
+- Publish → Shiny → repositorio → Branch `main` → Primary file `app/app.R` → Publish.
+- La primera vez pide instalar la aplicación de Connect Cloud en GitHub y darle acceso al repositorio.
+- Si el repositorio no aparece: falta ese acceso, o el repositorio es privado.
+- El registro (*logs*) muestra la instalación de paquetes. Tarda unos minutos.
+- Falla típica: `manifest.json` no está en `app/`, o no se hizo push.
+:::
+
 ## Paso 13 · Cambie algo y mire sus tres direcciones
 
 :::: {.columns}
@@ -829,7 +1036,18 @@ Así no crea otra contraseña, y Connect Cloud queda enlazado a la cuenta donde 
 :::
 ::::
 
+::: {.notes}
+- Con el push, Connect Cloud se republica sola (*Automatically publish on push*) y Actions corre de nuevo.
+- El enlace del paso 7 no cambia: el código viaja dentro de la dirección.
+- Idea de cierre: el repositorio es la fuente; las publicaciones salen de él.
+- Si no ven el cambio: Ctrl + F5 (caché del navegador). Mirar Actions y el registro de Connect Cloud.
+:::
+
 # Cierre {.seccion background-color="#8f4a4a"}
+
+::: {.notes}
+- 5 min: comparar, repasar, encuesta.
+:::
 
 ## Tres formas de publicar la misma app {.etapa}
 
@@ -846,6 +1064,12 @@ Así no crea otra contraseña, y Connect Cloud queda enlazado a la cuenta donde 
 En los tres casos el código queda a la vista de cualquiera. Con datos que identifican personas, ninguna sirve tal como está.
 :::
 
+::: {.notes}
+- Diferencia de fondo: R corre en el navegador (shinylive) o en un servidor (Connect Cloud).
+- Con datos sensibles, ninguna de las tres tal como está.
+- Otras opciones con servidor: shinyapps.io, un Posit Connect institucional, un Shiny Server propio.
+:::
+
 ## Si algo falla {.etapa}
 
 | Lo que ve | Qué hacer |
@@ -858,6 +1082,13 @@ En los tres casos el código queda a la vista de cualquiera. Con datos que ident
 | La dirección de GitHub Pages da **404** | Espere a que Actions termine con visto verde y recargue. |
 | Connect Cloud no publica | Revise que `manifest.json` esté en la carpeta `app` y que hizo push. |
 | Nada de lo anterior resulta | Su enlace del paso 7 sigue funcionando. Avise y siga con la persona de al lado. |
+
+::: {.notes}
+- Lámina de consulta: volver aquí cuando alguien se trabe.
+- Orden para revisar un error de Shiny: 1) leer la consola de R; 2) comas y paréntesis; 3) mismo nombre en ui y server; 4) `input$` dentro de render o reactive.
+- `print()` o `cat()` dentro de server escriben en la consola: sirven para mirar un valor.
+- Último respaldo: el enlace del paso 7.
+:::
 
 ## Lo que hizo hoy
 
@@ -877,6 +1108,12 @@ En los tres casos el código queda a la vista de cualquiera. Con datos que ident
 :::
 ::::
 
+::: {.notes}
+- Una frase por parte: piezas, app con datos reales, tres publicaciones, actualización con push.
+- Desafío ENSSEX: `app-enssex.R` más `enssex_base1.csv` copiado a la carpeta `app`.
+- Quedó fuera: temas con bslib, `observeEvent`, `reactiveVal`, módulos, tableros. Está en la clase 2025 de José.
+:::
+
 ## Fuentes
 
 ::: {.chico}
@@ -888,6 +1125,10 @@ En los tres casos el código queda a la vista de cualquiera. Con datos que ident
 - Bickel, P. J., Hammel, E. A. y O'Connell, J. W. (1975). Sex bias in graduate admissions: Data from Berkeley. *Science*, 187(4175), 398–404. Datos incluidos en R como `UCBAdmissions`.
 
 Código de estas diapositivas: <https://github.com/AGSCL/repr2026>
+:::
+
+::: {.notes}
+- `UCBAdmissions` viene con R, en el paquete `datasets`. Ayuda: `?UCBAdmissions`.
 :::
 
 ## Antes de irse: ¿cómo estuvo la clase?
@@ -904,3 +1145,8 @@ Cuente qué le sirvió, qué quedó confuso y qué cambiaría. Con eso se ajusta
 ![](../_figures/git/piolin-gracias.gif){height="300" fig-alt="Piolín da las gracias."}
 :::
 ::::
+
+::: {.notes}
+- Dejar esta lámina proyectada dos minutos.
+- Decir por dónde me envían sus direcciones, si las voy a pedir.
+:::
