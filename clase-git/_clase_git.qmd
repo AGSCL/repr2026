@@ -1084,6 +1084,7 @@ Para seguir practicando sin riesgo: [taller de Git, paso a paso](https://agscl.g
 
 ::: {.chico}
 - Plaza-Vega, F. (2024). *Mini curso: Quarto y GitHub Pages*. III Jornadas de Ingeniería Estadística, Universidad de Santiago de Chile. <https://github.com/FranPlaza/Quarto-Github>
+- Blischak, J. D., Davenport, E. R. y Wilson, G. (2016). A quick introduction to version control with Git and GitHub. *PLoS Computational Biology*, 12(1), e1004668. <https://doi.org/10.1371/journal.pcbi.1004668>
 - Epiverse-TRACE y The Carpentries. *Version Control with Git in RStudio*. CC-BY 4.0. <https://epiverse-trace.github.io/git-rstudio-basics/>
 - The Turing Way Community y Scriberia (2019). *Illustrations from the Turing Way*. CC-BY 4.0. <https://doi.org/10.5281/zenodo.3332807>
 - Chacon, S. y Straub, B. *Pro Git*. Apress. CC BY-NC-SA 3.0. <https://git-scm.com/book/es/v2>
