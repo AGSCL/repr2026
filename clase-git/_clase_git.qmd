@@ -61,6 +61,11 @@ format:
 
 5 minutos. Después, cada idea llega junto con el paso en que se usa.
 
+::: {.notes}
+- 5 min. La idea, antes de instalar nada.
+- Teclas: **S** abre estas notas; **O** muestra todas las láminas; **F** pantalla completa.
+:::
+
 ## ¿Le suena esta carpeta?
 
 :::: {.columns}
@@ -88,8 +93,9 @@ informe_final_AHORA_SI.docx
 ::::
 
 ::: {.notes}
-Pedir dos o tres sufijos en voz alta: _final, _v2, _corregido, _ahorasi, la fecha. La regla: nunca use la palabra "final" en un nombre de archivo.
-El meme de la derecha dice: "Tú usas control de versiones. Yo guardo versiones en archivos separados y espero no confundirme. No somos iguales."
+- Pedir dos o tres sufijos en voz alta: _final, _v2, _corregido, la fecha.
+- Regla: nunca la palabra "final" en un nombre de archivo.
+- Meme de la derecha: "Tú usas control de versiones. Yo guardo versiones en archivos separados y espero no confundirme. No somos iguales".
 :::
 
 ## Ya usa control de versiones
@@ -115,6 +121,12 @@ Google Docs lo hace con **un** documento. Un análisis es una **carpeta**: datos
 :::
 ::::
 
+::: {.notes}
+- Puente: Google Docs → Archivo → Historial de versiones.
+- **Control de versiones** = guardar la historia de un trabajo, no solo su último estado.
+- Límite de Docs: un documento a la vez. Un análisis es una carpeta entera.
+:::
+
 ## Git hace eso con la carpeta completa
 
 :::: {.columns}
@@ -136,6 +148,13 @@ En Word o Excel guarda la versión, pero no muestra qué cambió por dentro.
 :::
 :::
 ::::
+
+::: {.notes}
+- **Git** = programa que guarda versiones de una carpeta. De 2005, software libre.
+- Diferencia con Docs: aquí cada persona decide cuándo se guarda una versión y le pone un mensaje.
+- Texto plano (`.R`, `.qmd`, `.csv`): Git muestra el cambio línea por línea. Word o Excel: guarda la versión, sin detalle.
+- Término. **Diff**: la comparación entre dos versiones.
+:::
 
 ## Lo que logrará hoy
 
@@ -160,9 +179,20 @@ Abra estas diapositivas en su computador y avance a su ritmo:
 :::
 ::::
 
+::: {.notes}
+- Seis logros. El sexto es la parte 3.
+- El video es un meme de la primera vez con GitHub: sentirse así es normal.
+- Que abran las diapositivas en su propio computador.
+:::
+
 # Parte 2 · Instalar y subir {.seccion background-color="#8f4a4a"}
 
 Cada persona en su computador. Pasos 1 a 10.
+
+::: {.notes}
+- Individual, pasos 1 a 10.
+- Quien termina antes ayuda a quien está al lado.
+:::
 
 ## Cómo leer cada paso
 
@@ -196,6 +226,12 @@ Dentro de los archivos y en los mensajes de commit puede escribir normalmente.
 :::
 ::::
 
+::: {.notes}
+- Caja verde = comprobación. Caja gris = el comando equivalente. Caja rosada = cuidado.
+- Regla: no avanzar sin comprobar.
+- Nombres sin tildes, ñ ni espacios: evitan problemas en direcciones web y rutas.
+:::
+
 ## Paso 1 · Cree su cuenta en GitHub
 
 :::: {.columns}
@@ -219,6 +255,12 @@ Dentro de los archivos y en los mensajes de commit puede escribir normalmente.
 :::
 :::
 ::::
+
+::: {.notes}
+- El nombre de usuario es público y va en la dirección `usuario.github.io`.
+- GitHub envía un código al correo. Revisar la carpeta de spam.
+- Si GitHub bloquea por muchas cuentas nuevas desde la misma red: usar los datos del teléfono.
+:::
 
 ## Paso 2 · Instale Git
 
@@ -246,6 +288,13 @@ git --version
 :::
 :::
 ::::
+
+::: {.notes}
+- Git for Windows instala también Git Bash, que es una terminal.
+- Next en todas las pantallas: las opciones por defecto sirven.
+- Mac: `git --version` ofrece instalar las herramientas de Apple.
+- Término. **Terminal**: ventana donde se escriben comandos.
+:::
 
 ## Paso 3 · Preséntese a Git
 
@@ -279,6 +328,13 @@ Cada commit que haga quedará firmado con ese nombre. Así su pareja sabrá qui�
 :::
 ::::
 
+::: {.notes}
+- `git config --global` guarda nombre y correo para todos los repositorios de ese computador.
+- Usar el correo de la cuenta de GitHub: así los commits quedan asociados a esa cuenta.
+- Que la terminal no responda nada es lo normal.
+- Revisar con `git config --global --list`.
+:::
+
 ## Botones o comandos: el mismo lugar
 
 :::: {.columns}
@@ -298,6 +354,12 @@ En los pasos 2 y 3 escribió comandos. Desde ahora usará botones. En cada paso 
 :::
 :::
 ::::
+
+::: {.notes}
+- Desktop = interfaz gráfica (GUI). Terminal = línea de comandos (CLI). Debajo es el mismo Git.
+- Analogía: el botón Import Dataset frente a escribir `read.csv()`.
+- La caja gris muestra el comando; no hace falta escribirlo.
+:::
 
 ## Paso 4 · Instale GitHub Desktop
 
@@ -322,6 +384,12 @@ Desktop lee la misma configuración de Git que dejó en el paso 3. En **File →
 :::
 ::::
 
+::: {.notes}
+- Sign in abre el navegador; ahí se presiona Authorize desktop.
+- Si Desktop ya muestra la cuenta, se sigue de largo.
+- Desktop trae su propio Git, pero lee la configuración del paso 3: File → Options → Git.
+:::
+
 ## Ya tiene las tres cosas: no son lo mismo
 
 :::: {.columns}
@@ -343,8 +411,9 @@ Git funciona sin GitHub. GitHub no funciona sin Git. Ya instaló los dos program
 :::
 
 ::: {.notes}
-Insistir: Git es de 2005 y es software libre; GitHub es una empresa (de Microsoft) que ofrece dónde guardar repositorios de Git. Existen otros sitios: GitLab, Codeberg.
-La terminal también se llama línea de comandos o CLI (command line interface).
+- Git: 2005, software libre. GitHub: empresa, de Microsoft, que aloja repositorios de Git. Otros sitios parecidos: GitLab, Codeberg.
+- Terminal = línea de comandos = CLI (*command line interface*).
+- Git funciona sin GitHub; GitHub no funciona sin Git.
 :::
 
 ## Paso 5 · Cree su repositorio
@@ -374,6 +443,13 @@ Por fuera es una carpeta normal. Véala con **Repository → Show in Explorer**.
 :::
 ::::
 
+::: {.notes}
+- **Repositorio** (repo) = carpeta del proyecto más su historial. El historial vive en una carpeta oculta, `.git`.
+- Ubicación por defecto: `Documentos\GitHub`.
+- *Initialize with a README* crea `README.md`, la portada del repositorio.
+- `git init` = convertir una carpeta en repositorio.
+:::
+
 ## Paso 6 · Ponga un análisis en la carpeta
 
 :::: {.columns}
@@ -399,6 +475,13 @@ Si RStudio pide instalar `rmarkdown` o `knitr`, acepte.
 :::
 ::::
 
+::: {.notes}
+- Bajar `kit-enssex.zip`, extraer y copiar los dos archivos sueltos a la carpeta del repositorio.
+- Render crea `index.html` a partir de `index.qmd`.
+- Si RStudio pide instalar `rmarkdown` o `knitr`: aceptar.
+- Error típico: copiar la carpeta `kit-enssex` entera. Los archivos van junto a `README.md`.
+:::
+
 ## Commit: una versión guardada, con un mensaje
 
 Guardar el archivo (Ctrl+S) no basta. Un **commit** guarda una versión de toda la carpeta y lleva un mensaje.
@@ -419,7 +502,9 @@ El 1 no dice nada. El 2 repite lo que Git ya muestra por su cuenta.
 Ese mensaje lo leerá otra persona. Puede ser usted, seis meses después.
 
 ::: {.notes}
-Tomado de la lección "Version Control with Git in RStudio" (Epiverse-TRACE / The Carpentries, CC-BY 4.0).
+- Respuesta: la 3. Menos de 50 caracteres, empieza con un verbo, nombra una acción concreta.
+- Guardar el archivo no es hacer commit, y hacer commit no es subir.
+- Tomado de "Version Control with Git in RStudio" (Epiverse-TRACE / The Carpentries, CC-BY 4.0).
 :::
 
 ## Paso 7 · Su primer commit
@@ -453,6 +538,14 @@ El commit está en su computador. En GitHub todavía no hay nada.
 :::
 ::::
 
+::: {.notes}
+- **Changes** = lo que cambió desde el último commit. Casilla marcada = entra en el commit.
+- *Summary* = el mensaje, obligatorio. *Description* = opcional.
+- *Commit to main*: `main` es la rama principal.
+- Después, Changes queda vacío y el commit aparece en History.
+- `git add .` marca todo; `git commit -m` guarda la versión.
+:::
+
 ## Lo que no subió solo existe en su computador
 
 :::: {.columns}
@@ -475,6 +568,13 @@ Un archivo llamado `.gitignore` lista lo que Git debe dejar fuera. El historial 
 :::
 :::
 ::::
+
+::: {.notes}
+- Commit = queda en el computador. Push = sube a GitHub.
+- GitHub sirve de respaldo fuera del computador.
+- No se suben: datos personales, contraseñas, archivos de más de 100 MB.
+- `.gitignore` = lista de lo que Git debe dejar fuera. Lo ya subido sigue en el historial aunque se borre.
+:::
 
 ## Paso 8 · Súbalo a GitHub (push)
 
@@ -501,6 +601,13 @@ La primera vez el botón dice *Publish repository*. Desde ahora dirá **Push ori
 :::
 :::
 ::::
+
+::: {.notes}
+- *Publish repository* = el primer push: crea el repositorio en GitHub. Después el botón dice *Push origin*.
+- Desmarcar *Keep this code private*: GitHub Pages gratis pide repositorio público.
+- Término. **origin**: el nombre que Git le da a la copia que está en GitHub (el remoto).
+- Si quedó privado: Settings → General → Danger Zone → Change repository visibility.
+:::
 
 ## Paso 9 · Publique la página (GitHub Pages)
 
@@ -529,6 +636,13 @@ GitHub Pages muestra como sitio web el archivo `index.html` de su repositorio.
 :::
 ::::
 
+::: {.notes}
+- **GitHub Pages** = sitio web gratuito hecho con los archivos del repositorio. Muestra `index.html`.
+- Ruta: Settings → Pages → Branch `main`, `/ (root)` → Save.
+- Dirección: `usuario.github.io/repositorio`. Tarda uno o dos minutos.
+- Error 404: esperar; revisar que el archivo se llame `index.html`, esté en la raíz y el repositorio sea público.
+:::
+
 ## Paso 10 · De GitHub a su computador (pull)
 
 :::: {.columns}
@@ -554,6 +668,12 @@ GitHub Pages muestra como sitio web el archivo `index.html` de su repositorio.
 :::
 ::::
 
+::: {.notes}
+- Dirección contraria: el cambio nace en GitHub (lápiz sobre `README.md`) y se baja.
+- **Fetch** = preguntar si hay novedades. **Pull** = traerlas.
+- Hábito: hacer pull antes de empezar a trabajar.
+:::
+
 ## Cuatro palabras que ya usó
 
 :::: {.columns}
@@ -574,9 +694,59 @@ Guardar un archivo (Ctrl+S) no es hacer un commit, y hacer un commit no es subir
 :::
 ::::
 
+::: {.notes}
+- Repaso: repositorio, commit, push, pull.
+- Son tres pasos distintos: guardar el archivo, hacer commit, hacer push.
+- *Add* = elegir qué entra en el commit = las casillas de Changes.
+:::
+
+## Antes de colaborar: dónde vive cada cosa
+
+:::: {.columns}
+::: {.column width="50%"}
+![](../_figures/git/operaciones_locales.png){width="100%" fig-alt="Operaciones locales de Git. Tres lugares: directorio de trabajo, staging area y directorio de Git o repositorio. El stage lleva archivos del directorio de trabajo al staging area; el commit, del staging area al repositorio; el checkout trae el proyecto del repositorio al directorio de trabajo."}
+
+[Figura: Chacon, S. y Straub, B. *Pro Git*. CC BY-NC-SA 3.0.]{.fuente}
+:::
+::: {.column width="50%"}
+::: {.chico}
+Git trabaja en tres lugares de su computador. En GitHub Desktop ya los usó:
+
+| En la figura | En GitHub Desktop |
+|---|---|
+| Directorio de trabajo | La carpeta de su repositorio |
+| *Staging area* | Las casillas marcadas en **Changes** |
+| Repositorio | Lo que muestra **History** |
+
+- ***Stage***: marcar qué archivos entran en el commit.
+- ***Commit***: guardar esa versión en el repositorio.
+- ***Checkout***: traer una versión guardada a la carpeta. Ocurre al cambiar de rama.
+:::
+
+::: {.ok}
+Todo esto pasa en su computador. Push y pull son los que hablan con GitHub.
+:::
+:::
+::::
+
+::: {.notes}
+- Lámina de repaso para retomar la clase.
+- Tres lugares, todos en el computador: la carpeta (directorio de trabajo), el *staging area* (casillas marcadas) y el repositorio (carpeta oculta `.git`; se mira en History).
+- *Stage* = `git add`. *Commit* = `git commit`. *Checkout* = traer una versión a la carpeta (`git switch` o `git checkout`).
+- Lo remoto es otra cosa: push y pull hablan con GitHub.
+- Puente a la parte 3: al crear una rama y pasarse a ella, Git hace un checkout.
+:::
+
 # Parte 3 · Colaborar {.seccion background-color="#8f4a4a"}
 
 En parejas. Pasos 11 a 17.
+
+::: {.notes}
+- En parejas, pasos 11 a 17. Unos 50 min.
+- Antes de partir: quién terminó el paso 10. B no necesita repositorio propio.
+- Salas de Zoom de a dos; que se pasen sus nombres de usuario por el chat.
+- Número impar: un trío con un solo B a la vez.
+:::
 
 ## Así viaja un cambio entre dos personas
 
@@ -586,7 +756,7 @@ Decidan quién es [A]{.rol .a} y quién es [B]{.rol .b}. Trabajarán en el repos
 ::: {.column width="56%"}
 1. [A]{.rol .a} invita a [B]{.rol .b} a su repositorio.
 2. [B]{.rol .b} lo **clona**: baja una copia completa.
-3. [B]{.rol .b} crea una **rama**: una línea de trabajo separada de `main`.
+3. [B]{.rol .b} crea una **rama** (*branch*): una línea de trabajo separada de `main`.
 4. [B]{.rol .b} cambia el filtro, hace commit y sube la rama.
 5. [B]{.rol .b} abre un **pull request**: le pide a [A]{.rol .a} que integre su cambio.
 6. [A]{.rol .a} revisa el cambio y lo **fusiona** (*merge*) con `main`.
@@ -599,6 +769,15 @@ La rama protege a `main`. Lo que está en `main` es lo que se ve en la página p
 :::
 :::
 ::::
+
+::: {.notes}
+- **Rama (*branch*)** = línea de trabajo paralela. `main` = la rama principal, la que se publica.
+- B trabaja en su rama sin tocar `main`. A decide si el cambio entra.
+- Dibujo: Main en gris; Feature A sale y vuelve (se fusionó); Feature B sigue abierta.
+- **Pull request (PR)** = solicitud para integrar una rama. **Merge (fusionar)** = integrarla.
+- **Colaborador** = cuenta con permiso para escribir en el repositorio de otra persona.
+- Aquí no se usa *fork*: un fork es una copia del repositorio en la cuenta propia.
+:::
 
 ## Paso 11 · [A]{.rol .a} invita, [B]{.rol .b} acepta
 
@@ -624,6 +803,13 @@ La rama protege a `main`. Lo que está en `main` es lo que se ve en la página p
 
 ::: {.ok}
 **¿Cómo sé que funcionó?** [A]{.rol .a} ve a [B]{.rol .b} en la lista de *Collaborators*, ya sin el aviso *Pending invite*.
+:::
+
+::: {.notes}
+- A: Settings → Collaborators → Add people. GitHub puede pedirle la contraseña.
+- B acepta desde el correo, o en `github.com/USUARIO-A/REPOSITORIO/invitations`.
+- B debe tener abierta la sesión de la cuenta invitada.
+- Sin aceptar, B puede clonar (el repositorio es público) pero no subir.
 :::
 
 ## Paso 12 · [B]{.rol .b} clona el repositorio de [A]{.rol .a}
@@ -653,6 +839,13 @@ git clone https://github.com/USUARIO-A/REPOSITORIO.git
 :::
 ::::
 
+::: {.notes}
+- **Clonar (*clone*)** = bajar por primera vez un repositorio completo, con su historial.
+- File → Clone repository → pestaña URL → `USUARIO-A/REPOSITORIO`.
+- Queda en `Documentos\GitHub`, en una carpeta con el nombre del repositorio.
+- Clone es la primera vez; pull es actualizar lo que ya se tiene.
+:::
+
 ## Paso 13 · [B]{.rol .b} crea una rama
 
 :::: {.columns}
@@ -677,6 +870,14 @@ Una **rama** (*branch*) es una línea de trabajo separada de `main`. Lo que [B]{
 :::
 :::
 ::::
+
+::: {.notes}
+- Current branch → New branch → `filtro-edad` → Create branch.
+- Arriba debe decir *Current branch: filtro-edad*.
+- `git switch -c` crea la rama y se pasa a ella. Pasarse de una rama a otra es un checkout.
+- La rama nace como copia de `main` en ese momento.
+- Si Desktop pregunta qué hacer con cambios sin guardar: llevarlos a la rama nueva.
+:::
 
 ## Paso 14 · [B]{.rol .b} cambia el filtro y sube la rama
 
@@ -709,6 +910,14 @@ Al final, [A]{.rol .a} recarga su repositorio en el navegador: junto a `main` ah
 :::
 ::::
 
+::: {.notes}
+- B edita el `index.qmd` del repositorio de A (el clonado), no el suyo.
+- Cambia `edad_min` y `edad_max`, Render, commit y Publish branch.
+- Cambian dos archivos: `index.qmd` (lo escrito) e `index.html` (lo generado). El cambio de `index.html` se ve enorme: es normal.
+- *Publish branch* = el primer push de esa rama.
+- Si no deja publicar: B no aceptó la invitación del paso 11.
+:::
+
 ## Paso 15 · [B]{.rol .b} abre un pull request
 
 :::: {.columns}
@@ -733,6 +942,14 @@ Aquí no hay comando de Git. El pull request existe en GitHub, el sitio web.
 :::
 :::
 ::::
+
+::: {.notes}
+- *Create Pull Request* en Desktop abre el navegador.
+- `base: main` ← `compare: filtro-edad`. *base* = a dónde va el cambio; *compare* = de dónde viene.
+- No es el pull del paso 10: es una solicitud.
+- Queda con la etiqueta verde *Open*.
+- El pull request vive en GitHub, no en Git. Por eso no tiene comando.
+:::
 
 ## Paso 16 · [A]{.rol .a} revisa, fusiona y baja el cambio
 
@@ -765,6 +982,14 @@ Aquí no hay comando de Git. El pull request existe en GitHub, el sitio web.
 :::
 ::::
 
+::: {.notes}
+- A: Pull requests → abrir → Files changed (rojo = antes, verde = después) → Merge pull request → Confirm merge.
+- Queda con la etiqueta morada *Merged*.
+- A hace Fetch y Pull para bajar el cambio a su computador.
+- La página pública tarda uno o dos minutos. Si muestra la versión vieja: Ctrl + F5.
+- Botón de merge bloqueado por un conflicto: cerrar ese pull request y que B repita con una rama de otro nombre.
+:::
+
 ## Paso 17 · Cambien de rol
 
 :::: {.columns}
@@ -788,6 +1013,13 @@ Envíen las dos direcciones de sus páginas al profesor.
 :::
 ::::
 
+::: {.notes}
+- El mismo recorrido con los roles cambiados, en el repositorio de B.
+- B vuelve a su repositorio: Current repository → `enssex-…`.
+- Si falta tiempo, queda como tarea.
+- Terminaron: página cambiada por la pareja, un commit ajeno en History y un pull request *Merged*.
+:::
+
 ## Si algo falla
 
 | Lo que ve | Qué hacer |
@@ -801,7 +1033,19 @@ Envíen las dos direcciones de sus páginas al profesor.
 | RStudio no muestra el botón **Render** | Su RStudio es antiguo. Avise al profesor. |
 | Desktop habla de un **conflicto** (*conflict*) | No presione nada. Levante la mano. |
 
+::: {.notes}
+- Lámina de consulta: volver aquí cuando alguien se trabe.
+- **Conflicto** = dos cambios distintos sobre las mismas líneas; Git no sabe cuál dejar.
+- Salida rápida a un conflicto: cerrar el pull request sin fusionar y repetir con una rama nueva.
+- *Authentication failed*: File → Options → Accounts.
+- Push rechazado: primero Pull.
+:::
+
 # Cierre {.seccion background-color="#8f4a4a"}
+
+::: {.notes}
+- 5 min: botones y comandos, lo que viene, encuesta.
+:::
 
 ## Lo que hizo hoy, con sus nombres
 
@@ -820,7 +1064,7 @@ Envíen las dos direcciones de sus páginas al profesor.
 ::: {.column width="50%"}
 **Lo que viene**
 
-- Un `README.md` que explique qué hay en el repositorio y cómo se usa.
+- Un `README.md` que explique qué hay en el repositorio y cómo se usa. Para armarlo por secciones: [readme.so/editor](https://readme.so/editor), en inglés.
 - Una **licencia**: qué pueden hacer otras personas con su trabajo.
 - Un `.gitignore` para dejar fuera lo que no se sube.
 - Repositorios que guardan datos extraídos de la web y se actualizan solos.
@@ -829,16 +1073,28 @@ Para seguir practicando sin riesgo: [taller de Git, paso a paso](https://agscl.g
 :::
 ::::
 
+::: {.notes}
+- Cada botón de Desktop tiene su comando de Git.
+- README: readme.so/editor lo arma por secciones y lo baja como `README.md`. Está en inglés y pensado para programas: sirven título, descripción, autoría, licencia y cómo usarlo. Se reemplaza el del repositorio y se sube con commit y push.
+- Licencia: sin ella, otras personas no tienen permiso explícito para reutilizar el trabajo.
+- `.gitignore`: lista de archivos que Git no sigue.
+:::
+
 ## Fuentes
 
 ::: {.chico}
 - Plaza-Vega, F. (2024). *Mini curso: Quarto y GitHub Pages*. III Jornadas de Ingeniería Estadística, Universidad de Santiago de Chile. <https://github.com/FranPlaza/Quarto-Github>
 - Epiverse-TRACE y The Carpentries. *Version Control with Git in RStudio*. CC-BY 4.0. <https://epiverse-trace.github.io/git-rstudio-basics/>
 - The Turing Way Community y Scriberia (2019). *Illustrations from the Turing Way*. CC-BY 4.0. <https://doi.org/10.5281/zenodo.3332807>
+- Chacon, S. y Straub, B. *Pro Git*. Apress. CC BY-NC-SA 3.0. <https://git-scm.com/book/es/v2>
 - Ministerio de Salud de Chile. *Encuesta Nacional de Salud, Sexualidad y Género (ENSSEX) 2022–2023*.
 - Tipografía Oswald, SIL Open Font License 1.1.
 
 Código de estas diapositivas: <https://github.com/AGSCL/repr2026>
+:::
+
+::: {.notes}
+- Ilustraciones de Scriberia: CC-BY 4.0. Figura de operaciones locales: *Pro Git*, CC BY-NC-SA 3.0.
 :::
 
 ## Antes de irse: ¿cómo estuvo la clase?
@@ -855,3 +1111,8 @@ Cuente qué le sirvió, qué quedó confuso y qué cambiaría. Con eso se ajusta
 ![](../_figures/git/piolin-gracias.gif){height="300" fig-alt="Piolín da las gracias."}
 :::
 ::::
+
+::: {.notes}
+- Dejar esta lámina proyectada dos minutos.
+- Avisar por dónde envían las direcciones de sus páginas.
+:::
