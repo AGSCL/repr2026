@@ -608,21 +608,20 @@ install.packages(c("shiny", "rsconnect"))
 
 :::: {.columns}
 ::: {.column width="56%"}
-Es lo mismo de la clase de Git.
-
 1. En GitHub Desktop: **File → New repository…**
 2. **Name**: `shiny-` más su nombre. Por ejemplo, `shiny-maria`.
-3. Marque **Initialize this repository with a README**.
-4. Presione **Create repository**.
-5. Abra **Repository → Show in Explorer** y cree ahí una carpeta llamada `app`.
+3. Marque **Initialize this repository with a README** y presione **Create repository**.
+4. En RStudio: **File → New File → R Script** y pegue el guion de la lámina siguiente.
+5. Guárdelo en el repositorio como `00estructura_shiny.R`.
+6. **Session → Set Working Directory → To Source File Location** y **Source**.
 :::
 ::: {.column width="44%"}
 ::: {.ok}
-**¿Cómo sé que funcionó?** La carpeta del repositorio tiene un `README.md` y una carpeta `app` vacía.
+**¿Cómo sé que funcionó?** La consola dice `Listo`. El repositorio tiene una carpeta `app` vacía, `_doc`, `DESCRIPTION`, `README.md` y `renv.lock`.
 :::
 
 ::: {.ojo}
-**Ojo.** Sin tildes, sin ñ y sin espacios, en el repositorio y en la carpeta. La carpeta debe llamarse exactamente `app`.
+**Ojo.** Sin tildes, sin ñ y sin espacios en el nombre del repositorio. Si sale `Error`, lea el mensaje: dice qué hacer.
 :::
 :::
 ::::
@@ -630,8 +629,42 @@ Es lo mismo de la clase de Git.
 ::: {.notes}
 - Igual al paso 5 de la clase de Git: File → New repository.
 - Carpeta por defecto: `Documentos\GitHub\shiny-nombre`.
-- La carpeta `app` se crea en el Explorador: clic derecho → Nuevo → Carpeta.
-- Git no muestra carpetas vacías: en Changes todavía no aparece nada. Es normal.
+- El guion crea `app` y `_doc`, escribe DESCRIPTION, renv.lock, README y `_doc/entorno.txt`, y se detiene si algo falta.
+- Errores que avisa: proyecto abierto (File → Close Project), carpeta equivocada (Set Working Directory) o paquetes sin instalar (paso 1).
+- renv.lock sin activar renv: Run App y GitHub Actions siguen usando los paquetes del paso 1.
+- Git no muestra carpetas vacías: `app` aparece en Changes recién con `app.R`. Es normal.
+:::
+
+## El guion del paso 2 {.etapa .codigo}
+
+:::: {.columns}
+::: {.column width="60%"}
+```r
+{{< include 00estructura_shiny.R >}}
+```
+:::
+::: {.column width="40%"}
+Copie todo con el botón que aparece arriba a la derecha del código. No hay que cambiar nada.
+
+**Lo que deja en su repositorio:**
+
+- `app/`: donde vivirá la app, sola;
+- `DESCRIPTION`: qué paquetes usa (el autor es el marcador `SU-USUARIO`);
+- `renv.lock` y `_doc/entorno.txt`: con qué versiones y en qué computador;
+- `README.md`: qué es cada archivo.
+
+::: {.espejo}
+Es el compendio de la primera clase, en chico. Esta vez `renv.lock` solo **registra** las versiones: no cambia dónde R busca los paquetes.
+:::
+:::
+::::
+
+::: {.notes}
+- Mismo orden que `00estructura_proyecto.R`: datos, comprobar, carpetas, DESCRIPTION, renv.lock, entorno, README.
+- DESCRIPTION sin datos personales: el repositorio es público. `SU-USUARIO` es un marcador; el título es fijo porque el repositorio lleva el nombre del estudiante.
+- `library = .libPaths()`: snapshot de los paquetes ya instalados, sin `.Rprofile` ni carpeta renv.
+- Por qué no activar renv: Run App y la receta de Actions (paso 9) dejarían de encontrar shiny y shinylive.
+- README: solo se escribe si sigue como lo creó Desktop. Volver a correr el guion no borra lo escrito.
 :::
 
 ## Paso 3 · Escriba la app
@@ -759,7 +792,7 @@ Guarde y presione **Run App** otra vez.
 
 :::: {.columns}
 ::: {.column width="56%"}
-1. En GitHub Desktop, en **Changes**, aparece `app/app.R`. ![Lo que debe ver: GitHub Desktop con el archivo app/app.R en la lista Changes.](../_figures/shiny/desktop-commit-app.png){.captura}
+1. En GitHub Desktop, en **Changes**, aparecen `app/app.R` y los archivos del paso 2. ![Lo que debe ver: GitHub Desktop con app/app.R y los archivos del paso 2 en la lista Changes.](../_figures/shiny/desktop-commit-app.png){.captura}
 2. Mensaje: `Agrega app Shiny`. Presione **Commit to main**.
 3. Presione **Publish repository**.
 4. **Desmarque** *Keep this code private* y presione **Publish repository**.

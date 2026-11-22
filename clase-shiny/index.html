@@ -1747,28 +1747,111 @@ display:block!important;
 <h2>Paso 2 · Cree un repositorio para la app</h2>
 <div class="columns">
 <div class="column" style="width:56%;">
-<p>Es lo mismo de la clase de Git.</p>
 <ol type="1">
 <li>En GitHub Desktop: <strong>File → New repository…</strong></li>
 <li><strong>Name</strong>: <code>shiny-</code> más su nombre. Por ejemplo, <code>shiny-maria</code>.</li>
-<li>Marque <strong>Initialize this repository with a README</strong>.</li>
-<li>Presione <strong>Create repository</strong>.</li>
-<li>Abra <strong>Repository → Show in Explorer</strong> y cree ahí una carpeta llamada <code>app</code>.</li>
+<li>Marque <strong>Initialize this repository with a README</strong> y presione <strong>Create repository</strong>.</li>
+<li>En RStudio: <strong>File → New File → R Script</strong> y pegue el guion de la lámina siguiente.</li>
+<li>Guárdelo en el repositorio como <code>00estructura_shiny.R</code>.</li>
+<li><strong>Session → Set Working Directory → To Source File Location</strong> y <strong>Source</strong>.</li>
 </ol>
 </div><div class="column" style="width:44%;">
 <div class="ok">
-<p><strong>¿Cómo sé que funcionó?</strong> La carpeta del repositorio tiene un <code>README.md</code> y una carpeta <code>app</code> vacía.</p>
+<p><strong>¿Cómo sé que funcionó?</strong> La consola dice <code>Listo</code>. El repositorio tiene una carpeta <code>app</code> vacía, <code>_doc</code>, <code>DESCRIPTION</code>, <code>README.md</code> y <code>renv.lock</code>.</p>
 </div>
 <div class="ojo">
-<p><strong>Ojo.</strong> Sin tildes, sin ñ y sin espacios, en el repositorio y en la carpeta. La carpeta debe llamarse exactamente <code>app</code>.</p>
+<p><strong>Ojo.</strong> Sin tildes, sin ñ y sin espacios en el nombre del repositorio. Si sale <code>Error</code>, lea el mensaje: dice qué hacer.</p>
 </div>
 </div></div>
 <aside class="notes">
 <ul>
 <li>Igual al paso 5 de la clase de Git: File → New repository.</li>
 <li>Carpeta por defecto: <code>Documentos\GitHub\shiny-nombre</code>.</li>
-<li>La carpeta <code>app</code> se crea en el Explorador: clic derecho → Nuevo → Carpeta.</li>
-<li>Git no muestra carpetas vacías: en Changes todavía no aparece nada. Es normal.</li>
+<li>El guion crea <code>app</code> y <code>_doc</code>, escribe DESCRIPTION, renv.lock, README y <code>_doc/entorno.txt</code>, y se detiene si algo falta.</li>
+<li>Errores que avisa: proyecto abierto (File → Close Project), carpeta equivocada (Set Working Directory) o paquetes sin instalar (paso 1).</li>
+<li>renv.lock sin activar renv: Run App y GitHub Actions siguen usando los paquetes del paso 1.</li>
+<li>Git no muestra carpetas vacías: <code>app</code> aparece en Changes recién con <code>app.R</code>. Es normal.</li>
+</ul>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="el-guion-del-paso-2" class="slide level2 etapa codigo">
+<h2>El guion del paso 2</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href aria-hidden="true" tabindex="-1"></a><span class="co"># 00estructura_shiny.R: ordena el repositorio de su app como un compendio (paso 2)</span></span>
+<span id="cb7-2"><a href aria-hidden="true" tabindex="-1"></a><span class="co"># 1. PAQUETES QUE USA LA APP (los del paso 1; no hay que editar nada)</span></span>
+<span id="cb7-3"><a href aria-hidden="true" tabindex="-1"></a>paquetes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;shiny&quot;</span>, <span class="st">&quot;rsconnect&quot;</span>)</span>
+<span id="cb7-4"><a href aria-hidden="true" tabindex="-1"></a><span class="co"># 2. COMPROBAR antes de escribir archivos</span></span>
+<span id="cb7-5"><a href aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nzchar</span>(<span class="fu">Sys.getenv</span>(<span class="st">&quot;RENV_PROJECT&quot;</span>)))      <span class="co"># hay un proyecto con renv abierto</span></span>
+<span id="cb7-6"><a href aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">&quot;Cierre el proyecto: File &gt; Close Project&quot;</span>)</span>
+<span id="cb7-7"><a href aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">&quot;.git&quot;</span>))                     <span class="co"># .git marca la carpeta del repositorio</span></span>
+<span id="cb7-8"><a href aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">&quot;Session &gt; Set Working Directory &gt; To Source File Location&quot;</span>)</span>
+<span id="cb7-9"><a href aria-hidden="true" tabindex="-1"></a>faltan <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(paquetes, <span class="fu">rownames</span>(<span class="fu">installed.packages</span>()))   <span class="co"># paquetes sin instalar</span></span>
+<span id="cb7-10"><a href aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(faltan) <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">&quot;Primero instale (paso 1): &quot;</span>, <span class="fu">paste</span>(faltan, <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>))</span>
+<span id="cb7-11"><a href aria-hidden="true" tabindex="-1"></a><span class="co"># 3. CARPETAS</span></span>
+<span id="cb7-12"><a href aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;app&quot;</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)      <span class="co"># la app vive sola aqui: es lo que se publica</span></span>
+<span id="cb7-13"><a href aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;_doc&quot;</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)     <span class="co"># documentacion del entorno</span></span>
+<span id="cb7-14"><a href aria-hidden="true" tabindex="-1"></a><span class="co"># 4. DESCRIPTION: autoria y paquetes (repositorio publico: sin datos personales)</span></span>
+<span id="cb7-15"><a href aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(<span class="fu">c</span>(</span>
+<span id="cb7-16"><a href aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Type: Project&quot;</span>,</span>
+<span id="cb7-17"><a href aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Title: App Shiny del curso Reproducibilidad (UDP 2026)&quot;</span>,</span>
+<span id="cb7-18"><a href aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;Authors@R: person(&quot;SU-USUARIO&quot;, role = c(&quot;aut&quot;, &quot;cre&quot;))&#39;</span>,   <span class="co"># marcador: no identifica a nadie</span></span>
+<span id="cb7-19"><a href aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste</span>(<span class="st">&quot;Imports:&quot;</span>, <span class="fu">paste</span>(paquetes, <span class="at">collapse =</span> <span class="st">&quot;, &quot;</span>))</span>
+<span id="cb7-20"><a href aria-hidden="true" tabindex="-1"></a>), <span class="st">&quot;DESCRIPTION&quot;</span>)</span>
+<span id="cb7-21"><a href aria-hidden="true" tabindex="-1"></a><span class="co"># 5. renv.lock: versiones de R y de cada paquete, como en la clase 1</span></span>
+<span id="cb7-22"><a href aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">renv.consent =</span> <span class="cn">TRUE</span>)                 <span class="co"># renv no pregunta la primera vez</span></span>
+<span id="cb7-23"><a href aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">snapshot</span>(<span class="at">type =</span> <span class="st">&quot;explicit&quot;</span>,            <span class="co"># registra lo que dice Imports en DESCRIPTION</span></span>
+<span id="cb7-24"><a href aria-hidden="true" tabindex="-1"></a>               <span class="at">library =</span> <span class="fu">.libPaths</span>(),        <span class="co"># lee los paquetes ya instalados: no activa renv</span></span>
+<span id="cb7-25"><a href aria-hidden="true" tabindex="-1"></a>               <span class="at">prompt =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb7-26"><a href aria-hidden="true" tabindex="-1"></a><span class="co"># 6. ENTORNO: sistema operativo, version de R e idioma del computador</span></span>
+<span id="cb7-27"><a href aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(<span class="fu">capture.output</span>(<span class="fu">sessionInfo</span>()), <span class="st">&quot;_doc/entorno.txt&quot;</span>)</span>
+<span id="cb7-28"><a href aria-hidden="true" tabindex="-1"></a><span class="co"># 7. README: solo si sigue como lo creo GitHub Desktop (no borra lo que usted escribio)</span></span>
+<span id="cb7-29"><a href aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(<span class="st">&quot;README.md&quot;</span>) <span class="sc">||</span> <span class="fu">length</span>(<span class="fu">readLines</span>(<span class="st">&quot;README.md&quot;</span>)) <span class="sc">&lt;</span> <span class="dv">3</span>) {</span>
+<span id="cb7-30"><a href aria-hidden="true" tabindex="-1"></a>  <span class="fu">writeLines</span>(<span class="fu">c</span>(</span>
+<span id="cb7-31"><a href aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">&quot;#&quot;</span>, <span class="fu">basename</span>(<span class="fu">getwd</span>())), <span class="st">&quot;&quot;</span>,            <span class="co"># nombre del repositorio</span></span>
+<span id="cb7-32"><a href aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;App Shiny del curso Reproducibilidad (UDP 2026).&quot;</span>, <span class="st">&quot;&quot;</span>,</span>
+<span id="cb7-33"><a href aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;| Archivo | Que contiene |&quot;</span>,</span>
+<span id="cb7-34"><a href aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;| --- | --- |&quot;</span>,</span>
+<span id="cb7-35"><a href aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;| `app/app.R` | La app |&quot;</span>,</span>
+<span id="cb7-36"><a href aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;| `app/manifest.json` | Version de R y paquetes para Connect Cloud (paso 10) |&quot;</span>,</span>
+<span id="cb7-37"><a href aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;| `renv.lock` | Version de R y paquetes del computador donde se creo |&quot;</span>,</span>
+<span id="cb7-38"><a href aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;| `DESCRIPTION` | Autoria y paquetes |&quot;</span>,</span>
+<span id="cb7-39"><a href aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;| `_doc/entorno.txt` | Sistema operativo e idioma |&quot;</span></span>
+<span id="cb7-40"><a href aria-hidden="true" tabindex="-1"></a>  ), <span class="st">&quot;README.md&quot;</span>)</span>
+<span id="cb7-41"><a href aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-42"><a href aria-hidden="true" tabindex="-1"></a><span class="co"># 8. COMPROBAR que todo quedo</span></span>
+<span id="cb7-43"><a href aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">dir.exists</span>(<span class="st">&quot;app&quot;</span>), <span class="fu">file.exists</span>(<span class="st">&quot;DESCRIPTION&quot;</span>, <span class="st">&quot;renv.lock&quot;</span>, <span class="st">&quot;README.md&quot;</span>, <span class="st">&quot;_doc/entorno.txt&quot;</span>))</span>
+<span id="cb7-44"><a href aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="st">&quot;Listo. Siga con el paso 3: guarde app.R dentro de la carpeta app.&quot;</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:40%;">
+<p>Copie todo con el botón que aparece arriba a la derecha del código. No hay que cambiar nada.</p>
+<p><strong>Lo que deja en su repositorio:</strong></p>
+<ul>
+<li><code>app/</code>: donde vivirá la app, sola;</li>
+<li><code>DESCRIPTION</code>: qué paquetes usa (el autor es el marcador <code>SU-USUARIO</code>);</li>
+<li><code>renv.lock</code> y <code>_doc/entorno.txt</code>: con qué versiones y en qué computador;</li>
+<li><code>README.md</code>: qué es cada archivo.</li>
+</ul>
+<div class="espejo">
+<p>Es el compendio de la primera clase, en chico. Esta vez <code>renv.lock</code> solo <strong>registra</strong> las versiones: no cambia dónde R busca los paquetes.</p>
+</div>
+</div></div>
+<aside class="notes">
+<ul>
+<li>Mismo orden que <code>00estructura_proyecto.R</code>: datos, comprobar, carpetas, DESCRIPTION, renv.lock, entorno, README.</li>
+<li>DESCRIPTION sin datos personales: el repositorio es público. <code>SU-USUARIO</code> es un marcador; el título es fijo porque el repositorio lleva el nombre del estudiante.</li>
+<li><code>library = .libPaths()</code>: snapshot de los paquetes ya instalados, sin <code>.Rprofile</code> ni carpeta renv.</li>
+<li>Por qué no activar renv: Run App y la receta de Actions (paso 9) dejarían de encontrar shiny y shinylive.</li>
+<li>README: solo se escribe si sigue como lo creó Desktop. Volver a correr el guion no borra lo escrito.</li>
 </ul>
 <style type="text/css">
 span.MJX_Assistive_MathML {
@@ -1822,55 +1905,55 @@ display:block!important;
 <h2>El código de su app</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
-<span id="cb7-2"><a href aria-hidden="true" tabindex="-1"></a><span class="co"># DATOS: postulaciones a la Universidad de Berkeley en 1973, por resultado,</span></span>
-<span id="cb7-3"><a href aria-hidden="true" tabindex="-1"></a><span class="co"># sexo y departamento. Vienen con R: no hay que cargar ningun archivo.</span></span>
-<span id="cb7-4"><a href aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> UCBAdmissions</span>
-<span id="cb7-5"><a href aria-hidden="true" tabindex="-1"></a><span class="co"># UI: lo que se ve</span></span>
-<span id="cb7-6"><a href aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb7-7"><a href aria-hidden="true" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">&quot;Admision a Berkeley en 1973, por sexo&quot;</span>),</span>
-<span id="cb7-8"><a href aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
-<span id="cb7-9"><a href aria-hidden="true" tabindex="-1"></a>    <span class="co"># Un control: el menu de departamentos</span></span>
-<span id="cb7-10"><a href aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
-<span id="cb7-11"><a href aria-hidden="true" tabindex="-1"></a>      <span class="fu">selectInput</span>(<span class="st">&quot;depto&quot;</span>, <span class="st">&quot;Departamento&quot;</span>, <span class="at">choices =</span> <span class="fu">c</span>(<span class="st">&quot;Todos&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]))</span>
-<span id="cb7-12"><a href aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb7-13"><a href aria-hidden="true" tabindex="-1"></a>    <span class="co"># Dos resultados: un grafico y una tabla</span></span>
-<span id="cb7-14"><a href aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
-<span id="cb7-15"><a href aria-hidden="true" tabindex="-1"></a>      <span class="fu">plotOutput</span>(<span class="st">&quot;grafico&quot;</span>),</span>
-<span id="cb7-16"><a href aria-hidden="true" tabindex="-1"></a>      <span class="fu">tableOutput</span>(<span class="st">&quot;tabla&quot;</span>)</span>
-<span id="cb7-17"><a href aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb7-18"><a href aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb7-19"><a href aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-20"><a href aria-hidden="true" tabindex="-1"></a><span class="co"># SERVER: lo que se calcula</span></span>
-<span id="cb7-21"><a href aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
-<span id="cb7-22"><a href aria-hidden="true" tabindex="-1"></a>  <span class="co"># Postulantes por resultado y sexo, en el departamento elegido.</span></span>
-<span id="cb7-23"><a href aria-hidden="true" tabindex="-1"></a>  <span class="co"># Es reactive(): se recalcula solo cuando cambia el menu</span></span>
-<span id="cb7-24"><a href aria-hidden="true" tabindex="-1"></a>  conteo <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="cb7-25"><a href aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (input<span class="sc">$</span>depto <span class="sc">==</span> <span class="st">&quot;Todos&quot;</span>) {</span>
-<span id="cb7-26"><a href aria-hidden="true" tabindex="-1"></a>      <span class="fu">apply</span>(datos, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), sum)</span>
-<span id="cb7-27"><a href aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
-<span id="cb7-28"><a href aria-hidden="true" tabindex="-1"></a>      datos[, , input<span class="sc">$</span>depto]</span>
-<span id="cb7-29"><a href aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-30"><a href aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb7-31"><a href aria-hidden="true" tabindex="-1"></a>  <span class="co"># Porcentaje de admitidos en cada sexo; lo usan el grafico y la tabla</span></span>
-<span id="cb7-32"><a href aria-hidden="true" tabindex="-1"></a>  porcentaje <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="cb7-33"><a href aria-hidden="true" tabindex="-1"></a>    <span class="dv">100</span> <span class="sc">*</span> <span class="fu">conteo</span>()[<span class="st">&quot;Admitted&quot;</span>, ] <span class="sc">/</span> <span class="fu">colSums</span>(<span class="fu">conteo</span>())</span>
-<span id="cb7-34"><a href aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb7-35"><a href aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>grafico <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb7-36"><a href aria-hidden="true" tabindex="-1"></a>    <span class="fu">barplot</span>(<span class="fu">porcentaje</span>(), <span class="at">names.arg =</span> <span class="fu">c</span>(<span class="st">&quot;Hombres&quot;</span>, <span class="st">&quot;Mujeres&quot;</span>),</span>
-<span id="cb7-37"><a href aria-hidden="true" tabindex="-1"></a>            <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">ylab =</span> <span class="st">&quot;Porcentaje de admitidos&quot;</span>,</span>
-<span id="cb7-38"><a href aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;#555555&quot;</span>, <span class="st">&quot;#bc7777&quot;</span>),</span>
-<span id="cb7-39"><a href aria-hidden="true" tabindex="-1"></a>            <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">&quot;Departamento:&quot;</span>, input<span class="sc">$</span>depto))</span>
-<span id="cb7-40"><a href aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb7-41"><a href aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>tabla <span class="ot">&lt;-</span> <span class="fu">renderTable</span>({</span>
-<span id="cb7-42"><a href aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(<span class="at">Sexo =</span> <span class="fu">c</span>(<span class="st">&quot;Hombres&quot;</span>, <span class="st">&quot;Mujeres&quot;</span>),</span>
-<span id="cb7-43"><a href aria-hidden="true" tabindex="-1"></a>               <span class="at">Postulantes =</span> <span class="fu">as.integer</span>(<span class="fu">colSums</span>(<span class="fu">conteo</span>())),</span>
-<span id="cb7-44"><a href aria-hidden="true" tabindex="-1"></a>               <span class="at">Admitidos =</span> <span class="fu">as.integer</span>(<span class="fu">conteo</span>()[<span class="st">&quot;Admitted&quot;</span>, ]),</span>
-<span id="cb7-45"><a href aria-hidden="true" tabindex="-1"></a>               <span class="at">Porcentaje =</span> <span class="fu">porcentaje</span>())</span>
-<span id="cb7-46"><a href aria-hidden="true" tabindex="-1"></a>  }, <span class="at">digits =</span> <span class="dv">1</span>)</span>
-<span id="cb7-47"><a href aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb7-48"><a href aria-hidden="true" tabindex="-1"></a><span class="co"># La linea que une las dos mitades</span></span>
-<span id="cb7-49"><a href aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb8-2"><a href aria-hidden="true" tabindex="-1"></a><span class="co"># DATOS: postulaciones a la Universidad de Berkeley en 1973, por resultado,</span></span>
+<span id="cb8-3"><a href aria-hidden="true" tabindex="-1"></a><span class="co"># sexo y departamento. Vienen con R: no hay que cargar ningun archivo.</span></span>
+<span id="cb8-4"><a href aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> UCBAdmissions</span>
+<span id="cb8-5"><a href aria-hidden="true" tabindex="-1"></a><span class="co"># UI: lo que se ve</span></span>
+<span id="cb8-6"><a href aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb8-7"><a href aria-hidden="true" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">&quot;Admision a Berkeley en 1973, por sexo&quot;</span>),</span>
+<span id="cb8-8"><a href aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb8-9"><a href aria-hidden="true" tabindex="-1"></a>    <span class="co"># Un control: el menu de departamentos</span></span>
+<span id="cb8-10"><a href aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb8-11"><a href aria-hidden="true" tabindex="-1"></a>      <span class="fu">selectInput</span>(<span class="st">&quot;depto&quot;</span>, <span class="st">&quot;Departamento&quot;</span>, <span class="at">choices =</span> <span class="fu">c</span>(<span class="st">&quot;Todos&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]))</span>
+<span id="cb8-12"><a href aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb8-13"><a href aria-hidden="true" tabindex="-1"></a>    <span class="co"># Dos resultados: un grafico y una tabla</span></span>
+<span id="cb8-14"><a href aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb8-15"><a href aria-hidden="true" tabindex="-1"></a>      <span class="fu">plotOutput</span>(<span class="st">&quot;grafico&quot;</span>),</span>
+<span id="cb8-16"><a href aria-hidden="true" tabindex="-1"></a>      <span class="fu">tableOutput</span>(<span class="st">&quot;tabla&quot;</span>)</span>
+<span id="cb8-17"><a href aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-18"><a href aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb8-19"><a href aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-20"><a href aria-hidden="true" tabindex="-1"></a><span class="co"># SERVER: lo que se calcula</span></span>
+<span id="cb8-21"><a href aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb8-22"><a href aria-hidden="true" tabindex="-1"></a>  <span class="co"># Postulantes por resultado y sexo, en el departamento elegido.</span></span>
+<span id="cb8-23"><a href aria-hidden="true" tabindex="-1"></a>  <span class="co"># Es reactive(): se recalcula solo cuando cambia el menu</span></span>
+<span id="cb8-24"><a href aria-hidden="true" tabindex="-1"></a>  conteo <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb8-25"><a href aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (input<span class="sc">$</span>depto <span class="sc">==</span> <span class="st">&quot;Todos&quot;</span>) {</span>
+<span id="cb8-26"><a href aria-hidden="true" tabindex="-1"></a>      <span class="fu">apply</span>(datos, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), sum)</span>
+<span id="cb8-27"><a href aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb8-28"><a href aria-hidden="true" tabindex="-1"></a>      datos[, , input<span class="sc">$</span>depto]</span>
+<span id="cb8-29"><a href aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb8-30"><a href aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb8-31"><a href aria-hidden="true" tabindex="-1"></a>  <span class="co"># Porcentaje de admitidos en cada sexo; lo usan el grafico y la tabla</span></span>
+<span id="cb8-32"><a href aria-hidden="true" tabindex="-1"></a>  porcentaje <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb8-33"><a href aria-hidden="true" tabindex="-1"></a>    <span class="dv">100</span> <span class="sc">*</span> <span class="fu">conteo</span>()[<span class="st">&quot;Admitted&quot;</span>, ] <span class="sc">/</span> <span class="fu">colSums</span>(<span class="fu">conteo</span>())</span>
+<span id="cb8-34"><a href aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb8-35"><a href aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>grafico <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb8-36"><a href aria-hidden="true" tabindex="-1"></a>    <span class="fu">barplot</span>(<span class="fu">porcentaje</span>(), <span class="at">names.arg =</span> <span class="fu">c</span>(<span class="st">&quot;Hombres&quot;</span>, <span class="st">&quot;Mujeres&quot;</span>),</span>
+<span id="cb8-37"><a href aria-hidden="true" tabindex="-1"></a>            <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">ylab =</span> <span class="st">&quot;Porcentaje de admitidos&quot;</span>,</span>
+<span id="cb8-38"><a href aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;#555555&quot;</span>, <span class="st">&quot;#bc7777&quot;</span>),</span>
+<span id="cb8-39"><a href aria-hidden="true" tabindex="-1"></a>            <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">&quot;Departamento:&quot;</span>, input<span class="sc">$</span>depto))</span>
+<span id="cb8-40"><a href aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb8-41"><a href aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>tabla <span class="ot">&lt;-</span> <span class="fu">renderTable</span>({</span>
+<span id="cb8-42"><a href aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(<span class="at">Sexo =</span> <span class="fu">c</span>(<span class="st">&quot;Hombres&quot;</span>, <span class="st">&quot;Mujeres&quot;</span>),</span>
+<span id="cb8-43"><a href aria-hidden="true" tabindex="-1"></a>               <span class="at">Postulantes =</span> <span class="fu">as.integer</span>(<span class="fu">colSums</span>(<span class="fu">conteo</span>())),</span>
+<span id="cb8-44"><a href aria-hidden="true" tabindex="-1"></a>               <span class="at">Admitidos =</span> <span class="fu">as.integer</span>(<span class="fu">conteo</span>()[<span class="st">&quot;Admitted&quot;</span>, ]),</span>
+<span id="cb8-45"><a href aria-hidden="true" tabindex="-1"></a>               <span class="at">Porcentaje =</span> <span class="fu">porcentaje</span>())</span>
+<span id="cb8-46"><a href aria-hidden="true" tabindex="-1"></a>  }, <span class="at">digits =</span> <span class="dv">1</span>)</span>
+<span id="cb8-47"><a href aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-48"><a href aria-hidden="true" tabindex="-1"></a><span class="co"># La linea que une las dos mitades</span></span>
+<span id="cb8-49"><a href aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:40%;">
 <p>Copie todo con el botón que aparece arriba a la derecha del código.</p>
 <p><strong>Ya conoce casi todo:</strong></p>
@@ -1987,7 +2070,7 @@ display:block!important;
 <div class="columns">
 <div class="column" style="width:56%;">
 <ol type="1">
-<li>En GitHub Desktop, en <strong>Changes</strong>, aparece <code>app/app.R</code>. <img role="img" aria-label="Lo que debe ver: GitHub Desktop con el archivo app/app.R en la lista Changes." data-src="../_figures/shiny/desktop-commit-app.png" class="captura" alt="Lo que debe ver: GitHub Desktop con el archivo app/app.R en la lista Changes."></li>
+<li>En GitHub Desktop, en <strong>Changes</strong>, aparecen <code>app/app.R</code> y los archivos del paso 2. <img role="img" aria-label="Lo que debe ver: GitHub Desktop con app/app.R y los archivos del paso 2 en la lista Changes." data-src="../_figures/shiny/desktop-commit-app.png" class="captura" alt="Lo que debe ver: GitHub Desktop con app/app.R y los archivos del paso 2 en la lista Changes."></li>
 <li>Mensaje: <code>Agrega app Shiny</code>. Presione <strong>Commit to main</strong>.</li>
 <li>Presione <strong>Publish repository</strong>.</li>
 <li><strong>Desmarque</strong> <em>Keep this code private</em> y presione <strong>Publish repository</strong>.</li>
@@ -2164,22 +2247,22 @@ display:block!important;
 <li>En GitHub Desktop: <strong>Fetch origin</strong> y <strong>Pull origin</strong>. Así baja a su computador el archivo que creó en la web.</li>
 </ol>
 </div><div class="column" style="width:56%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><a href aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Publicar app en GitHub Pages</span></span>
-<span id="cb8-2"><a href aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
-<span id="cb8-4"><a href aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">workflow_dispatch</span><span class="kw">:</span></span>
-<span id="cb8-5"><a href aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
-<span id="cb8-6"><a href aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;main&quot;</span><span class="kw">]</span></span>
-<span id="cb8-7"><a href aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
-<span id="cb8-9"><a href aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">shinylive</span><span class="kw">:</span></span>
-<span id="cb8-10"><a href aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> posit-dev/r-shinylive/.github/workflows/deploy-app.yaml@actions-v1</span></span>
-<span id="cb8-11"><a href aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb8-12"><a href aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">app-dir</span><span class="kw">:</span><span class="at"> app</span></span>
-<span id="cb8-13"><a href aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">shinylive-version</span><span class="kw">:</span><span class="at"> shinylive</span></span>
-<span id="cb8-14"><a href aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">permissions</span><span class="kw">:</span></span>
-<span id="cb8-15"><a href aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">pages</span><span class="kw">:</span><span class="at"> write</span></span>
-<span id="cb8-16"><a href aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">id-token</span><span class="kw">:</span><span class="at"> write</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><a href aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Publicar app en GitHub Pages</span></span>
+<span id="cb9-2"><a href aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb9-4"><a href aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">workflow_dispatch</span><span class="kw">:</span></span>
+<span id="cb9-5"><a href aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
+<span id="cb9-6"><a href aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;main&quot;</span><span class="kw">]</span></span>
+<span id="cb9-7"><a href aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb9-9"><a href aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">shinylive</span><span class="kw">:</span></span>
+<span id="cb9-10"><a href aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> posit-dev/r-shinylive/.github/workflows/deploy-app.yaml@actions-v1</span></span>
+<span id="cb9-11"><a href aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb9-12"><a href aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">app-dir</span><span class="kw">:</span><span class="at"> app</span></span>
+<span id="cb9-13"><a href aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">shinylive-version</span><span class="kw">:</span><span class="at"> shinylive</span></span>
+<span id="cb9-14"><a href aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">permissions</span><span class="kw">:</span></span>
+<span id="cb9-15"><a href aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">pages</span><span class="kw">:</span><span class="at"> write</span></span>
+<span id="cb9-16"><a href aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">id-token</span><span class="kw">:</span><span class="at"> write</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="ok">
 <p><strong>¿Cómo sé que funcionó?</strong> Tras un círculo girando, esa dirección muestra su app.</p>
 </div>
@@ -2240,7 +2323,7 @@ display:block!important;
 <li>En RStudio, con <code>app.R</code> abierto: <strong>Session → Set Working Directory → To Source File Location</strong>. <img role="img" aria-label="Lo que debe ver: el menú Session de RStudio con la opción Set Working Directory y To Source File Location." data-src="../_figures/shiny/rstudio-directorio.png" class="captura" alt="Lo que debe ver: el menú Session de RStudio con la opción Set Working Directory y To Source File Location."></li>
 <li>En la consola:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href aria-hidden="true" tabindex="-1"></a>rsconnect<span class="sc">::</span><span class="fu">writeManifest</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href aria-hidden="true" tabindex="-1"></a>rsconnect<span class="sc">::</span><span class="fu">writeManifest</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="3" type="1">
 <li>En GitHub Desktop: mensaje <code>Agrega manifest para Connect Cloud</code>, <strong>Commit to main</strong> y <strong>Push origin</strong>.</li>
 </ol>
