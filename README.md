@@ -5,7 +5,7 @@
 
 [Diapositivas y ejercicio paso a paso](https://agscl.github.io/repr2026/clase-git/) · [PDF](https://agscl.github.io/repr2026/clase-git/clase-git.pdf) · [Kit ENSSEX del ejercicio (ZIP)](https://github.com/AGSCL/repr2026/raw/refs/heads/main/clase-git/kit-enssex.zip).
 
-[Taller para hacer por tu cuenta: ocho etapas con ensayo y capturas](https://agscl.github.io/repr2026/taller-git/) · [PDF](https://agscl.github.io/repr2026/taller-git/taller-git.pdf) · [Repositorio de práctica](https://github.com/AGSCL/enssex-andresgsta).
+[Suplemento para hacer por tu cuenta: ocho etapas con ensayo y capturas](https://agscl.github.io/repr2026/suple-git/) · [PDF](https://agscl.github.io/repr2026/suple-git/suple-git.pdf) · [Repositorio de práctica](https://github.com/AGSCL/enssex-andresgsta).
 
 Complemento de la clase del jueves 19 de noviembre de 2026 (18:00–21:30). Copias el análisis ENSSEX del profesor con un fork, cambias el tramo de edad, guardas la versión, la subes y propones el cambio con un pull request. Se hace con GitHub Desktop, en unos 45 minutos. En cada etapa hay un ensayo: un dibujo que muestra qué lugar cambia, sin ejecutar Git.
 
@@ -65,7 +65,7 @@ Para trabajar en clase, parte del enunciado y de los datos. Las pautas y las her
 | `resultados/` | Tablero web de la encuesta publicado en GitHub Pages. Se mantiene esta ruta para conservar su enlace público. |
 | `clase-git/` | Diapositivas de Git y GitHub publicadas en GitHub Pages (`index.html`), su fuente (`_clase_git.qmd`) y `kit-enssex.zip`, que reúne `_lib/kit-enssex/index.qmd` y `_data/enssex_base1.csv`. |
 | `clase-shiny/` | Diapositivas de Shiny publicadas en GitHub Pages (`index.html`) y su fuente (`_clase_shiny.qmd`). La app, su variante con la ENSSEX y la receta de GitHub Actions están en `_lib/kit-shiny/`; las capturas, en `_figures/shiny/`. |
-| `taller-git/` | Taller de Git para hacer por cuenta propia, publicado en GitHub Pages (`index.html`), con su fuente (`_taller_git.qmd`) y su PDF. Las capturas están en `_figures/taller-git/`. |
+| `suple-git/` | Suplemento de Git para hacer por cuenta propia, publicado en GitHub Pages (`index.html`), con su fuente (`_suple_git.qmd`) y su PDF. Las capturas están en `_figures/suple-git/`. |
 | `encuesta/` | Código de la encuesta Shiny y preparación del tablero. |
 | `TallerUDP/` | Fuente del tutor SWIRL opcional para ENSSEX y precios; `TallerUDP.zip` es su descarga. |
 
@@ -101,7 +101,7 @@ repr2026
  |--renv.lock
  |--repr2026.Rproj
  |--resultados
- `--taller-git
+ `--suple-git
 ```
 
 </details>

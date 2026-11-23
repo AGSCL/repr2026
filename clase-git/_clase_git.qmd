@@ -1069,7 +1069,7 @@ Envíen las dos direcciones de sus páginas al profesor.
 - Un `.gitignore` para dejar fuera lo que no se sube.
 - Repositorios que guardan datos extraídos de la web y se actualizan solos.
 
-Para seguir practicando sin riesgo: [taller de Git, paso a paso](https://agscl.github.io/repr2026/taller-git/).
+Para seguir practicando sin riesgo: [suplemento de Git, paso a paso](https://agscl.github.io/repr2026/suple-git/).
 :::
 ::::
 
