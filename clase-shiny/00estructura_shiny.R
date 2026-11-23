@@ -33,7 +33,7 @@ if (!file.exists("README.md") || length(readLines("README.md")) < 3) {
     "| Archivo | Que contiene |",
     "| --- | --- |",
     "| `app/app.R` | La app |",
-    "| `app/manifest.json` | Version de R y paquetes para Connect Cloud (paso 10) |",
+    "| `app/manifest.json` | Version de R y paquetes para Connect Cloud (paso 12) |",
     "| `renv.lock` | Version de R y paquetes del computador donde se creo |",
     "| `DESCRIPTION` | Autoria y paquetes |",
     "| `_doc/entorno.txt` | Sistema operativo e idioma |"

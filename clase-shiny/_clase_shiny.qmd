@@ -43,11 +43,12 @@ format:
         .reveal .slide-logo { height: 70px !important; max-height: unset !important; }
         .reveal section.seccion h1 { color: #fff; font-size: 110px; }
         .reveal section.seccion p { color: #fff; font-size: 44px; }
-        .ok, .ojo, .espejo { padding: .35em .7em; margin: .5em 0; border-radius: 6px; font-size: .88em; }
+        .ok, .ojo, .espejo, .aviso { padding: .35em .7em; margin: .5em 0; border-radius: 6px; font-size: .88em; }
         .ok { border-left: 10px solid #3a8a5c; background: #eef7f1; }
         .ojo { border-left: 10px solid #bc7777; background: #faf1f1; }
         .espejo { border-left: 10px solid #555; background: #f1f1f1; }
-        .ok p, .ojo p, .espejo p { margin: .2em 0; }
+        .aviso { border-left: 10px solid #d9822b; background: #fdf3e7; }
+        .ok p, .ojo p, .espejo p, .aviso p { margin: .2em 0; }
         .fuente { font-size: .5em; color: #666; }
         .chico { font-size: .8em; }
 
@@ -58,7 +59,7 @@ format:
         .reveal section.codigo pre code, .reveal .vivo pre code { max-height: none !important; line-height: 1.12; }
         .reveal section.codigo pre code.sourceCode > span, .reveal .vivo pre code.sourceCode > span { line-height: 1.12; }
         /* la receta de Actions debe verse entera y sin cortes de línea */
-        .reveal section.receta pre { font-size: .52em; }
+        .reveal section.receta pre { font-size: .46em; }
         .reveal section.receta pre code { max-height: none !important; }
         .vivo iframe { width: 100%; height: 660px; border: 2px solid #bc7777; border-radius: 6px; background: #fff; }
         .vivo a { display: block; font-size: .7em; }
@@ -233,7 +234,7 @@ Cinco etapas, una pieza cada una: la página, un control, un resultado, un gráf
 1. **Las partes de una app.** Cinco etapas en el navegador, sin instalar nada.
 2. **Su app con datos reales.** En RStudio, en un repositorio nuevo.
 3. **Publicarla sin servidor.** Primero como un enlace; después en GitHub Pages.
-4. **Publicarla con servidor.** En Posit Connect Cloud, desde GitHub.
+4. **Publicarla con servidor.** En Posit Connect Cloud, desde RStudio.
 
 ::: {.ok}
 Cada parte deja algo funcionando. Si una posterior falla, lo anterior sigue en pie.
@@ -594,11 +595,15 @@ install.packages(c("shiny", "rsconnect"))
 ::: {.ojo}
 **Ojo.** Si arriba a la derecha de RStudio aparece el nombre de un proyecto, ciérrelo antes: **File → Close Project**.
 :::
+
+::: {.aviso}
+**Aviso de Rtools.** Ignórelo: los paquetes se instalan igual.
+:::
 :::
 ::::
 
 ::: {.notes}
-- `shiny` hace la app. `rsconnect` crea `manifest.json` en la parte 5.
+- `shiny` hace la app. `rsconnect` publica la app en Connect Cloud en la parte 5.
 - Si pregunta *Do you want to install from sources…?*: responder **No**.
 - Un proyecto con renv abierto (clase 1) instala en su propia biblioteca. Por eso File → Close Project.
 - Comprobar: `library(shiny)` sin error; `packageVersion("shiny")`.
@@ -915,23 +920,23 @@ No hay botón para guardar: queda guardado al elegir.
 
 :::: {.columns}
 ::: {.column width="44%"}
-1. En la portada de su repositorio: **Add file → Create new file**. ![Lo que debe ver: el formulario de GitHub para crear un archivo, con la ruta .github/workflows/publicar-app.yml.](../_figures/shiny/github-crear-archivo.png){.captura}
+1. En la portada de su repositorio: **Add file** (o **+**) **→ Create new file**. ![Lo que debe ver: el botón + abierto, con la opción Create new file.](../_figures/shiny/pre-github-crear-archivo.png){.captura}
 2. En el nombre, escriba completo, con las barras:
-   `.github/workflows/publicar-app.yml`
+   `.github/workflows/publicar-app.yml` ![Lo que debe ver: el formulario de GitHub para crear un archivo, con la ruta .github/workflows/publicar-app.yml.](../_figures/shiny/github-crear-archivo.png){.captura}
 3. Pegue el contenido de la derecha. Cópielo con el botón.
-4. Presione **Commit changes…** y confirme.
-5. Entre a la pestaña **Actions** y espere el visto verde. Tarda varios minutos. ![Lo que debe ver: la pestaña Actions con la ejecución terminada y un visto verde.](../_figures/shiny/actions-visto-verde.png){.captura}
+4. Presione **Commit changes…** y confirme. ![Lo que debe ver: el editor con la receta pegada y el botón Commit changes.](../_figures/shiny/pre-actions-visto-verde.png){.captura} ![Lo que debe ver: la ventana para confirmar el commit en la rama main.](../_figures/shiny/pre2-actions-visto-verde.png){.captura}
+5. Entre a la pestaña **Actions** y espere el visto verde: tarda 5 a 7 minutos. ![Lo que debe ver: el último commit con un visto verde.](../_figures/shiny/actions-visto-verde.png){.captura}
 6. Abra `https://USUARIO.github.io/shiny-NOMBRE/`
-7. En GitHub Desktop: **Fetch origin** y **Pull origin**. Así baja a su computador el archivo que creó en la web.
+7. En GitHub Desktop: **Fetch origin** y **Pull origin**. Así baja a su computador el archivo que creó en la web. ![Lo que debe ver: GitHub Desktop con el botón Pull origin.](../_figures/shiny/post-actions-visto-verde.png){.captura}
+
+::: {.ok}
+**¿Cómo sé que funcionó?** Tras un círculo girando, esa dirección muestra su app.
+:::
 :::
 ::: {.column width="56%"}
 ```yaml
 {{< include ../_lib/kit-shiny/publicar-app.yml >}}
 ```
-
-::: {.ok}
-**¿Cómo sé que funcionó?** Tras un círculo girando, esa dirección muestra su app.
-:::
 
 ::: {.ojo}
 **Ojo.** Los espacios al inicio de cada línea importan. **¿Equis roja en Actions?** Revise el paso 8, abra la ejecución y presione **Re-run all jobs**.
@@ -951,19 +956,83 @@ No hay botón para guardar: queda guardado al elegir.
 
 # Parte 5 · Publicar con servidor {.seccion background-color="#8f4a4a"}
 
-Posit Connect Cloud, desde GitHub. Pasos 10 a 13.
+Posit Connect Cloud, desde RStudio. Pasos 10 a 13.
 
 ::: {.notes}
 - Connect Cloud = un servidor de Posit que corre R de verdad.
 - Pasos 10 a 13, unos 25 min.
+- Vía principal: el botón Publish de RStudio (pasos 10 y 11). El paso 12 es otra vía, desde GitHub: solo si sobra tiempo.
 - Si falta tiempo o falla: lo muestro con mi repositorio ya publicado.
 :::
 
-## Paso 10 · Prepare la lista de paquetes
+## Paso 10 · Cree su cuenta en Connect Cloud
 
 :::: {.columns}
 ::: {.column width="56%"}
-Connect Cloud necesita saber qué versión de R y qué paquetes usa su app. Esa lista es un archivo: `manifest.json`.
+1. Entre a **[connect.posit.cloud](https://connect.posit.cloud)**. ![Lo que debe ver: la portada de Posit Connect Cloud con el botón Sign Up.](../_figures/shiny/connect-portada.png){.captura}
+2. Presione **Sign Up**.
+3. Elija registrarse con **GitHub** y autorice.
+
+Así no crea otra contraseña.
+:::
+::: {.column width="44%"}
+::: {.ok}
+**¿Cómo sé que funcionó?** Entra a su página de inicio de Connect Cloud, todavía sin contenido.
+:::
+
+::: {.ojo}
+**No confunda.** **Posit Cloud** es RStudio en línea. **Posit Connect Cloud** es para publicar.
+:::
+:::
+::::
+
+::: {.notes}
+- Sign Up → GitHub → Authorize.
+- La cuenta sirve para las dos vías: RStudio (paso 11) y GitHub (paso 12).
+- No confundir: **Posit Cloud** = RStudio en línea. **Posit Connect Cloud** = publicar.
+:::
+
+## Paso 11 · Publique desde RStudio
+
+:::: {.columns}
+::: {.column width="56%"}
+1. En RStudio: **Tools → Global Options → Publishing → Connect… → Posit Connect Cloud**. ![Lo que debe ver: las opciones de RStudio en Publishing, el botón Connect y la opción Posit Connect Cloud.](../_figures/shiny/shiny-rstudio1.png){.captura}
+2. Se abre el navegador (si lo pide, entre con GitHub): presione **Continue** y autorice. ![Lo que debe ver: la página Authorize Access con un código y el botón Continue.](../_figures/shiny/shiny-rstudio2.png){.captura}
+3. Vuelva a RStudio. Con `app.R` abierto, presione **Publish**, a la derecha de **Run App**. ![Lo que debe ver: el botón Publish y la ventana Publish to Server, con la cuenta, el título y el botón Publish.](../_figures/shiny/shiny-rstudio3.png){.captura}
+4. Revise que `app.R` esté marcado, escriba un **Title** (por ejemplo, `shiny-maria`) y presione **Publish**.
+:::
+::: {.column width="44%"}
+::: {.ok}
+**¿Cómo sé que funcionó?** Tras unos minutos, RStudio abre su app en una dirección que termina en `share.connect.posit.cloud`. ![Lo que debe ver: su app publicada, en una dirección que termina en share.connect.posit.cloud.](../_figures/shiny/shiny-rstudio4.png){.captura}
+:::
+
+::: {.espejo}
+**¿Qué pasó?** RStudio subió la carpeta `app` directo, sin pasar por GitHub. Dejó una carpeta `app/rsconnect` que recuerda dónde publicó. Para actualizar: **Publish** otra vez.
+:::
+
+::: {.ojo}
+**¿No aparece Posit Connect Cloud?** En la consola: `rsconnect::connectCloudUser()` y después `rsconnect::deployApp("app")`.
+:::
+:::
+::::
+
+::: {.notes}
+- Vía principal. No usa `manifest.json` ni GitHub: RStudio arma la lista de paquetes y sube la carpeta.
+- Tools → Global Options → Publishing → Connect… → Posit Connect Cloud → navegador: Continue → Authorize.
+- Después: `app.R` abierto → Publish, a la derecha de Run App → cuenta, Title → Publish.
+- `app/rsconnect/…dcf` = registro de la publicación (cuenta y dirección; sin contraseñas). Aparecerá en GitHub Desktop: se puede subir.
+- El avance se ve en la pestaña Deploy, junto a la consola. Tarda unos minutos: instala los paquetes.
+- Si la opción no aparece en el diálogo, puede ser un RStudio antiguo: usar la consola.
+- Connect Cloud aparece con `rsconnect` 1.6.0 o posterior. Lo instalaron en el paso 1, así que es reciente.
+- Por consola: `deployApp("app")` supone que la carpeta de trabajo es la del repositorio. Comprobar con `getwd()`.
+- Para actualizar: Publish de nuevo. El push no republica esta copia.
+:::
+
+## Paso 12 · Otra vía, desde GitHub (1 de 2)
+
+:::: {.columns}
+::: {.column width="56%"}
+Connect Cloud también puede sacar la app de su repositorio y republicarla sola con cada push. Para eso necesita la lista de paquetes en un archivo: `manifest.json`.
 
 1. En RStudio, con `app.R` abierto: **Session → Set Working Directory → To Source File Location**. ![Lo que debe ver: el menú Session de RStudio con la opción Set Working Directory y To Source File Location.](../_figures/shiny/rstudio-directorio.png){.captura}
 2. En la consola:
@@ -976,16 +1045,17 @@ rsconnect::writeManifest()
 :::
 ::: {.column width="44%"}
 ::: {.ok}
-**¿Cómo sé que funcionó?** En la carpeta `app` hay un archivo nuevo, `manifest.json`, y ya está en github.com.
+**¿Cómo sé que funcionó?** En la carpeta `app` hay un archivo nuevo, `manifest.json`, y ya está en github.com. ![Lo que debe ver: el repositorio en github.com con el commit del manifest.](../_figures/shiny/github-manifest.png){.captura}
 :::
 
 ::: {.espejo}
-Es la misma idea del `renv.lock` de la primera clase: dejar por escrito el entorno para que otro computador pueda repetirlo.
+**¿Qué es `manifest.json`?** La lista de compras de Connect Cloud: su servidor parte sin paquetes e instala la versión de R y los paquetes que dice ahí. Es la misma idea del `renv.lock` de la primera clase. Si agrega un paquete a la app, vuelva a correr `writeManifest()`.
 :::
 :::
 ::::
 
 ::: {.notes}
+- Vía opcional: solo si sobra tiempo. La principal es el paso 11.
 - `manifest.json` = versión de R y lista de paquetes con sus versiones. Connect Cloud instala lo mismo.
 - `writeManifest()` escribe en la carpeta de trabajo. Por eso el cambio de carpeta.
 - Comprobar: `getwd()` debe terminar en `/app`.
@@ -993,48 +1063,21 @@ Es la misma idea del `renv.lock` de la primera clase: dejar por escrito el entor
 - Si el push sale rechazado: primero Pull origin (por el archivo del paso 9).
 :::
 
-## Paso 11 · Cree su cuenta en Connect Cloud
+## Paso 12 · Otra vía, desde GitHub (2 de 2)
 
 :::: {.columns}
 ::: {.column width="56%"}
-1. Entre a **[connect.posit.cloud](https://connect.posit.cloud)**. ![Lo que debe ver: la portada de Posit Connect Cloud con el botón Sign Up.](../_figures/shiny/connect-portada.png){.captura}
-2. Presione **Sign Up**.
-3. Elija registrarse con **GitHub** y autorice.
-
-Así no crea otra contraseña, y Connect Cloud queda enlazado a la cuenta donde está su repositorio.
-:::
-::: {.column width="44%"}
-::: {.ok}
-**¿Cómo sé que funcionó?** Entra a su página de inicio de Connect Cloud, todavía sin contenido.
-:::
-
-::: {.ojo}
-**Ojo.** El plan gratuito solo publica desde repositorios **públicos**. El suyo ya lo es.
-:::
-:::
-::::
-
-::: {.notes}
-- Sign Up → GitHub → Authorize.
-- Plan gratuito: solo repositorios públicos.
-- No confundir: **Posit Cloud** = RStudio en línea. **Posit Connect Cloud** = publicar.
-:::
-
-## Paso 12 · Publique la app
-
-:::: {.columns}
-::: {.column width="56%"}
-1. En **Home**, presione **Publish**. La primera vez le pide instalar la aplicación de Connect Cloud en GitHub: acepte.
+1. En [connect.posit.cloud](https://connect.posit.cloud), en **Home**, presione **Publish**. La primera vez le pide instalar la aplicación de Connect Cloud en GitHub: acepte.
 2. Elija **Shiny**.
-3. Elija su repositorio `shiny-…`.
+3. Elija su repositorio `shiny-…`. El plan gratuito pide que sea **público**: el suyo lo es.
 4. **Branch**: `main`.
-5. **Primary file**: `app/app.R`. ![Lo que debe ver: el formulario de publicación con el repositorio, la rama main y el archivo app/app.R elegidos.](../_figures/shiny/connect-publicar.png){.captura}
+5. **Primary file**: `app/app.R`.
 6. Deje activado **Automatically publish on push**.
 7. Presione **Publish**.
 :::
 ::: {.column width="44%"}
 ::: {.ok}
-**¿Cómo sé que funcionó?** Tras unos minutos de instalación, aparece su app en una dirección que termina en `share.connect.posit.cloud`. ![Lo que debe ver: su app publicada en Connect Cloud.](../_figures/shiny/connect-app-publicada.png){.captura}
+**¿Cómo sé que funcionó?** Tras unos minutos de instalación, aparece su app en otra dirección `share.connect.posit.cloud`. Es una copia distinta de la del paso 11.
 :::
 
 ::: {.ojo}
@@ -1044,6 +1087,7 @@ Así no crea otra contraseña, y Connect Cloud queda enlazado a la cuenta donde 
 ::::
 
 ::: {.notes}
+- Quien hizo el paso 11 queda con dos apps en Connect Cloud: es normal. Esta se republica sola con el push.
 - Publish → Shiny → repositorio → Branch `main` → Primary file `app/app.R` → Publish.
 - La primera vez pide instalar la aplicación de Connect Cloud en GitHub y darle acceso al repositorio.
 - Si el repositorio no aparece: falta ese acceso, o el repositorio es privado.
@@ -1057,20 +1101,22 @@ Así no crea otra contraseña, y Connect Cloud queda enlazado a la cuenta donde 
 ::: {.column width="56%"}
 1. En `app.R`, cambie el otro color del gráfico: `"#555555"` por `"orange"`.
 2. Guarde, y en GitHub Desktop haga **commit** y **push**.
-3. Espere unos minutos y recargue sus tres direcciones.
+3. En RStudio, presione **Publish** otra vez.
+4. Espere unos minutos y recargue sus tres direcciones.
 :::
 ::: {.column width="44%"}
 ::: {.ok}
 **¿Qué debe ver?**
 
-- **Connect Cloud** y **GitHub Pages** muestran el color nuevo: se publicaron solas con el push.
+- **GitHub Pages** muestra el color nuevo: se publicó sola con el push.
+- **Connect Cloud** también: la republicó usted con **Publish**. Por la vía de GitHub se republica sola.
 - **El enlace del paso 7** sigue igual: es una copia guardada dentro de la dirección.
 :::
 :::
 ::::
 
 ::: {.notes}
-- Con el push, Connect Cloud se republica sola (*Automatically publish on push*) y Actions corre de nuevo.
+- Con el push, Actions corre de nuevo. Connect Cloud: Publish otra vez desde RStudio; por la vía de GitHub se republica sola (*Automatically publish on push*).
 - El enlace del paso 7 no cambia: el código viaja dentro de la dirección.
 - Idea de cierre: el repositorio es la fuente; las publicaciones salen de él.
 - Si no ven el cambio: Ctrl + F5 (caché del navegador). Mirar Actions y el registro de Connect Cloud.
@@ -1087,11 +1133,11 @@ Así no crea otra contraseña, y Connect Cloud queda enlazado a la cuenta donde 
 |  | Enlace de shinylive | GitHub Pages + Actions | Posit Connect Cloud |
 |---|---|---|---|
 | ¿Dónde corre R? | En el navegador de quien visita | En el navegador de quien visita | En un servidor de Posit |
-| ¿Qué necesita? | Nada | Un repositorio público | Un repositorio público y una cuenta |
+| ¿Qué necesita? | Nada | Un repositorio público | Una cuenta |
 | Primera carga | Lenta | Lenta | Rápida |
 | Los datos | Viajan completos a quien visita | Viajan completos a quien visita | Se quedan en el servidor |
 | Paquetes | Solo los preparados para navegador | Solo los preparados para navegador | Casi todos los de CRAN |
-| Para actualizar | Crear un enlace nuevo | Solo push | Solo push |
+| Para actualizar | Crear un enlace nuevo | Solo push | **Publish** otra vez (o solo push, por la vía de GitHub) |
 
 ::: {.ojo}
 En los tres casos el código queda a la vista de cualquiera. Con datos que identifican personas, ninguna sirve tal como está.
@@ -1108,12 +1154,12 @@ En los tres casos el código queda a la vista de cualquiera. Con datos que ident
 | Lo que ve | Qué hacer |
 |---|---|
 | El editor vivo queda en blanco | Use el enlace *Abrir este editor en una pestaña nueva*, o recargue la página. |
-| R o RStudio no funcionan en su computador | Entre a [posit.cloud](https://posit.cloud), cree un proyecto de RStudio y siga ahí los pasos 1, 3, 4 y 10. |
+| R o RStudio no funcionan en su computador | Entre a [posit.cloud](https://posit.cloud), cree un proyecto de RStudio y siga ahí los pasos 1, 3, 4 y 11. |
 | No tiene GitHub Desktop (por ejemplo, en Linux) | Cree `app/app.R` en github.com con **Add file → Create new file**, igual que en el paso 9. |
 | **Run App** da un error | Vuelva a copiar el código completo. Casi siempre falta una coma o un paréntesis. |
 | Equis roja en **Actions** | Revise que en el paso 8 diga *GitHub Actions* y que la carpeta se llame `app`. Después, **Re-run all jobs**. |
 | La dirección de GitHub Pages da **404** | Espere a que Actions termine con visto verde y recargue. |
-| Connect Cloud no publica | Revise que `manifest.json` esté en la carpeta `app` y que hizo push. |
+| Connect Cloud no publica | Desde RStudio: lea el error en la pestaña **Deploy**. Desde GitHub: revise que `manifest.json` esté en `app` y que hizo push. |
 | Nada de lo anterior resulta | Su enlace del paso 7 sigue funcionando. Avise y siga con la persona de al lado. |
 
 ::: {.notes}
