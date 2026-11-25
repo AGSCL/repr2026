@@ -5,7 +5,7 @@ paquetes <- c("shiny", "rsconnect")
 if (nzchar(Sys.getenv("RENV_PROJECT")))      # hay un proyecto con renv abierto
   stop("Cierre el proyecto: File > Close Project")
 if (!dir.exists(".git"))                     # .git marca la carpeta del repositorio
-  stop("Session > Set Working Directory > To Source File Location")
+  stop("Abra el proyecto de su repositorio: File > Open Project")
 faltan <- setdiff(paquetes, rownames(installed.packages()))   # paquetes sin instalar
 if (length(faltan) > 0) stop("Primero instale (paso 1): ", paste(faltan, collapse = ", "))
 # 3. CARPETAS

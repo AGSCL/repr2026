@@ -87,7 +87,9 @@ format:
           visor.addEventListener("keydown", function (e) { e.stopPropagation(); });  // que Esc no mueva las láminas
           document.body.append(visor);
           document.querySelectorAll("img.captura").forEach(function (img) {
-            if (img.naturalWidth === 0) { img.remove(); return; }
+            // reveal.js recién carga la imagen al acercarse a su lámina: antes de eso no se puede saber si existe
+            img.addEventListener("error", function () { img.remove(); });
+            if (img.getAttribute("src") && img.complete && img.naturalWidth === 0) { img.remove(); return; }
             const ampliar = function () {
               const grande = new Image();
               grande.src = img.src; grande.alt = img.alt;
@@ -586,6 +588,14 @@ install.packages(c("shiny", "rsconnect"))
 
 - `shiny` construye la app.
 - `rsconnect` la prepara para Connect Cloud (parte 5).
+
+::: {.aviso}
+**¿Error con `rlang` o `00LOCK`?** Pasa con R 4.4. Instale `rsconnect` en su versión binaria:
+
+```r
+renv::install("rsconnect", type = "binary")
+```
+:::
 :::
 ::: {.column width="44%"}
 ::: {.ok}
@@ -604,25 +614,32 @@ install.packages(c("shiny", "rsconnect"))
 
 ::: {.notes}
 - `shiny` hace la app. `rsconnect` publica la app en Connect Cloud en la parte 5.
+- Error al instalar `rsconnect` con R 4.4.1 (`rlang`, carpeta `00LOCK`): `renv::install("rsconnect", type = "binary")`. Sin renv: `install.packages("rsconnect", type = "binary")`. Con R 4.6 instala normal.
 - Si pregunta *Do you want to install from sources…?*: responder **No**.
 - Un proyecto con renv abierto (clase 1) instala en su propia biblioteca. Por eso File → Close Project.
 - Comprobar: `library(shiny)` sin error; `packageVersion("shiny")`.
 :::
 
-## Paso 2 · Cree un repositorio para la app
+## Paso 2 · Cree un repositorio para la app {.etapa}
 
 :::: {.columns}
 ::: {.column width="56%"}
-1. En GitHub Desktop: **File → New repository…**
+1. En GitHub Desktop: **File → New repository…** ![Lo que debe ver: el menú File de GitHub Desktop con la opción New repository.](../_figures/shiny/paso2-desktop-nuevo-repo.png){.captura}
 2. **Name**: `shiny-` más su nombre. Por ejemplo, `shiny-maria`.
-3. Marque **Initialize this repository with a README** y presione **Create repository**.
-4. En RStudio: **File → New File → R Script** y pegue el guion de la lámina siguiente.
-5. Guárdelo en el repositorio como `00estructura_shiny.R`.
-6. **Session → Set Working Directory → To Source File Location** y **Source**.
+3. Marque **Initialize this repository with a README** y presione **Create repository**. ![Lo que debe ver: la ventana Create a new repository con el nombre, la casilla del README marcada y el botón Create repository.](../_figures/shiny/paso2-desktop-crear-repo.png){.captura}
+4. Con **Show in Explorer** vea dónde quedó la carpeta: la necesita en el punto siguiente. ![Lo que debe ver: GitHub Desktop con el repositorio recién creado y el botón Show in Explorer enmarcado.](../_figures/shiny/paso2-desktop-explorer.png){.captura}
+5. En RStudio: **File → New Project… → Existing Directory**. ![Lo que debe ver: la ventana New Project Wizard con la opción Existing Directory.](../_figures/shiny/paso2-rstudio-proyecto.png){.captura} Con **Browse…** elija la carpeta de su repositorio y presione **Create Project**. ![Lo que debe ver: la carpeta del repositorio en Project working directory y el botón Create Project, enmarcados.](../_figures/shiny/paso2-rstudio-proyecto-carpeta.png){.captura}
+6. **File → New File → R Script** ![Lo que debe ver: el menú File de RStudio, New File, R Script.](../_figures/shiny/rstudio-nuevo-script.png){.captura} y pegue el guion de la lámina siguiente.
+7. **File → Save As…** ![Lo que debe ver: el menú File de RStudio con Save As enmarcado.](../_figures/shiny/paso2-rstudio-guardar.png){.captura} Guárdelo como `00estructura_shiny.R`: la ventana ya abre en su repositorio.
+8. Presione **Source**. ![Lo que debe ver: el guion abierto en RStudio y el botón Source enmarcado.](../_figures/shiny/paso2-rstudio-source.png){.captura}
 :::
 ::: {.column width="44%"}
 ::: {.ok}
-**¿Cómo sé que funcionó?** La consola dice `Listo`. El repositorio tiene una carpeta `app` vacía, `_doc`, `DESCRIPTION`, `README.md` y `renv.lock`.
+**¿Cómo sé que funcionó?** La consola dice `Listo`. El repositorio tiene una carpeta `app` vacía, `_doc`, `DESCRIPTION`, `README.md`, `renv.lock` y el archivo del proyecto (`.Rproj`).
+:::
+
+::: {.espejo}
+**¿Para qué el proyecto?** Al abrirlo, R trabaja dentro de la carpeta del repositorio. No hay que decirle dónde está cada archivo.
 :::
 
 ::: {.ojo}
@@ -635,7 +652,9 @@ install.packages(c("shiny", "rsconnect"))
 - Igual al paso 5 de la clase de Git: File → New repository.
 - Carpeta por defecto: `Documentos\GitHub\shiny-nombre`.
 - El guion crea `app` y `_doc`, escribe DESCRIPTION, renv.lock, README y `_doc/entorno.txt`, y se detiene si algo falta.
-- Errores que avisa: proyecto abierto (File → Close Project), carpeta equivocada (Set Working Directory) o paquetes sin instalar (paso 1).
+- El proyecto de RStudio (`.Rproj`) deja la carpeta de trabajo en el repositorio: por eso no hace falta cambiarla a mano.
+- Errores que avisa: proyecto con renv abierto (File → Close Project), carpeta equivocada (abrir el proyecto del repositorio: File → Open Project) o paquetes sin instalar (paso 1).
+- `.Rproj` y `.gitignore` aparecen después en Changes (paso 6): se suben con lo demás.
 - renv.lock sin activar renv: Run App y GitHub Actions siguen usando los paquetes del paso 1.
 - Git no muestra carpetas vacías: `app` aparece en Changes recién con `app.R`. Es normal.
 :::
@@ -676,15 +695,15 @@ Es el compendio de la primera clase, en chico. Esta vez `renv.lock` solo **regis
 
 :::: {.columns}
 ::: {.column width="56%"}
-1. En RStudio: **File → New File → R Script**.
+1. En RStudio: **File → New File → R Script**. ![Lo que debe ver: el menú File de RStudio, New File, R Script.](../_figures/shiny/rstudio-nuevo-script.png){.captura}
 2. Pegue el código de la lámina siguiente.
-3. **File → Save As…**, entre a la carpeta `app` de su repositorio y guárdelo como `app.R`.
+3. **File → Save As…**, ![Lo que debe ver: el menú File de RStudio con Save As; a la derecha, las carpetas app y _doc que creó el guion.](../_figures/shiny/paso3-rstudio-guardar.png){.captura} entre a la carpeta `app` de su repositorio ![Lo que debe ver: la ventana para guardar, con las carpetas _doc y app del repositorio.](../_figures/shiny/paso3-guardar-carpeta.png){.captura} y guárdelo como `app.R`. ![Lo que debe ver: la ventana para guardar, ya dentro de la carpeta app, con el nombre app.](../_figures/shiny/paso3-guardar-app.png){.captura}
 
 Una app vive en su propia carpeta. Esta no necesita nada más: los datos vienen con R.
 :::
 ::: {.column width="44%"}
 ::: {.ok}
-**¿Cómo sé que funcionó?** En RStudio, arriba del código, aparece el botón **Run App**. ![Lo que debe ver: RStudio con app.R abierto y el botón Run App arriba a la derecha del código.](../_figures/shiny/rstudio-run-app.png){.captura}
+**¿Cómo sé que funcionó?** En RStudio, arriba del código, aparece el botón **Run App**. ![Lo que debe ver: RStudio con app.R abierto y el botón Run App arriba a la derecha del código.](../_figures/shiny/paso3-rstudio-run-app.png){.captura}
 :::
 
 ::: {.ojo}
@@ -738,10 +757,10 @@ El código no tiene tildes ni ñ, tampoco en los textos: en algunos computadores
 
 :::: {.columns}
 ::: {.column width="56%"}
-1. Con `app.R` abierto, presione **Run App**. Se abre una ventana con la app. ![Lo que debe ver: la app con el menú de departamentos, el gráfico de barras y la tabla.](../_figures/shiny/app-final.png){.captura}
-2. Deje *Todos*. ¿Admitían más a los hombres?
+1. Con `app.R` abierto, presione **Run App**. ![Lo que debe ver: RStudio con app.R abierto y el botón Run App arriba a la derecha del código.](../_figures/shiny/paso3-rstudio-run-app.png){.captura} Se abre una ventana con la app.
+2. Deje *Todos*. ¿Admitían más a los hombres? ![Lo que debe ver: la app con el menú en Todos, el gráfico de barras y la tabla.](../_figures/shiny/paso4-app-todos.png){.captura}
 3. Ahora elija los departamentos, uno por uno. ¿Se mantiene?
-4. Para detenerla, cierre la ventana o presione el botón rojo **Stop** de la consola.
+4. Para detenerla, cierre la ventana ![Lo que debe ver: la ventana de la app con el botón de cerrar, arriba a la derecha.](../_figures/shiny/paso4-app-cerrar.png){.captura} o presione el botón rojo **Stop** de la consola. ![Lo que debe ver: el botón rojo Stop, enmarcado, arriba a la derecha de la consola de RStudio.](../_figures/shiny/paso4-rstudio-stop.png){.captura}
 
 Mientras la app corre, la consola dice `Listening on http://127.0.0.1:…` y no acepta otros comandos. Es lo normal.
 :::
@@ -772,7 +791,7 @@ Una tabla fija habría mostrado solo el total. La app deja ver que la diferencia
 Cambie dos cosas en `app.R`:
 
 1. El título: dentro de `titlePanel(…)` agregue su nombre, sin tildes.
-2. Un color del gráfico: `"#bc7777"` por `"steelblue"`.
+2. Un color del gráfico: `"#bc7777"` por `"steelblue"`. ![Lo que debe ver: app.R con un nombre agregado en titlePanel y steelblue en el color.](../_figures/shiny/paso5-app-cambios.png){.captura}
 
 Guarde y presione **Run App** otra vez.
 :::
@@ -797,10 +816,10 @@ Guarde y presione **Run App** otra vez.
 
 :::: {.columns}
 ::: {.column width="56%"}
-1. En GitHub Desktop, en **Changes**, aparecen `app/app.R` y los archivos del paso 2. ![Lo que debe ver: GitHub Desktop con app/app.R y los archivos del paso 2 en la lista Changes.](../_figures/shiny/desktop-commit-app.png){.captura}
+1. En GitHub Desktop, en **Changes**, aparecen `app/app.R` y los archivos del paso 2. Deje todos marcados. ![Lo que debe ver: GitHub Desktop con todos los archivos marcados, el mensaje y el botón Commit, enmarcados.](../_figures/shiny/paso6-desktop-commit.png){.captura}
 2. Mensaje: `Agrega app Shiny`. Presione **Commit to main**.
 3. Presione **Publish repository**.
-4. **Desmarque** *Keep this code private* y presione **Publish repository**.
+4. **Desmarque** *Keep this code private* y presione **Publish repository**. ![Lo que debe ver: la ventana Publish repository con la casilla Keep this code private sin marcar y el botón Publish repository, enmarcados.](../_figures/shiny/paso6-desktop-publicar.png){.captura}
 :::
 ::: {.column width="44%"}
 ::: {.ok}
@@ -862,8 +881,8 @@ Es lo que usó en las etapas 1 a 5.
 ::: {.column width="56%"}
 1. Abra **[shinylive.io/r/editor](https://shinylive.io/r/editor/)**. Es el mismo editor de las etapas.
 2. Borre el código de ejemplo y pegue el de su `app.R`.
-3. Presione ▶ y revise que la app aparezca.
-4. Presione **Share**. En *Application URL*, presione **Copy URL**.![Lo que debe ver: la ventana Share de shinylive con las direcciones para copiar.](../_figures/shiny/shinylive-share.png){.captura}
+3. Presione ▶ y revise que la app aparezca. ![Lo que debe ver: el editor de shinylive con su código a la izquierda, la app a la derecha y el botón Share arriba.](../_figures/shiny/paso7-shinylive-editor.png){.captura}
+4. Presione **Share**. En *Application URL*, presione **Copy URL**. ![Lo que debe ver: la ventana Share de shinylive con las direcciones para copiar.](../_figures/shiny/paso7-shinylive-share.png){.captura}
 5. Pegue la dirección en otra pestaña.
 :::
 ::: {.column width="44%"}
@@ -893,8 +912,8 @@ El enlace del paso 7 es una copia suelta. Ahora la app se publicará desde su re
 
 En el navegador, dentro de su repositorio `shiny-…`:
 
-1. Entre a **Settings → Pages**.
-2. En *Build and deployment*, en **Source**, cambie *Deploy from a branch* por **GitHub Actions**. ![Lo que debe ver: la página Settings, Pages, con GitHub Actions elegido en Source.](../_figures/shiny/pages-fuente-actions.png){.captura}
+1. Entre a **Settings → Pages**. ![Lo que debe ver: la portada de su repositorio en github.com con la pestaña Settings enmarcada.](../_figures/shiny/paso8-github-settings.png){.captura}
+2. En *Build and deployment*, en **Source**, cambie *Deploy from a branch* por **GitHub Actions**. ![Lo que debe ver: el menú Source abierto, con las opciones GitHub Actions y Deploy from a branch.](../_figures/shiny/paso8-pages-fuente.png){.captura} ![Lo que debe ver: la página Settings, Pages, con GitHub Actions elegido en Source.](../_figures/shiny/pages-fuente-actions.png){.captura}
 
 No hay botón para guardar: queda guardado al elegir.
 :::
@@ -923,7 +942,7 @@ No hay botón para guardar: queda guardado al elegir.
 1. En la portada de su repositorio: **Add file** (o **+**) **→ Create new file**. ![Lo que debe ver: el botón + abierto, con la opción Create new file.](../_figures/shiny/pre-github-crear-archivo.png){.captura}
 2. En el nombre, escriba completo, con las barras:
    `.github/workflows/publicar-app.yml` ![Lo que debe ver: el formulario de GitHub para crear un archivo, con la ruta .github/workflows/publicar-app.yml.](../_figures/shiny/github-crear-archivo.png){.captura}
-3. Pegue el contenido de la derecha. Cópielo con el botón.
+3. Pegue el contenido de la derecha. Cópielo con el botón. ![Lo que debe ver: la receta pegada, con la ruta del archivo y el botón Commit changes enmarcados.](../_figures/shiny/paso9-github-receta.png){.captura}
 4. Presione **Commit changes…** y confirme. ![Lo que debe ver: el editor con la receta pegada y el botón Commit changes.](../_figures/shiny/pre-actions-visto-verde.png){.captura} ![Lo que debe ver: la ventana para confirmar el commit en la rama main.](../_figures/shiny/pre2-actions-visto-verde.png){.captura}
 5. Entre a la pestaña **Actions** y espere el visto verde: tarda 5 a 7 minutos. ![Lo que debe ver: el último commit con un visto verde.](../_figures/shiny/actions-visto-verde.png){.captura}
 6. Abra `https://USUARIO.github.io/shiny-NOMBRE/`
