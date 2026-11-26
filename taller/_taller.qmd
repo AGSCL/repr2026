@@ -1,0 +1,432 @@
+---
+title: "Taller evaluado"
+subtitle: "Un compendio reproducible con datos de la ELSOC"
+author: "Andrés González-Santa Cruz"
+institute: "Reproducibilidad y Comunicación de Resultados · UDP · 2026"
+lang: es
+format:
+  revealjs:
+    output-file: index.html
+    embed-resources: true
+    width: 1600
+    height: 900
+    slide-number: true
+    hash: true
+    pdf-separate-fragments: false
+    navigation-mode: linear
+    auto-stretch: false
+    code-copy: true
+    code-line-numbers: false
+    logo: "../_figures/git/cropped-logotipo-fsch.webp"
+    include-in-header:
+      text: |
+        <style>
+        /* Mismo estilo que clase-git, clase-shiny y suple-git: Oswald (SIL OFL 1.1) incrustada al renderizar */
+        @font-face {
+          font-family: "Oswald";
+          src: url("../_lib/oswald-latin.woff2") format("woff2");
+          font-weight: 300 700;
+        }
+        .reveal { font-family: "Oswald", "Arial Narrow", sans-serif; font-size: 42px; font-weight: 400; color: rgba(0, 0, 0, .82); }
+        .reveal h1, .reveal h2, .reveal h3 { font-family: inherit; font-weight: 600; color: #bc7777; }
+        .reveal h1.title { font-size: 150px; }
+        .reveal .subtitle { color: #555; font-size: 52px; }
+        .reveal a { color: #a24f4f; }
+        .reveal strong { font-weight: 600; color: #333; }
+        .reveal code { font-family: Consolas, "Courier New", monospace; font-size: .82em; color: #7a2e2e; background: #f6efef; padding: 0 .2em; border-radius: 4px; }
+        .reveal pre { font-size: .78em; width: 100%; }
+        .reveal pre code { color: inherit; background: none; padding: .5em .7em; font-size: 1em; max-height: 640px; }
+        .reveal pre code.sourceCode, .reveal pre code.sourceCode > span { white-space: pre-wrap !important; overflow-wrap: anywhere; }
+        .reveal li { margin: .22em 0; }
+        .reveal table { font-size: .86em; }
+        .reveal img { border-radius: 6px; }
+        .reveal .slide-logo { height: 70px !important; max-height: unset !important; }
+        .reveal section.seccion h1 { color: #fff; font-size: 110px; }
+        .reveal section.seccion p { color: #fff; font-size: 44px; }
+        .ok, .ojo, .espejo, .aviso { padding: .35em .7em; margin: .5em 0; border-radius: 6px; font-size: .88em; }
+        .ok { border-left: 10px solid #3a8a5c; background: #eef7f1; }
+        .ojo { border-left: 10px solid #bc7777; background: #faf1f1; }
+        .espejo { border-left: 10px solid #555; background: #f1f1f1; }
+        .aviso { border-left: 10px solid #d9822b; background: #fdf3e7; }
+        .ok p, .ojo p, .espejo p, .aviso p { margin: .2em 0; }
+        .chico { font-size: .8em; }
+        .reveal section.etapa { font-size: .8em; }
+        /* [captura]: miniatura al lado de la instrucción; se amplía con un clic */
+        img.captura { height: 1.15em; width: auto; vertical-align: middle; margin: 0 0 0 .25em; border: 2px solid #bc7777; border-radius: 3px; cursor: zoom-in; }
+        dialog.visor { border: 0; padding: 0; background: none; max-width: 96vw; max-height: 96vh; }
+        dialog.visor img { display: block; max-width: 96vw; max-height: 96vh; cursor: zoom-out; }
+        dialog.visor::backdrop { background: rgba(0, 0, 0, .75); }
+
+        /* Lo propio de este taller: el guion del paso 2 entero en la lámina y en el PDF, y tablas largas */
+        .reveal section.guion pre { font-size: .35em; margin: 0; }
+        .reveal section.guion pre code { max-height: none !important; line-height: 1.1; padding: .3em .6em; }
+        .reveal section.guion pre code.sourceCode > span { line-height: 1.1; }
+        .reveal section.guion h2 { margin-bottom: .1em; }
+        .reveal section.tabla table { font-size: .68em; }
+        .reveal section.tabla td, .reveal section.tabla th { padding: .22em .5em; }
+        .minimo { font-size: .6em; color: #555; text-align: right; margin-top: 9em; }
+        .minimo p { margin: 0; }
+        </style>
+    include-after-body:
+      text: |
+        <script>
+        window.addEventListener("load", function () {
+          // [captura]: una imagen que todavía no existe se quita; las demás se abren en grande al hacer clic
+          const visor = document.createElement("dialog");
+          visor.className = "visor";
+          visor.addEventListener("click", function () { visor.close(); });
+          visor.addEventListener("keydown", function (e) { e.stopPropagation(); });  // que Esc no mueva las láminas
+          document.body.append(visor);
+          document.querySelectorAll("img.captura").forEach(function (img) {
+            // reveal.js recién carga la imagen al acercarse a su lámina: antes de eso no se puede saber si existe
+            img.addEventListener("error", function () { img.remove(); });
+            if (img.getAttribute("src") && img.complete && img.naturalWidth === 0) { img.remove(); return; }
+            const ampliar = function () {
+              const grande = new Image();
+              grande.src = img.src; grande.alt = img.alt;
+              visor.replaceChildren(grande);
+              visor.showModal();
+            };
+            img.tabIndex = 0; img.setAttribute("role", "button"); img.title = "Clic para ampliar";
+            img.addEventListener("click", ampliar);
+            img.addEventListener("keydown", function (e) { if (e.key === "Enter") ampliar(); });
+          });
+
+          // Zoom con doble clic: usa el zoom que ya trae reveal.js (el de Alt + clic); otro doble clic vuelve
+          document.querySelector(".reveal .slides").addEventListener("dblclick", function (e) {
+            if (e.target.closest("a, button, img.captura")) return;
+            e.target.dispatchEvent(new MouseEvent("mousedown", { bubbles: true, altKey: true, ctrlKey: true, clientX: e.clientX, clientY: e.clientY }));
+          });
+        });
+        </script>
+---
+
+# Parte 1 · Qué se pide {.seccion background-color="#8f4a4a"}
+
+En parejas. Seis pasos. La entrega es un ZIP en Canvas.
+
+::: {.notes}
+- 10 min. Todavía no se abre RStudio.
+- Meta: cada pareja sabe qué entrega, cuál es su opción y con qué criterios se evalúa.
+- Teclas: **S** abre estas notas; **doble clic** amplía; **O** muestra todas las láminas.
+:::
+
+## Qué va a entregar
+
+:::: {.columns}
+::: {.column width="56%"}
+Un ZIP con la carpeta de su proyecto, en Canvas. Adentro va un compendio:
+
+- **El informe**: `informe.qmd` y su `informe.html`, con los nombres de la pareja, la fecha, una tabla de 2 × 2, un gráfico, tres textos cortos y la información de la sesión.
+- **Los datos**: la base ELSOC que bajó de GitHub.
+- **El entorno**: el guion que armó el compendio, `renv.lock`, `DESCRIPTION` y `README.md`.
+
+Recibe un kit con el proyecto y la plantilla del informe. El guion lo copia de estas láminas y lo completa.
+:::
+::: {.column width="44%"}
+::: {.ok}
+**Lo que se evalúa:** que sepa armar un compendio, completar un documento dinámico, renderizarlo y entregarlo de modo que otra persona lo pueda repetir.
+:::
+
+::: {.ojo}
+**En parejas.** Cada pareja recibe una opción, del 1 al 5. Se entrega hasta el **domingo 29 de noviembre a las 23:59**.
+:::
+
+::: {.espejo}
+Vale el 40 % de la nota del curso, según el programa.
+:::
+:::
+::::
+
+::: {.notes}
+- Un solo archivo en Canvas: el ZIP que la pareja arma en el paso 6.
+- No es una prueba de tablas ni de gráficos: el código viene casi completo.
+- Decir en voz alta qué opción tiene cada pareja y anotarla.
+- El programa habla de 5 a 10 páginas; aquí el informe es una página web con cinco secciones.
+:::
+
+## Las cinco opciones {.etapa .tabla}
+
+Todas hacen la misma pregunta: **¿difieren hombres y mujeres?** Cambian el año y el tema.
+
+| Opción | Ola | Tema | Variable | Categorías que forman el primer grupo |
+|---|---|---|---|---|
+| **1** | 2016 | Confianza en Carabineros | `conf_carb` | `"Bastante"` y `"Mucho"` |
+| **2** | 2017 | Confianza en el Presidente o la Presidenta | `conf_presi` | `"Nada"` |
+| **3** | 2018 | Confianza en los partidos políticos | `conf_part` | `"Nada"` |
+| **4** | 2019 | Cambiar la Constitución | `cambiar_consti` | `"De acuerdo o totalmente de acuerdo"` |
+| **5** | 2018 | Identificación con un partido político | `idpart` | `"Ninguno"` |
+
+: {tbl-colwidths="[8,8,34,18,32]"}
+
+El segundo grupo es el resto de las respuestas. Los nombres de los dos grupos y el título del gráfico los decide la pareja.
+
+::: {.ojo}
+Use solo la opción que le asignaron. Estos datos se escriben en el código de `informe.qmd`, en el paso 5.
+:::
+
+::: {.notes}
+- ELSOC: Estudio Longitudinal Social de Chile, del COES. Las mismas 1.886 personas, entrevistadas en 2016, 2017, 2018 y 2019.
+- Formato largo: una fila por persona y ola. Por eso el primer paso del código es filtrar una ola.
+- La tabla es de 2 × 2: sexo (hombre, mujer) por dos grupos de respuesta.
+- Las categorías van tal cual, con mayúsculas: una letra distinta y la tabla no sale de 2 × 2.
+- Opción 4: en la base, la categoría contraria viene con una errata («En desacuendo…»). No hay que escribirla.
+:::
+
+## Ruta: seis pasos
+
+:::: {.columns}
+::: {.column width="50%"}
+**Armar el compendio**
+
+1. Baje el kit y abra el proyecto.
+2. Copie el guion, complételo y ejecútelo.
+3. Baje la base desde GitHub.
+:::
+::: {.column width="50%"}
+**El informe y la entrega**
+
+4. Identifique el informe: opción y nombres.
+5. Complete el código y renderice.
+6. Escriba los textos, comprima y entregue.
+:::
+::::
+
+Necesita R, RStudio e internet. Tiempo estimado: entre una hora y una hora y media.
+
+[Un doble clic amplía cualquier parte de la lámina. Otro doble clic la devuelve.]{.chico}
+
+::: {.notes}
+- Pasos 1 a 3: unos 20 min, casi todo espera de instalación.
+- Pasos 4 a 6: unos 45 min. Lo que más tarda son los tres textos.
+- Si una pareja se atrasa en el paso 2 por la red, que avance leyendo su opción.
+:::
+
+# Parte 2 · Armar el compendio {.seccion background-color="#8f4a4a"}
+
+Pasos 1 a 3. Al final tendrá las carpetas, los paquetes y los datos.
+
+::: {.notes}
+- Unos 20 min. El paso 2 instala 47 paquetes: en mi equipo tardó un minuto.
+:::
+
+## Paso 1 · Baje el kit y abra el proyecto {.etapa}
+
+:::: {.columns}
+::: {.column width="56%"}
+El kit trae dos archivos: el proyecto y la plantilla del informe.
+
+1. Baje [kit-taller.zip](https://agscl.github.io/repr2026/taller/kit-taller.zip).
+2. En la carpeta de descargas: clic derecho sobre el ZIP y **Extraer todo…** Elija una carpeta corta, por ejemplo `C:\taller`.
+3. Entre a esa carpeta y haga doble clic en `TallerELSOC.Rproj`.
+:::
+::: {.column width="44%"}
+::: {.ok}
+**¿Cómo sé que funcionó?** RStudio muestra `TallerELSOC` arriba a la derecha. La pestaña **Files** lista `informe.qmd` y `TallerELSOC.Rproj`.
+:::
+
+::: {.ojo}
+**Ojo.** Un doble clic sobre el ZIP solo lo muestra por dentro: hay que extraerlo. Si trabaja dentro del ZIP, nada se guarda.
+:::
+
+::: {.aviso}
+Sin tildes, ñ ni espacios en la ruta. Evite las carpetas de OneDrive y Google Drive.
+:::
+:::
+::::
+
+::: {.notes}
+- El kit también puede estar en Canvas: es el mismo archivo.
+- Error típico: abrir `informe.qmd` desde el ZIP. Se nota porque Files no muestra los dos archivos.
+- OneDrive bloquea archivos mientras sincroniza y la instalación de paquetes falla a medias.
+- Abrir siempre por el `.Rproj`: así la carpeta de trabajo es la del proyecto.
+:::
+
+## Paso 2 · Prepare el compendio {.etapa .guion}
+
+:::: {.columns}
+::: {.column width="25%"}
+1. En RStudio: **File → New File → R Script**.
+2. Copie el guion con el botón de su esquina superior derecha y péguelo.
+3. Complete las dos líneas que siguen a cada `INSTRUCCION`.
+4. Guárdelo como `00estructura_taller.R`, junto a `TallerELSOC.Rproj`.
+5. Presione **Source**. Necesita internet y tarda unos minutos.
+:::
+::: {.column width="75%"}
+```r
+{{< include ../_lib/kit-taller/00estructura_taller.R >}}
+```
+:::
+::::
+
+::: {.notes}
+- Esta lámina es parte de la prueba: no se explica qué va en cada espacio.
+- INSTRUCCION 1: los dos paquetes que usa el informe. INSTRUCCION 2: las cuatro carpetas que nombra el README de la sección 7.
+- Si quedan espacios sin completar, el guion se detiene antes de crear nada.
+- Con una carpeta mal escrita, el guion falla al escribir `_doc/entorno.txt` o el informe no encuentra dónde guardar.
+- Se puede repetir: corregir y presionar Source otra vez.
+- DESCRIPTION no lleva nombres: los nombres van solo en el informe.
+:::
+
+## Paso 3 · Baje la base desde GitHub {.etapa}
+
+:::: {.columns}
+::: {.column width="56%"}
+La base está en un repositorio público del COES. Hay que traerla a la carpeta de datos de su proyecto.
+
+1. Abra [github.com/elsoc-coes/elsoc_ggplot](https://github.com/elsoc-coes/elsoc_ggplot) y entre a `1_input`, después a `data` y después a `elsoc_long.RData`. ![Lo que debe ver: la página del repositorio elsoc_ggplot, con la carpeta 1_input arriba de la lista y el botón verde Code.](../_figures/taller/github-repo.png){.captura}
+2. Presione la flecha hacia abajo, **Download raw file**, arriba a la derecha. ![Lo que debe ver: la página del archivo elsoc_long.RData, de 156 KB, con los botones Raw, copiar y descargar arriba a la derecha.](../_figures/taller/github-archivo.png){.captura}
+3. Mueva el archivo desde la carpeta de descargas a la carpeta `_data` del proyecto.
+
+**O con una línea**, en la consola de RStudio:
+
+```r
+download.file("https://raw.githubusercontent.com/elsoc-coes/elsoc_ggplot/master/1_input/data/elsoc_long.RData", "_data/elsoc_long.RData", mode = "wb")
+```
+:::
+::: {.column width="44%"}
+::: {.ok}
+**¿Cómo sé que funcionó?** En **Files**, dentro de `_data`, está `elsoc_long.RData` y pesa 155,8 KB.
+:::
+
+::: {.ojo}
+**Ojo con el nombre.** Debe ser exactamente `elsoc_long.RData`. No sirve `elsoc_long (1).RData`. No lo abra con doble clic.
+:::
+
+::: {.minimo}
+**Si la red bloquea la descarga:** en la página del repositorio, **Code → Download ZIP**. Extraiga y copie `1_input/data/elsoc_long.RData` a `_data`. O use otra red.
+:::
+:::
+::::
+
+::: {.notes}
+- Hay tres bases en esa carpeta. La del taller es la chica: `elsoc_long.RData`, 156 KB.
+- `mode = "wb"` importa en Windows: sin eso el archivo llega dañado.
+- El informe comprueba la huella (md5) del archivo antes de leerlo: si guardaron la página web en vez del archivo, se detiene y lo dice.
+- Algunas redes de trabajo bloquean `raw.githubusercontent.com`. El ZIP del repositorio completo (12 MB) sale por otra dirección y trae el mismo archivo.
+- También sirve clonar con GitHub Desktop: File → Clone repository → URL → `elsoc-coes/elsoc_ggplot`.
+:::
+
+# Parte 3 · El informe y la entrega {.seccion background-color="#8f4a4a"}
+
+Pasos 4 a 6. Casi todo ocurre en `informe.qmd`.
+
+::: {.notes}
+- Unos 45 min.
+- La plantilla trae el código con espacios en blanco. Se completan la opción, los nombres, seis espacios y tres textos.
+:::
+
+## Paso 4 · Identifique el informe {.etapa}
+
+:::: {.columns}
+::: {.column width="56%"}
+El encabezado dice qué opción es, quién lo hizo y cuándo.
+
+1. En **Files**, abra `informe.qmd`.
+2. En la línea 3, cambie `______` por el número de su opción.
+3. En la línea 4, cambie `Nombre Apellido y Nombre Apellido` por los dos nombres. Deje las comillas.
+4. Guarde con Ctrl + S.
+
+```yaml
+subtitle: "Opción 3 · Reproducibilidad y Comunicación de Resultados · UDP 2026"
+author: "Camila Rojas y Diego Soto"
+date: today
+```
+:::
+::: {.column width="44%"}
+::: {.espejo}
+**La fecha se escribe sola.** `date: today` pone el día en que se renderiza. Así el informe dice cuándo se produjo de verdad.
+:::
+
+::: {.ojo}
+**Ojo.** No borre los tres guiones `---` que abren y cierran el encabezado.
+:::
+:::
+::::
+
+::: {.notes}
+- Los nombres del ejemplo son inventados.
+- El encabezado se llama YAML. Las sangrías y las comillas importan.
+- Si RStudio abre el archivo en modo **Visual**, pasar a **Source** con el botón de arriba a la izquierda: es más fácil ver las líneas.
+:::
+
+## Paso 5 · Complete el código y renderice {.etapa}
+
+:::: {.columns}
+::: {.column width="54%"}
+1. En `informe.qmd`, busque las dos líneas que dicen `INSTRUCCION`.
+2. Complete cada `______` con los datos de su opción: la ola, la variable y las categorías del primer grupo.
+3. Escriba un nombre para cada grupo y un título para el gráfico.
+4. Guarde y presione **Render**.
+5. Revise el informe: su opción, sus nombres, dos tablas de 2 × 2 y un gráfico. ![Lo que debe ver: el informe renderizado, con el título, la opción, los nombres de la pareja, la fecha y las cinco secciones en la tabla de contenidos.](../_figures/taller/informe-portada.png){.captura}
+:::
+::: {.column width="46%"}
+![](../_figures/taller/ejemplo-grafico.png){width="100%" fig-alt="Ejemplo de gráfico: cuatro barras, dos para hombres y dos para mujeres, en azul y naranjo según el grupo de respuesta, con el porcentaje sobre cada barra, un título y la fuente."}
+
+[Ejemplo con una variable que no está entre las opciones.]{.chico}
+:::
+::::
+
+::: {.notes}
+- Los datos de cada opción están en la lámina «Las cinco opciones».
+- Si falta la base, el mensaje dice `No encuentro _data/…`. Si una categoría está mal escrita, dice que la tabla no es de 2 × 2.
+- Render guarda también la tabla en `_outputs/tabla.csv` y el gráfico en `_figures/grafico.png`.
+- El ejemplo usa `estatus` (estatus social subjetivo), ola 2016: 48,9 % de los hombres y 52,8 % de las mujeres en estatus bajo; 1.879 personas.
+- Render usa la biblioteca del proyecto. Por eso hay que abrir por el `.Rproj`.
+:::
+
+## Paso 6 · Escriba, comprima y entregue {.etapa}
+
+:::: {.columns}
+::: {.column width="56%"}
+1. Reemplace cada `ESCRIBA AQUÍ` por un texto suyo de tres a cinco líneas y presione **Render**.
+2. Cierre RStudio.
+3. En la carpeta del proyecto, entre a `renv` y elimine la carpeta `library`. Solo esa. ![Lo que debe ver: la carpeta renv del proyecto abierta en el Explorador, con la carpeta library seleccionada y el botón Eliminar del menú del clic derecho.](../_figures/taller/borrar-library.png){.captura}
+4. Vuelva atrás. Clic derecho sobre la carpeta del proyecto y **Comprimir a… → Archivo ZIP**. En Windows 10: **Enviar a → Carpeta comprimida**. ![Lo que debe ver: el menú del clic derecho sobre la carpeta del proyecto, con Comprimir a… y, al lado, Archivo ZIP.](../_figures/taller/comprimir-zip.png){.captura}
+5. Suba el ZIP a la tarea de Canvas, hasta el domingo 29 de noviembre a las 23:59. Una entrega por pareja.
+:::
+::: {.column width="44%"}
+**La entrega está completa si**
+
+- los tres textos nombran su tema y sus porcentajes;
+- el ZIP pesa menos de 2 MB;
+- trae el informe en `.qmd` y en `.html`, la base, la tabla, el gráfico, el guion y los archivos del entorno;
+- otra persona lo repite con `renv::restore()` y **Render**.
+
+[`library` guarda los paquetes instalados: 78 MB que se reinstalan con `renv::restore()`. Lo que los describe es `renv.lock`, y ese sí se entrega.]{.chico}
+:::
+::::
+
+::: {.notes}
+- Los tres textos: contexto y objetivo (sección 1), reproducibilidad, replicabilidad y ciencia abierta (sección 2), interpretación con una limitación (sección 4).
+- Reproducible: mismos datos y mismo código, mismos resultados. Replicable: datos nuevos y mismo método, resultados en la misma dirección.
+- Hay que cerrar RStudio antes de borrar: mientras está abierto, Windows no deja eliminar los paquetes en uso.
+- Dentro de `renv` se quedan `activate.R` y `settings.json`. Si los borran, el proyecto no se puede restaurar.
+- Con `library`, el ZIP pesa cerca de 47 MB y trae unos 3.600 archivos.
+- Así corrijo: `revisar_taller("entrega.zip")`, después `renv::restore()`, Render y comparar con la pauta.
+:::
+
+## Criterios de evaluación: 20 puntos {.etapa .tabla}
+
+| Criterio | Puntos | Completo | A medias: la mitad de los puntos |
+|---|---|---|---|
+| **1. Entrega y compendio** | 2 | El ZIP está en Canvas, sin la carpeta `library`, y trae la base, la tabla, el gráfico, `informe.qmd` e `informe.html`, cada uno en su lugar | Falta una pieza, viene `library` o los archivos llegaron sueltos |
+| **2. Entorno y dependencias** | 4 | El guion tiene sus dos instrucciones completas; están `renv.lock`, `DESCRIPTION`, `README.md` y `_doc/entorno.txt`, y el informe termina con la información de la sesión | Falta uno, o una instrucción quedó mal |
+| **3. Se repite en otro equipo** | 3 | Con `renv::restore()` y **Render**, el profesor obtiene los mismos números | Corre solo después de corregir una línea |
+| **4. Datos de su opción** | 3 | La ola, la variable y las categorías son las de la opción asignada y la tabla de 2 × 2 coincide con la pauta | Un dato no corresponde, o es otra opción |
+| **5. Gráfico** | 2 | Título y nombres de grupo propios, que dicen de qué trata | El título o los grupos no dicen de qué trata |
+| **6. Documento dinámico** | 2 | Número de opción, nombres de la pareja y fecha; el HTML sale del `.qmd` sin retoques a mano | Falta un dato, o el HTML no coincide con el `.qmd` |
+| **7. Tres textos** | 4 | Los tres nombran su tema y sus porcentajes: objetivo, reproducibilidad e interpretación con una limitación | Falta uno, o son genéricos |
+
+: {tbl-colwidths="[21,7,42,30]"}
+
+::: {.espejo}
+Sin evidencia de un criterio, 0 puntos en ese criterio. **Nota 4,0 con 12 puntos; nota 7,0 con 20.**
+:::
+
+::: {.notes}
+- Nota: hasta 12 puntos, 1 + 0,25 por punto. Sobre 12, 4 + 0,375 por punto sobre 12.
+- El criterio 3 se revisa extrayendo el ZIP en una carpeta nueva.
+- El criterio 7 es el que más exige redactar: un texto que serviría para cualquier opción queda a medias.
+- Dejar esta lámina proyectada mientras trabajan.
+:::

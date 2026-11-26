@@ -1,0 +1,101 @@
+---
+title: "Taller evaluado: una pregunta a la ELSOC"
+subtitle: "Opción ______ · Reproducibilidad y Comunicación de Resultados · UDP 2026"
+author: "Nombre Apellido y Nombre Apellido"
+date: today
+lang: es
+format:
+  html:
+    embed-resources: true
+    toc: true
+---
+
+## 1. Contexto, problema y objetivo
+
+ESCRIBA AQUÍ (3 a 5 líneas): qué es la ELSOC, qué pregunta responde este informe con la opción que le asignaron y cuál es el objetivo. Por ejemplo: «describir si hombres y mujeres difieren en…».
+
+## 2. Por qué importa que sea reproducible
+
+ESCRIBA AQUÍ (3 a 5 líneas): qué hace que este informe sea reproducible (otra persona obtiene los mismos números con los mismos datos y el mismo código), qué haría falta para replicarlo con datos nuevos y qué prácticas de ciencia abierta usa.
+
+## 3. Datos y preparación
+
+```{r}
+#| label: paquetes
+#| message: false
+library(dplyr)     # filtros y canalizaciones
+library(ggplot2)   # gráfico
+```
+
+La base se bajó de GitHub y está en `_data/`. Este bloque comprueba que sea el archivo original antes de leerlo.
+
+```{r}
+#| label: datos
+archivo <- "_data/elsoc_long.RData"
+if (!file.exists(archivo))                    # ¿está donde debe estar?
+  stop("No encuentro ", archivo, ". Baje la base y guárdela en la carpeta _data (paso 3).")
+if (tools::md5sum(archivo) != "780cc68dbbd75336d7600015c166f565")   # ¿es el archivo original?
+  stop("El archivo de _data no es la base original. Bórrelo y bájelo de nuevo (paso 3).")
+load(archivo)                                 # crea el objeto elsoc_long
+elsoc <- as.data.frame(elsoc_long)            # tabla simple, sin la agrupación por persona
+```
+
+La base tiene `r nrow(elsoc)` filas: `r length(unique(elsoc$idencuesta))` personas entrevistadas en `r nlevels(elsoc$ola)` olas.
+
+```{r}
+#| label: preparar
+# INSTRUCCION = Complete cada espacio en blanco con los datos de SU opción (lámina «Las cinco opciones»)
+datos <- elsoc |>
+  filter(ola == "______") |>                            # filtro: solo la ola asignada
+  select(sexo, respuesta = all_of("______")) |>         # subconjunto: sexo y la variable asignada
+  filter(!is.na(respuesta)) |>                          # filtro: sin respuestas vacías
+  mutate(grupo = if_else(respuesta %in% c("______"),    # categorías que forman el primer grupo
+                         "______",                      # un nombre suyo para el primer grupo
+                         "______"))                     # un nombre suyo para el resto
+```
+
+## 4. Resultados
+
+```{r}
+#| label: tabla
+tabla <- table(datos$sexo, datos$grupo)                         # 2 filas por 2 columnas
+stopifnot("La tabla no es de 2 x 2: revise la ola, la variable y las categorías del bloque anterior" =
+            identical(dim(tabla), c(2L, 2L)) && all(tabla > 0))
+porcentajes <- round(100 * prop.table(tabla, margin = 1), 1)    # porcentaje dentro de cada sexo
+knitr::kable(as.data.frame.matrix(tabla), caption = "Número de personas")
+knitr::kable(as.data.frame.matrix(porcentajes), caption = "Porcentaje dentro de cada sexo")
+write.csv(as.data.frame.matrix(porcentajes), "_outputs/tabla.csv")   # la tabla queda guardada
+```
+
+```{r}
+#| label: grafico
+#| fig-alt: "Gráfico de barras: porcentaje de cada grupo de respuesta entre hombres y entre mujeres."
+resumen <- datos |>
+  count(sexo, grupo) |>                                         # personas en cada casilla de la tabla
+  group_by(sexo) |>
+  mutate(porcentaje = round(100 * n / sum(n), 1))               # porcentaje dentro de cada sexo
+# INSTRUCCION = Escriba un título suyo para el gráfico
+grafico <- ggplot(resumen, aes(x = sexo, y = porcentaje, fill = grupo)) +
+  geom_col(position = "dodge") +
+  geom_text(aes(label = paste(porcentaje, "%")), position = position_dodge(width = 0.9), vjust = -0.6) +
+  scale_fill_manual(values = c("#2a78d6", "#eb6834")) +
+  scale_y_continuous(limits = c(0, 100)) +
+  labs(title = "______", x = NULL, y = "Porcentaje", fill = NULL, caption = "Fuente: ELSOC (COES)") +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "top")
+grafico
+ggsave("_figures/grafico.png", grafico, width = 7, height = 4.5, dpi = 150)   # el gráfico queda guardado
+```
+
+Respondieron esta pregunta `r nrow(datos)` personas: `r sum(datos$sexo == "Hombre")` hombres y `r sum(datos$sexo == "Mujer")` mujeres.
+
+ESCRIBA AQUÍ (3 a 5 líneas): qué muestran la tabla y el gráfico, si la diferencia entre hombres y mujeres le parece grande o chica, y una limitación (por ejemplo, que no se usaron los ponderadores de la encuesta).
+
+## 5. Entorno
+
+Para repetir este informe en otro computador: abrir `TallerELSOC.Rproj`, ejecutar `renv::restore()` y presionar **Render** en `informe.qmd`. Las versiones de los paquetes están en `renv.lock`.
+
+```{r}
+#| label: sesion
+sessionInfo()
+```
